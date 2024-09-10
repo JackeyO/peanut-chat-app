@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: qiyu-live-api
+  cloud:
+    nacos:
+      password: nacos
+      username: nacos
+      discovery:
+        server-addr: 8.136.101.218:8848
+        namespace: qiyu-live-test
