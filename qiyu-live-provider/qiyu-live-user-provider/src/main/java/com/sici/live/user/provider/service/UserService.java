@@ -3,6 +3,8 @@ package com.sici.live.user.provider.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sici.live.model.user.pojo.UserPO;
 
+import java.util.List;
+
 /**
  * @projectName: qiyu-live-app
  * @package: com.sici.live.user.provider.service
@@ -13,4 +15,7 @@ import com.sici.live.model.user.pojo.UserPO;
  */
 
 public interface UserService extends IService<UserPO> {
+    UserPO getUser(Long userId);
+
+    List<UserPO> getUsers(List<Long> userBatchIds);
 }
