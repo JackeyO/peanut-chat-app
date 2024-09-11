@@ -3,11 +3,19 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/qiyu-live-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-framework/qiyu-live-framework-datasource-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-framework/qiyu-live-framework-redis-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-framework/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-model/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-user-interface/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-user-interface/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-user-provider/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-user-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-user-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-user-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-utils/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />

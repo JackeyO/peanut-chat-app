@@ -9,7 +9,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>qiyu-live-api</artifactId>
+    <modules>
+        <module>qiyu-live-user-interface</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <artifactId>qiyu-live-interface</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -23,24 +29,12 @@
             <artifactId>qiyu-live-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sici</groupId>
-            <artifactId>qiyu-live-model</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sici</groupId>
-            <artifactId>qiyu-live-user-interface</artifactId>
         </dependency>
     </dependencies>
 
