@@ -29,6 +29,10 @@
             <artifactId>qiyu-live-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.sici</groupId>
+            <artifactId>qiyu-live-model</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>

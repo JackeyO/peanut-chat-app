@@ -1,5 +1,6 @@
 package com.sici.framework.redis;
 
+import com.sici.framework.redis.key.RedisKeyEntry;
 import jakarta.annotation.Resource;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.dao.DataAccessException;
@@ -10,7 +11,6 @@ import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -310,6 +310,20 @@ public class CacheService extends CachingConfigurerSupport {
      */
     public void multiSet(Map<String, String> maps) {
         stringRedisTemplate.opsForValue().multiSet(maps);
+    }
+
+    public void multiSetByPipeLine(Map<RedisKeyEntry, String> map) {
+        stringRedisTemplate.executePipelined(
+                new SessionCallback<Object>() {
+                    @Override
+                    public <K, V> Object execute(RedisOperations<K, V> operations) throws DataAccessException {
+                        map.forEach((k, v) -> {
+                            operations.opsForValue().set((K) k.getValue(), (V) v, k.getExpire(), k.getTimeUnit());
+                        });
+                        return null;
+                    }
+                }
+        );
     }
 
     /**

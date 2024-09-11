@@ -1,6 +1,12 @@
 package com.sici.live.user.interfaces.rpc;
 
+import com.sici.common.result.ResponseResult;
+import com.sici.live.model.user.dto.UserDTO;
+import com.sici.live.model.user.pojo.UserPO;
+import com.sici.live.model.user.vo.UserVO;
 import org.apache.dubbo.config.annotation.DubboService;
+
+import java.util.List;
 
 /**
  * @projectName: qiyu-live-app
@@ -13,5 +19,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 
 @DubboService
 public interface IUserRpc {
-    String test();
+    ResponseResult<UserVO> getUserById(Long userId);
+    ResponseResult<List<UserVO>> getUserByBatchIds(List<Long> userBatchIds);
+    ResponseResult saveUser(UserDTO userDTO);
+    ResponseResult deleteUser(UserDTO userDTO);
+    ResponseResult updateUser(UserDTO userDTO);
 }
