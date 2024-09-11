@@ -20,7 +20,6 @@ public class TestDubboController {
     private IUserRpc iUserRpc;
     @GetMapping("testDubbo")
     public String testDubbo() {
-        iUserRpc.test();
-        return "ok";
+        return iUserRpc.test();
     }
 }
