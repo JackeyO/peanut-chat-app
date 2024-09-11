@@ -1,6 +1,8 @@
 package com.sici.live.user.provider.service.impl;
 
+import com.sici.common.result.ResponseResult;
 import com.sici.live.model.user.pojo.UserPO;
+import com.sici.live.model.user.vo.UserVO;
 import com.sici.live.user.provider.service.UserService;
 import jakarta.annotation.Resource;
 import org.junit.Test;
@@ -18,7 +20,7 @@ public class UserServiceImplTest {
     private UserService userService;
     @Test
     public void getUser() {
-        UserPO user = userService.getUser(0L);
+        ResponseResult<UserVO> user = userService.getUser(0L);
     }
 
     @Test
@@ -28,6 +30,6 @@ public class UserServiceImplTest {
             list.add((long) i);
         }
 
-        List<UserPO> users = userService.getUsers(list);
+        ResponseResult<List<UserVO>> users = userService.getUsers(list);
     }
 }

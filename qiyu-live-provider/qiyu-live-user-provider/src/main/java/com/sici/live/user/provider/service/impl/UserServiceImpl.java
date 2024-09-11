@@ -2,10 +2,15 @@ package com.sici.live.user.provider.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sici.bean.ConvertBeanUtil;
 import com.sici.common.constant.user.UserProviderConstant;
+import com.sici.common.enums.code.AppHttpCodeEnum;
+import com.sici.common.result.ResponseResult;
 import com.sici.framework.redis.CacheService;
 import com.sici.framework.redis.key.RedisKeyEntry;
+import com.sici.live.model.user.dto.UserDTO;
 import com.sici.live.model.user.pojo.UserPO;
+import com.sici.live.model.user.vo.UserVO;
 import com.sici.live.user.provider.mapper.UserMapper;
 import com.sici.live.user.provider.redis.key.UserProviderCacheKeyBuilder;
 import com.sici.live.user.provider.service.UserService;
@@ -41,31 +46,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
     private UserMapper userMapper;
 
     @Override
-    public UserPO getUser(Long userId) {
+    public ResponseResult<UserVO> getUser(Long userId) {
         if (userId == null) {
-            return null;
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
         String user = cacheService.get(userProviderCacheKeyBuilder.buildUserInfoKey(userId));
-        UserPO userPO = null;
+        UserVO userVo = null;
         if (!StringUtils.isEmpty(user)) {
-            userPO = JSON.parseObject(user, UserPO.class);
+            userVo = JSON.parseObject(user, UserVO.class);
         }
-        if (userPO == null) {
-            userPO = getById(userId);
-            // 存入缓存
-            if (userPO != null) {
+        if (userVo == null) {
+            UserPO userPo = getById(userId);
+            if (userPo != null) {
+                userVo = ConvertBeanUtil.convertSingle(userPo, UserVO.class);
+                // 存入缓存
                 cacheService.setEx(userProviderCacheKeyBuilder.buildUserInfoKey(userId),
-                        JSON.toJSONString(userPO), UserProviderConstant.USER_INFO_CACHE_EXPIRE, TimeUnit.MINUTES);
+                        JSON.toJSONString(userVo), UserProviderConstant.USER_INFO_CACHE_EXPIRE, TimeUnit.MINUTES);
             }
         }
-        return userPO;
+        return ResponseResult.okResult(userVo);
     }
 
     @Override
-    public List<UserPO> getUsers(List<Long> userBatchIds) {
-        List<UserPO> userPOS = new ArrayList<>();
+    public ResponseResult<List<UserVO>> getUsers(List<Long> userBatchIds) {
+        List<UserVO> userVos = new ArrayList<>();
         if (CollectionUtils.isEmpty(userBatchIds)) {
-            return userPOS;
+            return ResponseResult.okResult(userVos);
         }
 
         // 获取key
@@ -78,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
                 .filter(user -> !StringUtils.isEmpty(user))
                 .map(user -> JSON.parseObject(user, UserPO.class))
                 .forEach(userPO -> {
-                    userPOS.add(userPO);
+                    userVos.add(ConvertBeanUtil.convertSingle(userPO, UserVO.class));
                     inRedis.put(userPO.getUserId(), true);
                 });
 
@@ -91,22 +97,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
         notInRedisGroupedIds.values()
                 .stream()
                 .forEach(userIds -> {
-                    List<UserPO> userPOSTmp = userMapper.selectBatchIds(userIds)
-                                    .stream().filter(userPO -> userPO != null).collect(Collectors.toList());
-                    userPOS.addAll(userPOSTmp);
+                    List<UserVO> userVosTmp = userMapper.selectBatchIds(userIds)
+                                    .stream().filter(userPO -> userPO != null).collect(Collectors.toList())
+                                    .stream().map(userPO -> ConvertBeanUtil.convertSingle(userPO, UserVO.class))
+                                    .collect(Collectors.toList());
+                    userVos.addAll(userVosTmp);
 
-                    Map<RedisKeyEntry, String> userPosMap = userPOSTmp.stream()
-                            .collect(Collectors.toMap(userPO ->
+                    Map<RedisKeyEntry, String> userVosMap = userVosTmp.stream()
+                            .collect(Collectors.toMap(userVo ->
                                             RedisKeyEntry.builder()
-                                                    .value(userProviderCacheKeyBuilder.buildUserInfoKey(userPO.getUserId()))
+                                                    .value(userProviderCacheKeyBuilder.buildUserInfoKey(userVo.getUserId()))
                                                     .expire(RedisExpireTimeUtil.createRandomExpireTime())
                                                     .timeUnit(TimeUnit.MINUTES).build()
                                     ,
-                                    userPO -> JSON.toJSONString(userPO)));
+                                    userVo -> JSON.toJSONString(userVo)));
                     // 保存到redis
-                    cacheService.multiSetByPipeLine(userPosMap);
+                    cacheService.multiSetByPipeLine(userVosMap);
                 });
 
-        return userPOS;
+        return ResponseResult.okResult(userVos);
+    }
+
+    @Override
+    public ResponseResult removeUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+
+        UserPO userPO = ConvertBeanUtil.convertSingle(userDTO, UserPO.class);
+
+        removeById(userPO);
+
+        // 延迟双删
+        cacheService.delete(userProviderCacheKeyBuilder.buildUserInfoKey(userPO.getUserId()));
+        return null;
+    }
+
+    @Override
+    public ResponseResult saveUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+
+        UserPO userPO = ConvertBeanUtil.convertSingle(userDTO, UserPO.class);
+        boolean save = save(userPO);
+        return save ? ResponseResult.okResult() : ResponseResult.errorResult();
+    }
+
+    @Override
+    public ResponseResult updateUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+
+        UserPO userPO = ConvertBeanUtil.convertSingle(userDTO, UserPO.class);
+
+        boolean updated = updateById(userPO);
+        return updated ? ResponseResult.okResult() : ResponseResult.errorResult();
     }
 }
+
