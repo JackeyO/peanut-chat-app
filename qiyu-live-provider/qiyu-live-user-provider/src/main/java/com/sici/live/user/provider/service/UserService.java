@@ -1,7 +1,10 @@
 package com.sici.live.user.provider.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sici.common.result.ResponseResult;
+import com.sici.live.model.user.dto.UserDTO;
 import com.sici.live.model.user.pojo.UserPO;
+import com.sici.live.model.user.vo.UserVO;
 
 import java.util.List;
 
@@ -15,7 +18,13 @@ import java.util.List;
  */
 
 public interface UserService extends IService<UserPO> {
-    UserPO getUser(Long userId);
+    ResponseResult<UserVO> getUser(Long userId);
 
-    List<UserPO> getUsers(List<Long> userBatchIds);
+    ResponseResult<List<UserVO>> getUsers(List<Long> userBatchIds);
+
+    ResponseResult removeUser(UserDTO userDTO);
+
+    ResponseResult saveUser(UserDTO userDTO);
+
+    ResponseResult updateUser(UserDTO userDTO);
 }

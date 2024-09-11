@@ -42,34 +42,30 @@ public class UserRpcImpl implements IUserRpc {
     @Override
     @EnableInvokeLog(description = "用户RPC服务==>根据userId查询用户")
     public ResponseResult<UserVO> getUserById(Long userId) {
-        return ResponseResult.okResult(ConvertBeanUtil.convertSingle(userService.getUser(userId), UserVO.class));
+        return userService.getUser(userId);
     }
 
     @Override
     @EnableInvokeLog(description = "用户RPC服务==>根据用户id批量查询用户")
     public ResponseResult<List<UserVO>> getUserByBatchIds(List<Long> userBatchIds) {
-        List<UserPO> userPOS = userService.getUsers(userBatchIds);
-        return ResponseResult.okResult(ConvertBeanUtil.convertCollection(userPOS, UserVO.class));
+        return userService.getUsers(userBatchIds);
     }
 
     @Override
     @EnableInvokeLog(description = "用户RPC服务==>保存用户")
     public ResponseResult saveUser(UserDTO userDTO) {
-        boolean save = userService.save(ConvertBeanUtil.convertSingle(userDTO, UserPO.class));
-        return save ? ResponseResult.okResult() : ResponseResult.errorResult();
+        return userService.saveUser(userDTO);
     }
 
     @Override
     @EnableInvokeLog(description = "用户RPC服务==>删除用户")
     public ResponseResult deleteUser(UserDTO userDTO) {
-        boolean removed = userService.removeById(ConvertBeanUtil.convertSingle(userDTO, UserPO.class));
-        return removed ? ResponseResult.okResult() : ResponseResult.errorResult();
+        return userService.removeUser(userDTO);
     }
 
     @Override
     @EnableInvokeLog(description = "用户RPC服务==>更新用户")
     public ResponseResult updateUser(UserDTO userDTO) {
-        boolean updated = userService.updateById(ConvertBeanUtil.convertSingle(userDTO, UserPO.class));
-        return updated ? ResponseResult.okResult() : ResponseResult.errorResult();
+        return userService.updateUser(userDTO);
     }
 }
