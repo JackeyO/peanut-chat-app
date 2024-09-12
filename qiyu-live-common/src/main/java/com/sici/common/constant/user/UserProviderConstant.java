@@ -14,4 +14,8 @@ public class UserProviderConstant {
     public static final int USER_TABLE_KEY_MOD = 100;
     // 用户信息缓存过期时间
     public static final int USER_INFO_CACHE_EXPIRE = 60;
+
+
+    // 用户缓存信息删除相关主题名
+    public static final String USER_CACHE_DELETE_TOPIC = "user-cache-delete";
 }
