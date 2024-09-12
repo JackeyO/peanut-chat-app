@@ -34,6 +34,11 @@
             <groupId>com.sici</groupId>
             <artifactId>qiyu-live-framework-redis-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sici</groupId>
+            <artifactId>qiyu-live-framework-rocketmq-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

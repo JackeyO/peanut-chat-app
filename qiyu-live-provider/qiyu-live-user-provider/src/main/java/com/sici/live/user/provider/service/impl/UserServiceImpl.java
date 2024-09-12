@@ -16,6 +16,11 @@ import com.sici.live.user.provider.redis.key.UserProviderCacheKeyBuilder;
 import com.sici.live.user.provider.service.UserService;
 import com.sici.redis.RedisExpireTimeUtil;
 import jakarta.annotation.Resource;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.MQProducer;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -44,6 +49,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
     private UserProviderCacheKeyBuilder userProviderCacheKeyBuilder;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private MQProducer mqProducer;
 
     @Override
     public ResponseResult<UserVO> getUser(Long userId) {
@@ -120,17 +127,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
 
     @Override
     public ResponseResult removeUser(UserDTO userDTO) {
+        // 参数校验
         if (userDTO == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
 
         UserPO userPO = ConvertBeanUtil.convertSingle(userDTO, UserPO.class);
 
+        // 删数据库
         removeById(userPO);
 
         // 延迟双删
         cacheService.delete(userProviderCacheKeyBuilder.buildUserInfoKey(userPO.getUserId()));
-        return null;
+        // TODO: 发消息到rocketmq通知执行第二次删除redis缓存  || created by 20148 at 9/11/2024 7:04 PM
+
+
+        return ResponseResult.okResult();
     }
 
     @Override
@@ -146,14 +158,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
 
     @Override
     public ResponseResult updateUser(UserDTO userDTO) {
+        // 参数校验
         if (userDTO == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
 
         UserPO userPO = ConvertBeanUtil.convertSingle(userDTO, UserPO.class);
 
+        // 更新数据库
         boolean updated = updateById(userPO);
-        return updated ? ResponseResult.okResult() : ResponseResult.errorResult();
+
+        // 延迟双删
+        cacheService.delete(userProviderCacheKeyBuilder.buildUserInfoKey(userPO.getUserId()));
+
+        Message message = new Message();
+        message.setTopic(UserProviderConstant.USER_CACHE_DELETE_TOPIC);
+        message.setDelayTimeLevel(1);
+        message.setBody(JSON.toJSONString(ConvertBeanUtil.convertSingle(userDTO, UserVO.class)).getBytes());
+        try {
+            mqProducer.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseResult.okResult();
     }
 }
-
