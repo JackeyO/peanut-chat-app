@@ -33,7 +33,8 @@ public enum AppHttpCodeEnum {
     MATERIAL_REFERENCE_NOT_EXIST(501, "素材引用不存在"),
     WMNEWS_NOT_EXIST(1002, "自媒体文章不存在"),
     WMNEWS_ID_IS_ABSENT(501, "自媒体文章ID不存在"),
-    WMNEWS_NOT_PUBLISHED(501, "自媒体文章未发布,不能进行上下架操作");
+    WMNEWS_NOT_PUBLISHED(501, "自媒体文章未发布,不能进行上下架操作"),
+    ID_SEGMENT_IS_FULL(501, "id段已经满了");
 
     Integer code;
 

@@ -37,7 +37,7 @@
         <commons.io.version>2.6</commons.io.version>
         <commons.codec.version>1.12</commons.codec.version>
         <lombok.version>1.18.34</lombok.version>
-        <mysql.version>5.1.46</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <mybatis.version>3.5.1</mybatis.version>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
         <mybatis.plus.version>3.5.4.1</mybatis.plus.version>
@@ -80,7 +80,6 @@
     </parent>
 
     <dependencies>
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -98,8 +97,18 @@
         <dependencies>
             <dependency>
                 <groupId>com.sici</groupId>
+                <artifactId>qiyu-live-id-generate-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>qiyu-live-id-generate-provider</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
                 <artifactId>qiyu-live-framework-rocketmq-starter</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
@@ -122,43 +131,43 @@
             <dependency>
                 <artifactId>qiyu-live-user-interface</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
                 <artifactId>qiyu-live-framework-datasource-starter</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
                 <artifactId>qiyu-live-framework-redis-starter</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <artifactId>qiyu-live-model</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>qiyu-live-user-provider</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>qiyu-live-utils</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>qiyu-live-common</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>qiyu-live-api</artifactId>
                 <groupId>com.sici</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <!-- Spring boot 特殊处理包 -->
             <dependency>
