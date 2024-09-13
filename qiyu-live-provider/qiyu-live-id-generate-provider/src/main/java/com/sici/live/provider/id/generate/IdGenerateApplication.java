@@ -1,6 +1,7 @@
 package com.sici.live.provider.id.generate;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableDubbo
 @ComponentScan("com.sici")
+@MapperScan("com.sici.live.provider.id.generate.mapper")
 public class IdGenerateApplication {
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication();
