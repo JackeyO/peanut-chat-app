@@ -16,6 +16,7 @@
         <module>qiyu-live-framework</module>
         <module>qiyu-live-provider</module>
         <module>qiyu-live-interface</module>
+        <module>qiyu-live-provider/qiyu-live-id-generate-provider</module>
     </modules>
 
     <properties>
