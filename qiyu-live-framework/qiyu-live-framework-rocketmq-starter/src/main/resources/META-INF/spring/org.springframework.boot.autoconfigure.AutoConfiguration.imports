@@ -1,3 +1,4 @@
 com.sici.live.framework.rocketmq.properties.RocketMQProducerProperties
 com.sici.live.framework.rocketmq.properties.RocketMQConsumerProperties
 com.sici.live.framework.rocketmq.config.RocketMQProducerConfig
+com.sici.live.framework.rocketmq.config.RocketMQConsumerConfigurer

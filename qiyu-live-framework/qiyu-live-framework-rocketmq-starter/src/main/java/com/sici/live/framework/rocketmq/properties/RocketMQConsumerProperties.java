@@ -6,14 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "qiyu.rocketmq.consumer")
+@ConfigurationProperties(prefix = "rocketmq.consumer")
 @Component
 @Data
 public class RocketMQConsumerProperties {
-    //rocketmq 的 nameSever 地址
-    @Value("${qiyu.rocketmq.consumer.nameSrv}")
-    private String nameSrv;
+//    rocketmq 的 nameSever 地址
+    @Value("${rocketmq.consumer.nameServer}")
+    private String nameServer;
     //分组名称
-    @Value("${qiyu.rocketmq.consumer.groupName}")
+    @Value("${rocketmq.consumer.groupName}")
     private String groupName;
 }

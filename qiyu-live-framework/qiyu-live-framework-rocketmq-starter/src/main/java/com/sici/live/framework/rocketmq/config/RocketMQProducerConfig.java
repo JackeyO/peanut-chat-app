@@ -35,7 +35,7 @@ public class RocketMQProducerConfig {
         //初始化 rocketmq 的生产者
         DefaultMQProducer defaultMQProducer = new DefaultMQProducer();
         try {
-            defaultMQProducer.setNamesrvAddr(producerProperties.getNameSrv());
+            defaultMQProducer.setNamesrvAddr(producerProperties.getNameServer());
             defaultMQProducer.setProducerGroup(producerProperties.getGroupName());
             defaultMQProducer.setRetryTimesWhenSendFailed(producerProperties.getRetryTimes());
             defaultMQProducer.setRetryTimesWhenSendAsyncFailed(producerProperties.getRetryTimes());
@@ -44,7 +44,7 @@ public class RocketMQProducerConfig {
             //设置异步发送的线程池
             defaultMQProducer.setAsyncSenderExecutor(asyncThreadPoolExecutor);
             defaultMQProducer.start();
-            log.info("rocketmq 生产者启动成功,nameSrv is {}", producerProperties.getNameSrv());
+            log.info("rocketmq 生产者启动成功,nameSrv is {}", producerProperties.getNameServer());
         } catch (MQClientException e) {
             throw new RuntimeException(e);
         }

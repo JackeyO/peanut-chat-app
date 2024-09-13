@@ -10,6 +10,10 @@
     </parent>
 
     <artifactId>qiyu-live-api</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>qiyu-live-api-user</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -46,11 +50,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sici</groupId>
-            <artifactId>qiyu-live-user-interface</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>

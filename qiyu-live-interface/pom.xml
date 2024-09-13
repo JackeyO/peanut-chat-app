@@ -11,6 +11,7 @@
 
     <modules>
         <module>qiyu-live-user-interface</module>
+        <module>qiyu-live-id-generate-interface</module>
     </modules>
 
     <packaging>pom</packaging>
