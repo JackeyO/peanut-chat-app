@@ -10,8 +10,8 @@
     </parent>
 
     <modules>
-        <module>qiyu-live-user-interface</module>
-        <module>qiyu-live-id-generate-interface</module>
+        <module>qiyu-live-interface-user</module>
+        <module>qiyu-live-interface-id-generate</module>
     </modules>
 
     <packaging>pom</packaging>

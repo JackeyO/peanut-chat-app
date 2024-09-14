@@ -12,7 +12,7 @@
     <artifactId>qiyu-live-provider</artifactId>
 
     <modules>
-        <module>qiyu-live-user-provider</module>
+        <module>qiyu-live-provider-user</module>
     </modules>
 
     <packaging>pom</packaging>
