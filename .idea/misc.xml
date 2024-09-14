@@ -9,6 +9,12 @@
         <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user-tag/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user-tag/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17.0.11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

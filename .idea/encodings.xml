@@ -10,16 +10,18 @@
     <file url="file://$PROJECT_DIR$/qiyu-live-framework/qiyu-live-framework-rocketmq-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-framework/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-framework/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-id-generate-interface/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-id-generate/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user-tag/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-interface/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-interface/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-model/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-id-generate-provider/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-id-generate-provider/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-user-provider/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-user-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-id-generate/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-id-generate/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user-tag/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-provider/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-provider/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/qiyu-live-utils/src/main/java" charset="UTF-8" />

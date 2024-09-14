@@ -16,7 +16,7 @@
         <module>qiyu-live-framework</module>
         <module>qiyu-live-provider</module>
         <module>qiyu-live-interface</module>
-        <module>qiyu-live-provider/qiyu-live-id-generate-provider</module>
+        <module>qiyu-live-provider/qiyu-live-provider-id-generate</module>
     </modules>
 
     <properties>
@@ -97,12 +97,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-id-generate-interface</artifactId>
+                <artifactId>qiyu-live-interface-id-generate</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-id-generate-provider</artifactId>
+                <artifactId>qiyu-live-provider-id-generate</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -129,7 +129,7 @@
             </dependency>
             <!--内部依赖工程-->
             <dependency>
-                <artifactId>qiyu-live-user-interface</artifactId>
+                <artifactId>qiyu-live-interface-user</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
@@ -150,7 +150,7 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>qiyu-live-user-provider</artifactId>
+                <artifactId>qiyu-live-provider-user</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
