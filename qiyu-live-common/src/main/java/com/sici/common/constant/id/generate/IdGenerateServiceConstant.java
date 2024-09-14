@@ -12,4 +12,7 @@ package com.sici.common.constant.id.generate;
 public class IdGenerateServiceConstant {
     // 刷新本地id段异步线程名
     public static final String REFRESH_LOCAL_SEQ_ASYNC_THREAD_NAME = "id-generate-service-thread";
+
+    // 数据库id段更新阈值比例
+    public static final double UPDATE_THRESH_RATE = 0.75;
 }
