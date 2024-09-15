@@ -16,6 +16,8 @@ import java.util.List;
 @Conditional(RedisKeyLoadMatch.class)
 public class UserProviderCacheKeyBuilder extends RedisKeyBuilder {
     private static String USER_INFO_KEY = "userInfo";
+    private static String USER_TAG_LOCK_KEY = "userTagLock";
+    private static String USER_TAG_KEY = "userTag";
 
     public String buildUserInfoKey(Long userId) {
         return super.getPrefix() + USER_INFO_KEY +
@@ -24,6 +26,26 @@ public class UserProviderCacheKeyBuilder extends RedisKeyBuilder {
     public List<String> buildUserInfoKey(List<Long> userId) {
         List<String> keys = new ArrayList<>();
         userId.forEach(id -> keys.add(buildUserInfoKey(id)));
+        return keys;
+    }
+
+    public String buildUserTakLockKey(Long userId) {
+        return super.getPrefix() + USER_TAG_LOCK_KEY +
+                super.getSplitItem() + userId;
+    }
+    public List<String> buildUserTakLockKey(List<Long> userId) {
+        List<String> keys = new ArrayList<>();
+        userId.forEach(id -> keys.add(buildUserTakLockKey(id)));
+        return keys;
+    }
+
+    public String buildUserTakKey(Long userId) {
+        return super.getPrefix() + USER_TAG_KEY +
+                super.getSplitItem() + userId;
+    }
+    public List<String> buildUserTakKey(List<Long> userId) {
+        List<String> keys = new ArrayList<>();
+        userId.forEach(id -> keys.add(buildUserTakKey(id)));
         return keys;
     }
 }

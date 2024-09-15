@@ -17,5 +17,12 @@ public class UserProviderConstant {
 
 
     // 用户缓存信息删除相关主题名
-    public static final String USER_CACHE_DELETE_TOPIC = "user-cache-delete";
+    public static final String USER_INFO_CACHE_DELETE_TOPIC = "user-info-cache-delete";
+    // 用户标签缓存删除主题名
+    public static final String USER_TAG_CACHE_DELETE_TOPIC = "user-tag-cache-delete";
+
+
+    // 用户信息缓存消费者组
+    public static final String USER_INFO_CONSUMER_GROUP = "qiyu-live-user-info";
+    public static final String USER_TAG_CONSUMER_GROUP = "qiyu-live-user-tag";
 }

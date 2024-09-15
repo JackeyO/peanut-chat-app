@@ -3,6 +3,7 @@ package com.sici.live.provider.user.config.rocketmq;
 import com.sici.common.constant.user.UserProviderConstant;
 import com.sici.live.framework.rocketmq.config.RocketMQConsumerConfigurer;
 import com.sici.live.provider.user.consumer.UserInfoCacheConsumer;
+import com.sici.live.provider.user.consumer.UserTagCacheConsumer;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -21,11 +22,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j
-public class UserInfoCacheConsumerConfig implements InitializingBean {
+public class UserTagCacheConsumerConfig implements InitializingBean {
     @Resource
     private RocketMQConsumerConfigurer rocketMQConsumerConfigurer;
     @Resource
-    private UserInfoCacheConsumer userInfoCacheConsumer;
+    private UserTagCacheConsumer userTagCacheConsumer;
     @Override
     public void afterPropertiesSet() {
         initConsumer();
@@ -35,11 +36,11 @@ public class UserInfoCacheConsumerConfig implements InitializingBean {
         try {
             //初始化我们的 RocketMQ 消费者
             DefaultMQPushConsumer defaultMQPushConsumer = rocketMQConsumerConfigurer.configureDefault();
-            defaultMQPushConsumer.setConsumerGroup(UserProviderConstant.USER_INFO_CONSUMER_GROUP);
-            defaultMQPushConsumer.subscribe(UserProviderConstant.USER_INFO_CACHE_DELETE_TOPIC, "*");
-            defaultMQPushConsumer.setMessageListener(userInfoCacheConsumer);
+            defaultMQPushConsumer.setConsumerGroup(UserProviderConstant.USER_TAG_CONSUMER_GROUP);
+            defaultMQPushConsumer.subscribe(UserProviderConstant.USER_TAG_CACHE_DELETE_TOPIC, "*");
+            defaultMQPushConsumer.setMessageListener(userTagCacheConsumer);
             defaultMQPushConsumer.start();
-            log.info("mq==>用户信息缓存删除消费者启动成功,nameSrv is {}", defaultMQPushConsumer.getNamesrvAddr());
+            log.info("mq==>用户标签信息缓存删除消费者启动成功,nameSrv is {}", defaultMQPushConsumer.getNamesrvAddr());
         } catch (MQClientException e) {
             throw new RuntimeException(e);
         }
