@@ -174,7 +174,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
         cacheService.delete(userProviderCacheKeyBuilder.buildUserInfoKey(userVo.getUserId()));
 
         Message message = new Message();
-        message.setTopic(UserProviderConstant.USER_CACHE_DELETE_TOPIC);
+        message.setTopic(UserProviderConstant.USER_INFO_CACHE_DELETE_TOPIC);
         message.setDelayTimeLevel(1);
         message.setBody(JSON.toJSONString(userVo).getBytes());
         try {

@@ -23,7 +23,6 @@ public class RocketMQConsumerConfigurer {
     public DefaultMQPushConsumer configureDefault() {
         DefaultMQPushConsumer defaultMQPushConsumer = new DefaultMQPushConsumer();
         defaultMQPushConsumer.setNamesrvAddr(consumerProperties.getNameServer());
-        defaultMQPushConsumer.setConsumerGroup(consumerProperties.getGroupName());
         defaultMQPushConsumer.setConsumeMessageBatchMaxSize(1);
         defaultMQPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         return defaultMQPushConsumer;

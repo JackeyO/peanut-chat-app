@@ -10,8 +10,9 @@ package com.sici.common.enums.user.tag;
  */
 
 public enum UserTagEnums {
-    IS_VIP_USER(2, "是否是VIP用户", "tag_info_01"),
-    IS_NEW_USER(4, "是否是老用户", "tag_info_01");
+    IS_RIH_UESR(1, "是否是有钱用户", "tag_info_01"),
+    IS_VIP_USER(2, "是否是VIP用户", "tag_info_02"),
+    IS_OLD_USER(4, "是否是老用户", "tag_info_03");
 
     private long tag;
     private String desc;
