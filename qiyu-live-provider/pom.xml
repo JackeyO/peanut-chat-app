@@ -13,6 +13,7 @@
 
     <modules>
         <module>qiyu-live-provider-user</module>
+        <module>qiyu-live-provider-im</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -28,7 +29,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.sici</groupId>
             <artifactId>qiyu-live-common</artifactId>
@@ -52,6 +52,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sici</groupId>
+            <artifactId>qiyu-live-framework-redis-starter</artifactId>
         </dependency>
 
         <dependency>

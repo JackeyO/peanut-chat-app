@@ -11,6 +11,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/qiyu-live-im/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user-tag/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user-tag/pom.xml" />
       </set>
