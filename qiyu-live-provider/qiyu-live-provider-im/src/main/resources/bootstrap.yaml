@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: qiyu-live-provider-im
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: qiyu-live-dev
+        server-addr: 8.136.101.218:8848
+      config:
+        server-addr: 8.136.101.218:8848
+        file-extension: yaml
+        namespace: qiyu-live-dev
