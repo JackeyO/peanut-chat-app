@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sici</groupId>
-        <artifactId>qiyu-live-app</artifactId>
+        <artifactId>qiyu-live-provider</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>qiyu-live-interface-user</module>
-        <module>qiyu-live-interface-id-generate</module>
-        <module>qiyu-live-interface-im</module>
-        <module>qiyu-live-interface-im-router</module>
-    </modules>
-
-    <packaging>pom</packaging>
-
-    <artifactId>qiyu-live-interface</artifactId>
+    <artifactId>qiyu-live-provider-im-router</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -29,19 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>com.sici</groupId>
-            <artifactId>qiyu-live-common</artifactId>
+            <artifactId>qiyu-live-interface-im-router</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sici</groupId>
-            <artifactId>qiyu-live-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <artifactId>qiyu-live-interface-im</artifactId>
         </dependency>
     </dependencies>
 
