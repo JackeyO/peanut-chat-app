@@ -2,7 +2,6 @@ package com.sici.live.im.core.server.handler;
 
 import com.sici.live.im.core.server.common.ImMsg;
 import io.netty.channel.ChannelHandlerContext;
-import org.springframework.stereotype.Component;
 
 /**
  * @projectName: qiyu-live-app

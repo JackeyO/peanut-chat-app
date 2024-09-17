@@ -1,5 +1,6 @@
 package com.sici.live.provider.im.rpc;
 
+import com.sici.common.log.annotation.EnableInvokeLog;
 import com.sici.common.result.ResponseResult;
 import com.sici.live.interfaces.im.rpc.ImTokenRpc;
 import com.sici.live.provider.im.service.ImTokenService;
@@ -24,11 +25,13 @@ public class ImTokenRpcImpl implements ImTokenRpc {
     @Resource
     private ImTokenService imTokenService;
     @Override
+    @EnableInvokeLog(description = "[IM RPC]==>[创建IM登录token]")
     public ResponseResult<String> createImLoginToken(long userId, int appId) {
         return imTokenService.createImLoginToken(userId, appId);
     }
 
     @Override
+    @EnableInvokeLog(description = "[IM RPC]==>[根据token获取用户ID]")
     public ResponseResult<Long> getUserIdByToken(String token) {
         return imTokenService.getUserIdByToken(token);
     }

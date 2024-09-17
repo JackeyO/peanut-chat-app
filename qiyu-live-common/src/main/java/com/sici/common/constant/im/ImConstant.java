@@ -10,5 +10,12 @@ package com.sici.common.constant.im;
  */
 
 public class ImConstant {
+    // 默认魔法值
     public static final short DEFAULT_MAGIC = 18673;
+
+    // 默认心跳间隔
+    public static final int DEFAULT_HEART_BEAT_INTERVAL = 30000;
+
+    // im 业务消息主题
+    public static final String IM_BIZ_MESSAGE_TOPIC = "im";
 }

@@ -1,7 +1,10 @@
 package com.sici.live.im.core.server.handler;
 
+import com.sici.live.im.core.server.common.ChannelHandlerContextCache;
 import com.sici.live.im.core.server.common.ImMsg;
-import com.sici.live.im.core.server.handler.impl.ImMessageHandlerFactoryImpl;
+import com.sici.live.im.core.server.common.util.ImContextUtil;
+import com.sici.live.im.core.server.handler.impl.LoginMessageHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import jakarta.annotation.Resource;
@@ -19,9 +22,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@ChannelHandler.Sharable
 public class ImServerCoreHandler extends SimpleChannelInboundHandler {
     @Resource
     private ImHandlerFactory imHandlerFactory;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if(!(msg instanceof ImMsg)) {
@@ -34,4 +39,16 @@ public class ImServerCoreHandler extends SimpleChannelInboundHandler {
         // 根据code类型交给不同的handler去处理
         imHandlerFactory.doMessageHandle(ctx, imMsg);
     }
+
+    /**
+     * 正常或意外短线都会回调到这里
+     * @param ctx
+     */
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) {
+        Long userId = ImContextUtil.getUserId(ctx);
+        ChannelHandlerContextCache.remove(userId);
+    }
 }
+
+

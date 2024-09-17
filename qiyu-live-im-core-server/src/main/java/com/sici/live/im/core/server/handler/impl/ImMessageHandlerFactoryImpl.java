@@ -8,6 +8,7 @@ import com.sici.live.im.core.server.handler.ImHandlerFactory;
 import io.netty.channel.ChannelHandlerContext;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -26,14 +27,7 @@ import java.util.Map;
 public class ImMessageHandlerFactoryImpl implements ImHandlerFactory, InitializingBean {
     private static Map<Integer, AbstractMessageHandler> imMessageHandlers = new HashMap<>();
     @Resource
-    private LoginMessageHandler loginMessageHandler;
-    @Resource
-    private LogoutMessageHandler logoutMessageHandler;
-    @Resource
-    private BizMessageHandler bizMessageHandler;
-    @Resource
-    private HeartBeatMessageHandler heartBeatMessageHandler;
-
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() {
@@ -41,10 +35,10 @@ public class ImMessageHandlerFactoryImpl implements ImHandlerFactory, Initializi
     }
 
     private void initializeMessageHandlers() {
-        imMessageHandlers.put(ImEnums.IM_MSG_LOGIN.getCode(), loginMessageHandler);
-        imMessageHandlers.put(ImEnums.IM_MSG_LOGOUT.getCode(), logoutMessageHandler);
-        imMessageHandlers.put(ImEnums.IM_MSG_BIZ.getCode(), bizMessageHandler);
-        imMessageHandlers.put(ImEnums.IM_MSG_HEARTBEAT.getCode(), heartBeatMessageHandler);
+        imMessageHandlers.put(ImEnums.IM_MSG_LOGIN.getCode(), applicationContext.getBean(LoginMessageHandler.class));
+        imMessageHandlers.put(ImEnums.IM_MSG_LOGOUT.getCode(), applicationContext.getBean(LogoutMessageHandler.class));
+        imMessageHandlers.put(ImEnums.IM_MSG_BIZ.getCode(), applicationContext.getBean(BizMessageHandler.class));
+        imMessageHandlers.put(ImEnums.IM_MSG_HEARTBEAT.getCode(), applicationContext.getBean(HeartBeatMessageHandler.class));
     }
 
     @Override
