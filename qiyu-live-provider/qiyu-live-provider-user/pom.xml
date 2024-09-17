@@ -24,7 +24,6 @@
             <groupId>com.sici</groupId>
             <artifactId>qiyu-live-interface-user</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.sici</groupId>
             <artifactId>qiyu-live-framework-datasource-starter</artifactId>
