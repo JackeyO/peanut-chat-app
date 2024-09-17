@@ -1,8 +1,10 @@
 package com.sici.live.im.core.server.common;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.springframework.stereotype.Component;
 
 /**
  * @projectName: qiyu-live-app
@@ -13,6 +15,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * @version: 1.0
  */
 
+@Component
 public class ImMsgEncoder extends MessageToByteEncoder {
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {

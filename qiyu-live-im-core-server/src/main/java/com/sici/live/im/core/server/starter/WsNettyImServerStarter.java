@@ -13,6 +13,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -27,7 +28,7 @@ public class WsNettyImServerStarter implements InitializingBean {
     @Value("${qiyu.im.ws.port}")
     private int port;
     @Resource
-    private ImServerCoreHandler wsImServerCoreHandler;
+    private ApplicationContext applicationContext;
 
     //基于netty去启动一个java进程，绑定监听的端口
     public void startApplication() throws InterruptedException {
@@ -40,15 +41,15 @@ public class WsNettyImServerStarter implements InitializingBean {
 
         serverBootstrap.childHandler(new ChannelInitializer<>() {
             @Override
-            protected void initChannel(Channel channel) throws Exception {
-                log.info("channel initialized");
+            protected void initChannel(Channel channel) {
+                log.info("channel initialized, channel:{}", channel);
 
                 // 增加编解码器
                 channel.pipeline().addLast(new ImMsgEncoder());
                 channel.pipeline().addLast(new ImMsgDecoder());
 
                 // 设置消息处理器handler
-                channel.pipeline().addLast(new ImServerCoreHandler());
+                channel.pipeline().addLast(applicationContext.getBean(ImServerCoreHandler.class));
             }
         });
 
@@ -57,9 +58,10 @@ public class WsNettyImServerStarter implements InitializingBean {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+            log.info("netty stopped gracefully!");
         }));
 
-        log.info("netty started successfully, bind port: " + port);
+        log.info("netty started successfully!, bind port: " + port);
 
         channelFuture.channel().closeFuture().sync();
 //

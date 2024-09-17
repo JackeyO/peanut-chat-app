@@ -2,8 +2,10 @@ package com.sici.live.im.core.server.common;
 
 import com.sici.common.constant.im.ImConstant;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.springframework.stereotype.Component;
 
 import java.awt.im.spi.InputMethodContext;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
  * @version: 1.0
  */
 
+@Component
 public class ImMsgDecoder extends ByteToMessageDecoder {
     private final int BASE_LEN = 2 + 4 + 4;
 

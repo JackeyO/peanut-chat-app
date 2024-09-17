@@ -3,8 +3,11 @@ package com.sici.live.im.core.server.handler.impl;
 import com.alibaba.fastjson.JSON;
 import com.sici.common.enums.im.AppIdEnums;
 import com.sici.common.result.ResponseResult;
+import com.sici.live.im.core.server.common.ChannelHandlerContextCache;
+import com.sici.live.im.core.server.common.ImContextAttr;
 import com.sici.live.im.core.server.common.ImMsg;
 import com.sici.live.im.core.server.common.ImMsgBuilder;
+import com.sici.live.im.core.server.common.util.ImContextUtil;
 import com.sici.live.im.core.server.handler.AbstractMessageHandler;
 import com.sici.live.interfaces.im.rpc.ImTokenRpc;
 import com.sici.live.model.im.dto.ImMsgBody;
@@ -33,30 +36,38 @@ public class LoginMessageHandler implements AbstractMessageHandler {
 
     @Override
     public void handle(ChannelHandlerContext ctx, ImMsg imMsg) {
+        // 用户已经登陆过
+        if (ImContextUtil.getUserId(ctx) != null) {
+            return ;
+        }
         byte[] body = imMsg.getBody();
         if (body == null || body.length == 0) {
             ctx.close();
-            log.error("message body is null: {}", imMsg);
-            throw new IllegalArgumentException("message body is null");
+            log.error("[loginMessageHandler]==>message body is null: {}", imMsg);
+            throw new IllegalArgumentException("[loginMessageHandler]==>message body is null");
         }
         ImMsgBody imMsgBody = JSON.parseObject(new String(body), ImMsgBody.class);
         String token = imMsgBody.getToken();
         if (StringUtils.isEmpty(token)) {
             ctx.close();
-            log.error("token is empty");
+            log.error("[loginMessageHandler]==>token is empty");
             throw new IllegalArgumentException("token is empty");
         }
 
         ResponseResult<Long> userIdByToken = imTokenRpc.getUserIdByToken(token);
         Long userId = userIdByToken != null ? userIdByToken.getData() : null;
 
-        if (userId == null) {
+        if (userId == null || !userId.equals(imMsgBody.getUserId())) {
             ctx.close();
-            log.error("userId is null");
-            throw new IllegalArgumentException("userId is null");
+            log.error("[loginMessageHandler]==>userId error");
+            throw new IllegalArgumentException("[loginMessageHandler]==>userId error");
         }
 
-        log.info("[server received message]: " + imMsg);
+        log.info("[loginMessageHandler]==>[server received message]: " + imMsg);
+        ChannelHandlerContextCache.put(userId, ctx);
+        ImContextUtil.setUserId(ctx, userId);
+        ImContextUtil.setAppId(ctx, imMsgBody.getAppId());
+
         ImMsg imMsgResponse = ImMsgBuilder.buildLogin(JSON.toJSONString(
                 ImMsgBody.builder()
                         .appId(AppIdEnums.QIYU_LIVE_APP.getAppId())
