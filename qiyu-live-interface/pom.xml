@@ -14,6 +14,7 @@
         <module>qiyu-live-interface-id-generate</module>
         <module>qiyu-live-interface-im</module>
         <module>qiyu-live-interface-im-router</module>
+        <module>qiyu-live-interface-message</module>
     </modules>
 
     <packaging>pom</packaging>

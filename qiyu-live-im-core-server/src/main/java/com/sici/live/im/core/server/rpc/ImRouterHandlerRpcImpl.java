@@ -1,6 +1,9 @@
 package com.sici.live.im.core.server.rpc;
 
+import com.sici.live.im.core.server.service.ImRouterHandlerService;
 import com.sici.live.interfaces.im.rpc.ImRouterHandlerRpc;
+import com.sici.live.model.im.dto.ImMsgBody;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Component;
@@ -18,8 +21,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ImRouterHandlerRpcImpl implements ImRouterHandlerRpc {
+    @Resource
+    private ImRouterHandlerService imRouterHandlerService;
     @Override
-    public void sendMsg(Long objectId, String imMsg) {
-        log.info("this is im core server, receive msg:{}, to:{}", imMsg, objectId);
+    public void sendMsg(ImMsgBody imMsg) {
+        imRouterHandlerService.onReceive(imMsg);
     }
 }

@@ -1,5 +1,6 @@
 package com.sici.live.interfaces.im.router.rpc;
 
+import com.sici.live.model.im.dto.ImMsgBody;
 import org.apache.dubbo.config.annotation.DubboService;
 
 /**
@@ -18,5 +19,5 @@ public interface ImRouterRpc {
      * @param objectId
      * @param imMsg
      */
-    void sendMsg(Long objectId, String imMsg);
+    void sendMsg(ImMsgBody imMsg);
 }

@@ -27,16 +27,19 @@ public class ImMsgBody implements Serializable {
     /**
      * 接入im服务端业务线id
      */
-    private int appId;
+    private Integer appId;
     /**
      * 用户id
      */
-    private long userId;
+    private Long userId;
     // 从业务服务中获取，用于和im服务建立连接时用到
     /**
      * token
      */
     private String token;
+
+    // 业务标识
+    private Integer bizCode;
     /**
      * 业务数据
      */

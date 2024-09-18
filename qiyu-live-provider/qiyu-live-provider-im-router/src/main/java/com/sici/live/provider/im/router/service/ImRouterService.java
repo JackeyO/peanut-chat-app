@@ -1,5 +1,7 @@
 package com.sici.live.provider.im.router.service;
 
+import com.sici.live.model.im.dto.ImMsgBody;
+
 /**
  * @projectName: qiyu-live-app
  * @package: com.sici.live.provider.im.router.service
@@ -15,5 +17,5 @@ public interface ImRouterService {
      * @param objectId
      * @param imMsg
      */
-    void sendMsg(Long objectId, String imMsg);
+    void sendMsg(ImMsgBody imMsg);
 }

@@ -15,6 +15,19 @@ import java.util.Map;
  */
 
 public class ChannelHandlerContextCache {
+    /**
+     * 当前im服务对外暴露的地址
+     */
+    private static String SERVER_ADDRESS= "";
+
+    public static String getServerAddress() {
+        return SERVER_ADDRESS;
+    }
+
+    public static void setServerAddress(String serverAddress) {
+        SERVER_ADDRESS = serverAddress;
+    }
+
     private static Map<Long, ChannelHandlerContext> channelHandlerContextCacheMap = new HashMap<>();
 
     public static ChannelHandlerContext get(Long userId) {

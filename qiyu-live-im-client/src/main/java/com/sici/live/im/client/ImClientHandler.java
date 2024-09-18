@@ -1,6 +1,5 @@
-package com.sici.live.im.core.server;
+package com.sici.live.im.client;
 
-import com.sici.live.im.core.server.common.ImMsg;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;

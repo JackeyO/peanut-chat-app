@@ -1,9 +1,11 @@
 package com.sici.live.im.core.server.handler;
 
+import com.sici.common.constant.im.ImConstant;
+import com.sici.common.enums.im.AppIdEnums;
 import com.sici.live.im.core.server.common.ChannelHandlerContextCache;
 import com.sici.live.im.core.server.common.ImMsg;
+import com.sici.live.im.core.server.common.util.ImCacheUtil;
 import com.sici.live.im.core.server.common.util.ImContextUtil;
-import com.sici.live.im.core.server.handler.impl.LoginMessageHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -26,6 +28,8 @@ import org.springframework.stereotype.Component;
 public class ImServerCoreHandler extends SimpleChannelInboundHandler {
     @Resource
     private ImHandlerFactory imHandlerFactory;
+    @Resource
+    private ImCacheUtil imCacheUtil;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -47,6 +51,12 @@ public class ImServerCoreHandler extends SimpleChannelInboundHandler {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
         Long userId = ImContextUtil.getUserId(ctx);
+
+        if (userId != null) {
+            imCacheUtil.removeImOnlineTime(userId, AppIdEnums.QIYU_LIVE_APP.getAppId());
+            imCacheUtil.removeImBindAddressOfUserId(userId, AppIdEnums.QIYU_LIVE_APP.getAppId());
+        }
+
         ChannelHandlerContextCache.remove(userId);
     }
 }
