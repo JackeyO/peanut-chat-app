@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -47,7 +48,8 @@ public class ImClientTest implements InitializingBean {
     public void testImClient() {
         CompletableFuture.runAsync(() ->{
             try {
-                startConnection("127.0.0.1", 8085);
+//                startConnection("127.0.0.1", 8085);
+                startChat("127.0.0.1", 8085);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -102,6 +104,83 @@ public class ImClientTest implements InitializingBean {
                 v.writeAndFlush(ImMsgBuilder.buildBiz(JSON.toJSONString(imMsgBody)));
             });
             Thread.sleep(1000);
+        }
+    }
+
+
+    public void startChat(String address, Integer port) throws InterruptedException {
+        EventLoopGroup clientGroup = new NioEventLoopGroup();
+
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(clientGroup);
+        bootstrap.channel(NioSocketChannel.class);
+        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+            @Override
+            protected void initChannel(SocketChannel ch) {
+                log.info("connection established");
+                ch.pipeline().addLast(new ImMsgEncoder());
+                ch.pipeline().addLast(new ImMsgDecoder());
+                ch.pipeline().addLast(new ImClientHandler());
+            }
+        });
+        ChannelFuture channelFuture = bootstrap.connect(address, port).sync();
+        Channel channel = channelFuture.channel();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入用户id");
+        Long userId = scanner.nextLong();
+        System.out.println("请输入用户id");
+        Long objectId = scanner.nextLong();
+
+        ResponseResult<String> imLoginToken = imTokenRpc.createImLoginToken(userId, AppIdEnums.QIYU_LIVE_APP.getAppId());
+        String token = imLoginToken.getData();
+
+        Integer appId = AppIdEnums.QIYU_LIVE_APP.getAppId();
+        ImMsgBody imMsgBody = ImMsgBody.builder()
+                .userId(userId)
+                .appId(appId)
+                .token(token)
+                .data("login:" + userId)
+                .build();
+        channel.writeAndFlush(ImMsgBuilder.buildLogin(JSON.toJSONString(imMsgBody)));
+
+//        CompletableFuture.runAsync(() -> {
+//            while (true) {
+//                ImMsg imMsg = ImMsgBuilder.buildHeartBeat(JSON.toJSONString(
+//                        ImMsgBody.builder()
+//                                .userId(userId)
+//                                .appId(appId)
+//                                .token(token)
+//                                .build()
+//                ));
+//                channel.writeAndFlush(imMsg);
+//
+//                try {
+//                    Thread.sleep(30000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
+
+        while (true) {
+            System.out.println("请输入消息内容");
+            String message = scanner.nextLine();
+
+            ImMsg imMsg = ImMsgBuilder.buildBiz(JSON.toJSONString(
+                    ImMsgBody.builder()
+                            .userId(objectId)
+                            .appId(appId)
+                            .bizCode(ImMsgBizCodeEnum.LIVING_ROOM_IM_CHAT_MSG_BIZ.getCode())
+                            .data(JSON.toJSONString(
+                                    ImMsgDto.builder()
+                                            .content(message)
+                                            .build()
+                            ))
+                            .build()
+            ));
+
+            channel.writeAndFlush(imMsg);
         }
     }
 }

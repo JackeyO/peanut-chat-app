@@ -41,7 +41,7 @@ public class SimpleMessageHandler implements MessageHandler {
                     .bizCode(imMsgBody.getBizCode())
                     .token(imMsgBody.getToken())
                     .data(JSON.toJSONString(ImMsgDto.builder()
-                            .content("直播间消息处理成功")
+                            .content(imMsgDto.getContent())
                             .userId(imMsgBody.getUserId())
                             .appId(imMsgDto.getAppId())
                             .build()))
