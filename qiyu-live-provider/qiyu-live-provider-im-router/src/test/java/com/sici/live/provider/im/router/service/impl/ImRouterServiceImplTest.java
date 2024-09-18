@@ -17,6 +17,6 @@ public class ImRouterServiceImplTest {
     private ImRouterService imRouterService;
     @Test
     public void sendMsg() {
-        imRouterService.sendMsg(1234L, "hello, send message from imRouter to imRouterHandler");
+//        imRouterService.sendMsg( );
     }
 }

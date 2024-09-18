@@ -20,6 +20,7 @@
         <module>qiyu-live-test</module>
         <module>qiyu-live-im-core-server</module>
         <module>qiyu-live-provider/qiyu-live-provider-im-router</module>
+        <module>qiyu-live-im-client</module>
     </modules>
 
     <properties>
@@ -99,6 +100,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>qiyu-live-interface-message</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>qiyu-live-provider-message</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
                 <artifactId>qiyu-live-interface-im-router</artifactId>

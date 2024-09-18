@@ -1,9 +1,12 @@
-package com.sici.live.im.core.server;
+package com.sici.live.im.client;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @projectName: qiyu-live-app
@@ -16,6 +19,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
+@EnableDiscoveryClient
+@EnableDubbo
+@ComponentScan("com.sici")
 public class ImClientApplication {
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(ImClientApplication.class);

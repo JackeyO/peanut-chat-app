@@ -1,5 +1,7 @@
 package com.sici.live.im.core.server.starter;
 
+import com.sici.common.constant.im.ImConstant;
+import com.sici.live.im.core.server.common.ChannelHandlerContextCache;
 import com.sici.live.im.core.server.common.ImMsgDecoder;
 import com.sici.live.im.core.server.common.ImMsgEncoder;
 import com.sici.live.im.core.server.handler.ImServerCoreHandler;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 
 /**
  * @Author idea
@@ -29,6 +33,8 @@ public class WsNettyImServerStarter implements InitializingBean {
     private int port;
     @Resource
     private ApplicationContext applicationContext;
+    @Resource
+    private Environment environment;
 
     //基于netty去启动一个java进程，绑定监听的端口
     public void startApplication() throws InterruptedException {
@@ -63,16 +69,14 @@ public class WsNettyImServerStarter implements InitializingBean {
 
         log.info("netty started successfully!, bind port: " + port);
 
+        //获取im的服务注册ip和暴露端口
+        String registryIp = environment.getProperty(ImConstant.DUBBO_REGISTRY_IP_ENV_NAME);
+        String registryPort = environment.getProperty(ImConstant.DUBBO_REGISTRY_PORT_ENV_NAME);
+        if (StringUtils.isEmpty(registryPort) || StringUtils.isEmpty(registryIp)) {
+            throw new IllegalArgumentException("registry ip and port can't be null");
+        }
+        ChannelHandlerContextCache.setServerAddress(registryIp + ":" + registryPort);
         channelFuture.channel().closeFuture().sync();
-//
-//
-//        //获取im的服务注册ip和暴露端口
-//        String registryIp = environment.getProperty("DUBBO_IP_TO_REGISTRY");
-//        String registryPort = environment.getProperty("DUBBO_PORT_TO_REGISTRY");
-//        if (StringUtils.isEmpty(registryPort) || StringUtils.isEmpty(registryIp)) {
-//            throw new IllegalArgumentException("启动参数中的注册端口和注册ip不能为空");
-//        }
-//        ChannelHandlerContextCache.setServerIpAddress(registryIp + ":" + registryPort);
     }
 
     @Override
