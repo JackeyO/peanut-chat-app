@@ -1,10 +1,12 @@
 package com.sici.live.im.core.server.handler.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.sici.common.constant.im.ImConstant;
 import com.sici.common.constant.im.ImMqConstant;
 import com.sici.live.im.core.server.common.ImMsg;
 import com.sici.live.im.core.server.common.util.ImContextUtil;
 import com.sici.live.im.core.server.handler.AbstractMessageHandler;
+import com.sici.live.model.im.dto.ImMsgBody;
 import io.netty.channel.ChannelHandlerContext;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +58,7 @@ public class BizMessageHandler implements AbstractMessageHandler {
 
         try {
             SendResult sendResult = mqProducer.send(message);
-            log.info("[BizMessageHandler]==>[message send status]==>", sendResult.getSendStatus());
+            log.info("[BizMessageHandler]==>[message sent]==>{}", imMsg);
         } catch (Exception e) {
             log.error("[BizMessageHandler]==>[message send error]");
         }

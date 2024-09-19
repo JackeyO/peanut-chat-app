@@ -25,4 +25,8 @@ public class ImConstant {
 
     // im服务对外部暴露的服务地址--缓存key前缀
     public static final String IM_CORE_SERVER_ADDRESS_CACHE_KEY_PREFIX = "im-core-server:bind:address:";
+
+
+    // IM 消息重试次数上限
+    public static final int IM_MSG_RETRY_TIMES = 3;
 }

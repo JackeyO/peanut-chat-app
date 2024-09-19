@@ -40,7 +40,7 @@ public class ImUserImServerAddressCacheSaveConsumer implements MessageListenerCo
             ImMsgBody imMsgBody = JSON.parseObject(imMsgBodyStr, ImMsgBody.class);
             if (imMsgBody == null || imMsgBody.getUserId() == null || imMsgBody.getAppId() == null) {
                 log.error("[im-core-server]==>mq==>[用户连接IM服务器地址缓存记录-消费者--接收到消息]==>消息参数不合法");
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
 
             try {
@@ -49,7 +49,7 @@ public class ImUserImServerAddressCacheSaveConsumer implements MessageListenerCo
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("[im-core-server]==>mq==>[用户连接IM服务器地址缓存记录-消费者--记录失败], 消息内容:{}", imMsgBody);
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;

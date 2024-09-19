@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -45,19 +46,20 @@ public class ImClientTest implements InitializingBean {
     public void afterPropertiesSet() {
         testImClient();
     }
+
     public void testImClient() {
-        CompletableFuture.runAsync(() ->{
+        CompletableFuture.runAsync(() -> {
             try {
-//                startConnection("127.0.0.1", 8085);
                 startChat("127.0.0.1", 8085);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
     }
+
     public void startConnection(String address, int port) throws InterruptedException {
         Map<Long, Channel> userChannelMap = new HashMap<>();
-        for (int i = 0; i < 5; i ++) {
+        for (int i = 0; i < 5; i++) {
             EventLoopGroup clientGroup = new NioEventLoopGroup();
 
             Bootstrap bootstrap = new Bootstrap();
@@ -171,6 +173,7 @@ public class ImClientTest implements InitializingBean {
                     ImMsgBody.builder()
                             .userId(objectId)
                             .appId(appId)
+                            .msgId(UUID.randomUUID().toString())
                             .bizCode(ImMsgBizCodeEnum.LIVING_ROOM_IM_CHAT_MSG_BIZ.getCode())
                             .data(JSON.toJSONString(
                                     ImMsgDto.builder()

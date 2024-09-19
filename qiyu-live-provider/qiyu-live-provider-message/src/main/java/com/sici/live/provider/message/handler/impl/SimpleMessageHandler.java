@@ -8,6 +8,7 @@ import com.sici.live.model.im.dto.ImMsgDto;
 import com.sici.live.provider.message.handler.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,24 +31,22 @@ public class SimpleMessageHandler implements MessageHandler {
         ImMsgDto imMsgDto = JSON.parseObject(imMsgBody.getData(), ImMsgDto.class);
         Integer bizCode = imMsgBody.getBizCode();
         if (bizCode == null) {
-            log.error("bizCode为空,无法进行消息处理, imMsgBody:{}", imMsgBody);
+            log.error("[im-message-provider]==>[SimpleMessageHandler]==>bizCode为空,无法进行消息处理, imMsgBody:{}", imMsgBody);
             throw new RuntimeException("bizCode为空,无法进行消息处理, imMsgBody:" + imMsgBody);
         }
         if (bizCode.equals(ImMsgBizCodeEnum.LIVING_ROOM_IM_CHAT_MSG_BIZ.getCode())) {
             // TODO: 这里制作一个演示，后续会完善直播业务  || created by 20148 at 9/18/2024 5:50 PM
-            ImMsgBody imMsgBodyResponse = ImMsgBody.builder()
-                    .userId(imMsgBody.getUserId())
-                    .appId(imMsgBody.getAppId())
-                    .bizCode(imMsgBody.getBizCode())
-                    .token(imMsgBody.getToken())
-                    .data(JSON.toJSONString(ImMsgDto.builder()
-                            .content(imMsgDto.getContent())
-                            .userId(imMsgBody.getUserId())
-                            .appId(imMsgDto.getAppId())
-                            .build()))
-                    .build();
+//            ImMsgBody imMsgBodyResponse = new ImMsgBody();
+//            BeanUtils.copyProperties(imMsgBody, imMsgBodyResponse);
+//            imMsgBodyResponse.setData(
+//                    JSON.toJSONString(ImMsgDto.builder()
+//                            .content(imMsgDto.getContent())
+//                            .userId(imMsgBody.getUserId())
+//                            .appId(imMsgDto.getAppId())
+//                            .build()));
 
-            imRouterRpc.sendMsg(imMsgBodyResponse);
+//            imRouterRpc.sendMsg(imMsgBodyResponse);
+            imRouterRpc.sendMsg(imMsgBody);
         }
     }
 }

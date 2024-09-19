@@ -50,7 +50,7 @@ public class ImUserImServerAddressCacheDeleteConsumer implements MessageListener
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("[im-core-server]==>mq==>[用户连接IM服务器地址缓存删除-消费者--删除失败], 消息内容:{}", imMsgBody);
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;

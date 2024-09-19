@@ -1,7 +1,6 @@
 package com.sici.live.im.core.server.handler.impl;
 
-import com.sici.common.constant.im.ImConstant;
-import com.sici.common.enums.im.ImEnums;
+import com.sici.common.enums.im.ImMsgCodeEnums;
 import com.sici.live.im.core.server.common.ImMsg;
 import com.sici.live.im.core.server.handler.AbstractMessageHandler;
 import com.sici.live.im.core.server.handler.ImHandlerFactory;
@@ -35,10 +34,11 @@ public class ImMessageHandlerFactoryImpl implements ImHandlerFactory, Initializi
     }
 
     private void initializeMessageHandlers() {
-        imMessageHandlers.put(ImEnums.IM_MSG_LOGIN.getCode(), applicationContext.getBean(LoginMessageHandler.class));
-        imMessageHandlers.put(ImEnums.IM_MSG_LOGOUT.getCode(), applicationContext.getBean(LogoutMessageHandler.class));
-        imMessageHandlers.put(ImEnums.IM_MSG_BIZ.getCode(), applicationContext.getBean(BizMessageHandler.class));
-        imMessageHandlers.put(ImEnums.IM_MSG_HEARTBEAT.getCode(), applicationContext.getBean(HeartBeatMessageHandler.class));
+        imMessageHandlers.put(ImMsgCodeEnums.IM_MSG_LOGIN.getCode(), applicationContext.getBean(LoginMessageHandler.class));
+        imMessageHandlers.put(ImMsgCodeEnums.IM_MSG_LOGOUT.getCode(), applicationContext.getBean(LogoutMessageHandler.class));
+        imMessageHandlers.put(ImMsgCodeEnums.IM_MSG_BIZ.getCode(), applicationContext.getBean(BizMessageHandler.class));
+        imMessageHandlers.put(ImMsgCodeEnums.IM_MSG_HEARTBEAT.getCode(), applicationContext.getBean(HeartBeatMessageHandler.class));
+        imMessageHandlers.put(ImMsgCodeEnums.IM_MSG_ACK.getCode(), applicationContext.getBean(ImMessageAckHandler.class));
     }
 
     @Override

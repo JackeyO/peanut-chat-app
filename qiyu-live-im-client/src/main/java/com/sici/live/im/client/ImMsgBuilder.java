@@ -1,7 +1,7 @@
 package com.sici.live.im.client;
 
 import com.sici.common.constant.im.ImConstant;
-import com.sici.common.enums.im.ImEnums;
+import com.sici.common.enums.im.ImMsgCodeEnums;
 
 /**
  * @projectName: qiyu-live-app
@@ -35,7 +35,7 @@ public class ImMsgBuilder {
     public static ImMsg buildLogin(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImEnums.IM_MSG_LOGIN.getCode())
+                .code(ImMsgCodeEnums.IM_MSG_LOGIN.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -45,7 +45,7 @@ public class ImMsgBuilder {
     public static ImMsg buildLogout(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImEnums.IM_MSG_LOGOUT.getCode())
+                .code(ImMsgCodeEnums.IM_MSG_LOGOUT.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -55,7 +55,7 @@ public class ImMsgBuilder {
     public static ImMsg buildBiz(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImEnums.IM_MSG_BIZ.getCode())
+                .code(ImMsgCodeEnums.IM_MSG_BIZ.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -64,7 +64,17 @@ public class ImMsgBuilder {
     public static ImMsg buildHeartBeat(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImEnums.IM_MSG_HEARTBEAT.getCode())
+                .code(ImMsgCodeEnums.IM_MSG_HEARTBEAT.getCode())
+                .len(body.getBytes().length)
+                .body(body.getBytes())
+                .build();
+        return imMsg;
+    }
+
+    public static ImMsg buildAck(String body) {
+        ImMsg imMsg = ImMsg.builder()
+                .magic(ImConstant.DEFAULT_MAGIC)
+                .code(ImMsgCodeEnums.IM_MSG_ACK.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
