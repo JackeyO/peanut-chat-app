@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.sici.common.constant.im.ImConstant;
 import com.sici.framework.redis.CacheService;
 import com.sici.live.im.core.server.redis.key.HeartBeatMessageKeyBuilder;
+import com.sici.live.im.core.server.service.ImMsgAckService;
+import com.sici.live.im.core.server.service.ImRouterHandlerService;
 import com.sici.live.model.im.dto.ImMsgBody;
-import com.sici.live.model.user.vo.UserVO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -29,28 +30,30 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
-public class ImUserOnlineTimeCacheSaveConsumer implements MessageListenerConcurrently {
+public class ImMsgAckDelayMessageConsumer implements MessageListenerConcurrently {
     @Resource
     private CacheService cacheService;
     @Resource
-    private HeartBeatMessageKeyBuilder heartBeatMessageKeyBuilder;
+    private ImMsgAckService imMsgAckService;
+    @Resource
+    private ImRouterHandlerService imRouterHandlerService;
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
         String imMsgBodyStr = new String(msgs.get(0).getBody());
-        log.info("[im-core-server]==>mq==>[用户最新在线时间缓存记录-消费者--接收到消息]==>msgStr is {}", imMsgBodyStr);
+        log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--接收到消息]==>msgStr is {}", imMsgBodyStr);
         if (!StringUtils.isEmpty(imMsgBodyStr)) {
             ImMsgBody imMsgBody = JSON.parseObject(imMsgBodyStr, ImMsgBody.class);
             if (imMsgBody == null || imMsgBody.getUserId() == null || imMsgBody.getAppId() == null) {
-                log.error("[im-core-server]==>mq==>[用户最新在线时间缓存记录-消费者--接收到消息]==>消息参数不合法");
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                log.error("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--接收到消息]==>消息参数不合法");
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
             }
 
             try {
                 handle(imMsgBody);
-                log.info("[im-core-server]==>mq==>[用户最新在线时间缓存记录-消费者--成功记录], 消息内容:{}", imMsgBody);
+                log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查成功], 消息内容:{}", imMsgBody);
             } catch (Exception e) {
                 e.printStackTrace();
-                log.info("[im-core-server]==>mq==>[用户最新在线时间缓存记录-消费者--记录失败], 消息内容:{}", imMsgBody);
+                log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查失败], 消息内容:{}", imMsgBody);
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         }
@@ -59,17 +62,12 @@ public class ImUserOnlineTimeCacheSaveConsumer implements MessageListenerConcurr
 
     void handle(ImMsgBody imMsgBody) {
         try {
-            Long userId = imMsgBody.getUserId();
-            Integer appId = imMsgBody.getAppId();
-
-            long currentMillis = System.currentTimeMillis();
-            String zSetKey = heartBeatMessageKeyBuilder.buildHearBeatKey(userId, appId);
-            cacheService.expire(zSetKey, 5, TimeUnit.MINUTES);
-            cacheService.zAdd(zSetKey,
-                    JSON.toJSONString(userId), currentMillis);
-
-            // 删除两个心跳间隔外的心跳包记录(考虑到网络延迟)
-            cacheService.zRemoveRangeByScore(zSetKey, 0, currentMillis - ImConstant.DEFAULT_HEART_BEAT_INTERVAL * 2);
+            Integer msgAckTimes = imMsgAckService.getMsgAckTimes(imMsgBody);
+            // 没有ACK并且已重试次数没有达到上限就需要进行再次重试
+            if (msgAckTimes != null && msgAckTimes < ImConstant.IM_MSG_RETRY_TIMES) {
+                log.info("[im-core-server]==>mq==>[IM消息确认]==>执行消息重发, imMsgBody:{}, 已重试次数:{}", imMsgBody, msgAckTimes + 1);
+                imRouterHandlerService.onReceive(imMsgBody);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

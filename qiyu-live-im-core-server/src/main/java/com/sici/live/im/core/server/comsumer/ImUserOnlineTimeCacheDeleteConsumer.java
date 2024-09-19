@@ -41,7 +41,7 @@ public class ImUserOnlineTimeCacheDeleteConsumer implements MessageListenerConcu
             ImMsgBody imMsgBody = JSON.parseObject(imMsgBodyStr, ImMsgBody.class);
             if (imMsgBody == null || imMsgBody.getUserId() == null || imMsgBody.getAppId() == null) {
                 log.error("[im-core-server]==>mq==>[用户最新在线时间缓存删除-消费者--接收到消息]==>消息参数不合法");
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
 
             try {
@@ -50,7 +50,7 @@ public class ImUserOnlineTimeCacheDeleteConsumer implements MessageListenerConcu
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("[im-core-server]==>mq==>[用户最新在线时间缓存删除-消费者--删除失败], 消息内容:{}", imMsgBody);
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;

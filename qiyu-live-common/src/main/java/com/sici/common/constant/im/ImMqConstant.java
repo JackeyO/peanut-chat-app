@@ -32,4 +32,6 @@ public class ImMqConstant {
     public static final String IM_CORE_SERVER_USER_IM_SERVER_ADDRESS_CACHE_DELETE_TOPIC = "im-core-server_user-im-server-address-cache-delete_topic";
     public static final String IM_CORE_SERVER_MESSAGE_RECEIVE_CONSUMER_GROUP = "im-core-server_message-receive_consumer-group";
     public static final String IM_CORE_SERVER_MESSAGE_RECEIVE_TOPIC = "im-core-server_message-receive_topic";
+    public static final String IM_CORE_SERVER_MSG_ACK_DELAY_TOPIC = "im-core-server_msg-ack_topic";
+    public static final String IM_CORE_SERVER_MSG_ACK_DELAY_CONSUMER_GROUP = "im-core-server_msg-ack_consumer-group";
 }

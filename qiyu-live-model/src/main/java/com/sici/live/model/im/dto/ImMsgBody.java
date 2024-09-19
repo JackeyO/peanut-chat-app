@@ -24,6 +24,7 @@ import java.io.Serializable;
 public class ImMsgBody implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    private String msgId;
     /**
      * 接入im服务端业务线id
      */

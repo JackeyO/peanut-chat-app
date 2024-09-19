@@ -3,9 +3,11 @@ package com.sici.live.im.core.server.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.sici.live.im.core.server.common.ChannelHandlerContextCache;
 import com.sici.live.im.core.server.common.ImMsgBuilder;
+import com.sici.live.im.core.server.service.ImMsgAckService;
 import com.sici.live.im.core.server.service.ImRouterHandlerService;
 import com.sici.live.model.im.dto.ImMsgBody;
 import io.netty.channel.ChannelHandlerContext;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class ImRouterHandlerServiceImpl implements ImRouterHandlerService {
+    @Resource
+    private ImMsgAckService imMsgAckService;
     @Override
     public void onReceive(ImMsgBody imMsgBody) {
         Long userId = imMsgBody.getUserId();
@@ -28,6 +32,10 @@ public class ImRouterHandlerServiceImpl implements ImRouterHandlerService {
         if (ctx == null) {
             log.error("[imRouterHandlerServiceImpl]==>没有找到对应的ChannelHandlerContext, imMsgBody:{}", imMsgBody);
         }
+
+        // 发送消息到客户端后，需要记录当前重试次数,初始为0,最多重试3次
+        imMsgAckService.recordMsgAck(imMsgBody);
         ctx.writeAndFlush(ImMsgBuilder.buildBiz(JSON.toJSONString(imMsgBody)));
+        imMsgAckService.sendDelayMessage(imMsgBody);
     }
 }

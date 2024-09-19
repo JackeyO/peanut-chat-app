@@ -45,7 +45,7 @@ public class ImMessageReceiveConsumer implements MessageListenerConcurrently {
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("[im-message-provider]==>mq==>[IM消息接收-消费者--处理失败], 消息内容:{}", imMsgBody);
-                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
