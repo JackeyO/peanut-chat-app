@@ -5,22 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sici</groupId>
-    <artifactId>qiyu-live-app</artifactId>
+    <artifactId>peanut-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>qiyu-live-utils</module>
-        <module>qiyu-live-common</module>
-        <module>qiyu-live-model</module>
-        <module>qiyu-live-api</module>
-        <module>qiyu-live-framework</module>
-        <module>qiyu-live-provider</module>
-        <module>qiyu-live-interface</module>
-        <module>qiyu-live-provider/qiyu-live-provider-id-generate</module>
-        <module>qiyu-live-test</module>
-        <module>qiyu-live-im-core-server</module>
-        <module>qiyu-live-provider/qiyu-live-provider-im-router</module>
-        <module>qiyu-live-im-client</module>
+        <module>peanut-app-utils</module>
+        <module>peanut-app-common</module>
+        <module>peanut-app-model</module>
+        <module>peanut-app-api</module>
+        <module>peanut-app-framework</module>
+        <module>peanut-app-rpc-provider</module>
+        <module>peanut-app-rpc-interface</module>
+        <module>peanut-app-test</module>
+        <module>peanut-app-im-core-server</module>
+        <module>peanut-app-im-client</module>
     </modules>
 
     <properties>
@@ -37,7 +35,7 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <!-- 依赖包版本管理 -->
-        <spring.boot.version>3.0.4</spring.boot.version>
+        <spring.boot.version>2.6.7</spring.boot.version>
         <commons.io.version>2.6</commons.io.version>
         <commons.codec.version>1.12</commons.codec.version>
         <lombok.version>1.18.34</lombok.version>
@@ -52,8 +50,9 @@
         <fastjson.version>1.2.58</fastjson.version>
         <fastjson.dataformat.version>2.9.9</fastjson.dataformat.version>
         <spring.jwt.version>1.0.9.RELEASE</spring.jwt.version>
-        <spring.boot.admin.version>3.0.0</spring.boot.admin.version>
-        <spring.cloud.version>2022.0.0</spring.cloud.version>
+        <spring.boot.admin.version>2.6.7</spring.boot.admin.version>
+        <spring.cloud.version>2021.0.4</spring.cloud.version>
+        <com.alibaba.cloud>2021.0.4.0</com.alibaba.cloud>
         <curator.version>4.2.0</curator.version>
         <hanlp.version>portable-1.3.4</hanlp.version>
         <fastdfs.version>1.26.5</fastdfs.version>
@@ -64,24 +63,23 @@
         <reflections.version>0.9.11</reflections.version>
         <swagger.version>2.9.2</swagger.version>
         <knife4j.springboot.version>4.3.0</knife4j.springboot.version>
-        <dubbo.spring.version>3.2.0-beta.3</dubbo.spring.version>
-        <com.alibaba.cloud>2022.0.0.0-RC1</com.alibaba.cloud>
-
+        <dubbo.spring.version>2.7.13</dubbo.spring.version>
         <sharding.jdbc.version>5.3.2</sharding.jdbc.version>
+
+        <hutool.version>5.8.18</hutool.version>
 
         <curator.version>2.12.0</curator.version>
         <hessian.version>4.0.38</hessian.version>
         <jetty.version>9.4.28.v20200408</jetty.version>
         <dubbo.version>2.7.8</dubbo.version>
-        <rocketmq.client.version>4.8.0</rocketmq.client.version>
+        <rocketmq.spring.version>2.2.2</rocketmq.spring.version>
         <netty-all.version>4.1.89.Final</netty-all.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.6.7</version>
     </parent>
 
     <dependencies>
@@ -101,55 +99,29 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-interface-message</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-provider-message</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-interface-im-router</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-provider-im-router</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-interface-im</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-provider-im</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-interface-id-generate</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-provider-id-generate</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-framework-rocketmq-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq.client.version}</version>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-app-rpc-interface-im-router</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-app-rpc-provider-im-router</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-app-rpc-interface-im-core-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-app-framework-rocketmq-starter</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -165,43 +137,34 @@
             </dependency>
             <!--内部依赖工程-->
             <dependency>
-                <artifactId>qiyu-live-interface-user</artifactId>
                 <groupId>com.sici</groupId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-framework-datasource-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>qiyu-live-framework-redis-starter</artifactId>
+                <artifactId>peanut-app-framework-redis-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <artifactId>qiyu-live-model</artifactId>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-app-framework-frequency-control-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>peanut-app-model</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>qiyu-live-provider-user</artifactId>
+                <artifactId>peanut-app-utils</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>qiyu-live-utils</artifactId>
+                <artifactId>peanut-app-common</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>qiyu-live-common</artifactId>
-                <groupId>com.sici</groupId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <artifactId>qiyu-live-api</artifactId>
+                <artifactId>peanut-app-api</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
@@ -253,6 +216,13 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${lang3.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
             <!--加密处理包-->
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -283,16 +253,16 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-cbor</artifactId>
-                <version>${fastjson.dataformat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${fastjson.dataformat.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--                <artifactId>jackson-dataformat-cbor</artifactId>-->
+<!--                <version>${fastjson.dataformat.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--                <artifactId>jackson-dataformat-xml</artifactId>-->
+<!--                <version>${fastjson.dataformat.version}</version>-->
+<!--            </dependency>-->
             <!-- spring colud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

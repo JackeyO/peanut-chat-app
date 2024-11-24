@@ -7,12 +7,28 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-user-provider/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-user-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-test/qiyu-live-rocketmq-test/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-test/qiyu-live-rocketmq-test/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-rpc-provider/qiyu-live-provider-im-router/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-rpc-provider/peanut-app-rpc-provider-im-router/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/peanut-app-api/qiyu-live-api-user/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-framework/peanut-app-framework-shardingjdbc-datasource-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-rpc-interface/qiyu-live-interface-message/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-rpc-interface/qiyu-live-interface-user/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-app-rpc-provider/qiyu-live-provider-user/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-api/qiyu-live-api-living/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-im/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-id-generate/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-living/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-user-tag/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-id-generate/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-im/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-living/pom.xml" />
+        <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-message/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-provider/qiyu-live-provider-user-tag/pom.xml" />
       </set>
     </option>

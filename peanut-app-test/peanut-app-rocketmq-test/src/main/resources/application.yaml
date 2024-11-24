@@ -1,0 +1,4 @@
+rocketmq:
+  name-server: 47.96.140.250:9876
+  producer:
+    group: hello
