@@ -1,13 +1,14 @@
 package com.sici.chat.service;
 
-/**
- * @projectName: qiyu-live-app
- * @package: com.sici.live.service
- * @author: 20148
- * @description: 房间业务
- * @create-date: 11/24/2024 3:36 PM
- * @version: 1.0
- */
 
-public interface RoomService {
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.sici.chat.model.chat.room.entity.Room;
+
+/**
+* @author 20148
+* @description 针对表【room】的数据库操作Service
+* @createDate 2024-11-25 18:13:49
+*/
+public interface RoomService  {
+
 }

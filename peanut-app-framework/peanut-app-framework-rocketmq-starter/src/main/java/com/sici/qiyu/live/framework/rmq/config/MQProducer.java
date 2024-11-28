@@ -23,9 +23,10 @@ public class MQProducer {
         Message<Object> build = MessageBuilder.withPayload(body).build();
         rocketMQTemplate.send(topic, build);
     }
-    public void sendMsg(String topic, Object body, long delay) {
+    public void sendMsg(String topic, Object body, int delay) {
         Message<Object> build = MessageBuilder.withPayload(body).build();
-        rocketMQTemplate.send(topic, build);
+        rocketMQTemplate.syncSend(topic, build, 5000, delay);
+//        rocketMQTemplate.send(topic, build);
     }
 
     /**

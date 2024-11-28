@@ -1,9 +1,10 @@
 package com.sici.chat.im.core.server.comsumer;
 
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.common.constant.im.ImConstant;
 import com.sici.common.constant.im.ImMqConstant;
 import com.sici.chat.im.core.server.service.ImMsgAckService;
-import com.sici.chat.im.core.server.service.ImRouterHandlerService;
+import com.sici.chat.im.core.server.service.ImPushService;
 import com.sici.chat.model.im.dto.ImMsgBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -25,33 +26,33 @@ import javax.annotation.Resource;
 @Slf4j
 @RocketMQMessageListener(consumerGroup = ImMqConstant.IM_CORE_SERVER_MSG_ACK_DELAY_CONSUMER_GROUP,
         topic = ImMqConstant.IM_CORE_SERVER_MSG_ACK_DELAY_TOPIC)
-public class ImMsgAckDelayMessageConsumer implements RocketMQListener<ImMsgBody> {
+public class ImMsgAckDelayMessageConsumer implements RocketMQListener<ImMsg> {
     @Resource
     private ImMsgAckService imMsgAckService;
     @Resource
-    private ImRouterHandlerService imRouterHandlerService;
+    private ImPushService imPushService;
 
     @Override
-    public void onMessage(ImMsgBody imMsgBody) {
-        if (imMsgBody == null || imMsgBody.getUserId() == null || imMsgBody.getAppId() == null) {
+    public void onMessage(ImMsg imMsg) {
+        if (imMsg == null || imMsg.getToUid() == null) {
             log.error("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--接收到消息]==>消息参数不合法");
         }
         try {
-            handle(imMsgBody);
-            log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查成功], 消息内容:{}", imMsgBody);
+            handle(imMsg);
+            log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查成功], 消息内容:{}", imMsg);
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查失败], 消息内容:{}", imMsgBody);
+            log.info("[im-core-server]==>mq==>[IM消息确认--延迟消息-消费者--检查失败], 消息内容:{}", imMsg);
         }
     }
 
-    void handle(ImMsgBody imMsgBody) {
+    void handle(ImMsg imMsg) {
         try {
-            Integer msgAckTimes = imMsgAckService.getMsgAckTimes(imMsgBody);
+            Integer msgAckTimes = imMsgAckService.getMsgAckTimes(imMsg);
             // 没有ACK并且已重试次数没有达到上限就需要进行再次重试
             if (msgAckTimes != null && msgAckTimes < ImConstant.IM_MSG_RETRY_TIMES) {
-                log.info("[im-core-server]==>mq==>[IM消息确认]==>执行消息重发, imMsgBody:{}, 已重试次数:{}", imMsgBody, msgAckTimes + 1);
-                imRouterHandlerService.onReceive(imMsgBody);
+                log.info("[im-core-server]==>mq==>[IM消息确认]==>执行消息重发, imMsg:{}, 已重试次数:{}", imMsg, msgAckTimes + 1);
+                imPushService.pushMsg(imMsg, imMsg.getToUid());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

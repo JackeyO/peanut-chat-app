@@ -20,8 +20,8 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class ImTokenServiceImpl implements ImTokenService {
-    @Resource
-    private RedisCacheUtil redisCacheUtil;
+//    @Resource
+//    private RedisCacheUtil redisCacheUtil;
 //    @Resource
 //    private ImProviderCacheKeyBuilder imProviderCacheKeyBuilder;
     @Override

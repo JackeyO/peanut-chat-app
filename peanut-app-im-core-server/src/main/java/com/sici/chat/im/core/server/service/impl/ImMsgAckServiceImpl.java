@@ -1,11 +1,10 @@
 package com.sici.chat.im.core.server.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.common.constant.im.ImMqConstant;
 import com.sici.framework.redis.RedisUtils;
 import com.sici.chat.im.core.server.redis.key.ImCoreServerCacheKeyBuilder;
 import com.sici.chat.im.core.server.service.ImMsgAckService;
-import com.sici.chat.model.im.dto.ImMsgBody;
 import com.sici.qiyu.live.framework.rmq.config.MQProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -31,33 +30,32 @@ public class ImMsgAckServiceImpl implements ImMsgAckService {
     private MQProducer mqProducer;
 
     @Override
-    public void doMsgAck(ImMsgBody imMsgBody) {
-        RedisUtils.hdel(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsgBody.getUserId(),
-                        imMsgBody.getAppId()),
-                imMsgBody.getMsgId());
-    }
-    @Override
-    public void recordMsgAck(ImMsgBody imMsgBody) {
-        Integer msgAckTimes = getMsgAckTimes(imMsgBody);
-        if (msgAckTimes == null) msgAckTimes = -1;
-        RedisUtils.hset(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsgBody.getUserId(),
-                imMsgBody.getAppId()),
-                imMsgBody.getMsgId(),
-                JSON.toJSONString(msgAckTimes + 1));
-    }
-    @Override
-    public void sendDelayMessage(ImMsgBody imMsgBody) {
-        String imMsgBodyJSON = JSON.toJSONString(imMsgBody);
-        mqProducer.sendMsg(ImMqConstant.IM_CORE_SERVER_MSG_ACK_DELAY_TOPIC,
-                imMsgBody,
-                2);
+    public void doMsgAck(ImMsg imMsg) {
+        RedisUtils.hdel(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsg.getToUid()),
+                imMsg.getMsgId());
     }
 
     @Override
-    public Integer getMsgAckTimes(ImMsgBody imMsgBody) {
-        Object timesStr = RedisUtils.hget(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsgBody.getUserId(),
-                        imMsgBody.getAppId()),
-                imMsgBody.getMsgId());
+    public void recordMsgAck(ImMsg imMsg) {
+        Integer msgAckTimes = getMsgAckTimes(imMsg);
+        if (msgAckTimes == null) msgAckTimes = -1;
+        RedisUtils.hset(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsg.getToUid()),
+                String.valueOf(imMsg.getMsgId()),
+                msgAckTimes + 1);
+    }
+
+    @Override
+    public void sendDelayMessage(ImMsg imMsg, int delay) {
+        mqProducer.sendMsg(ImMqConstant.IM_CORE_SERVER_MSG_ACK_DELAY_TOPIC,
+                imMsg,
+                delay);
+    }
+
+    @Override
+    public Integer getMsgAckTimes(ImMsg imMsg) {
+        Object timesStr = RedisUtils.hget(imCoreServerCacheKeyBuilder.buildImMsgAckKey(imMsg.getToUid()
+                ),
+                String.valueOf(imMsg.getMsgId()));
         if (timesStr == null) {
             return null;
         }

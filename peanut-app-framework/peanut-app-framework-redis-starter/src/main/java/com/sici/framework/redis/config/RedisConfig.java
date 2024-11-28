@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.framework.redis.config
+ * @package: com.sici.framework.utilsredis.config
  * @author: 20148
  * @description:
  * @create-date: 9/11/2024 12:50 PM

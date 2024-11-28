@@ -1,7 +1,9 @@
 package com.sici.chat.interfaces.im.router.rpc;
 
-import com.sici.chat.model.im.dto.ImMsgBody;
+import com.sici.chat.model.im.bo.ImMsg;
 import org.apache.dubbo.config.annotation.DubboService;
+
+import java.util.List;
 
 /**
  * @projectName: qiyu-live-app
@@ -15,9 +17,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 @DubboService(timeout = 60000, retries = 0)
 public interface ImRouterRpc {
     /**
-     * 向im发送消息
-     * @param objectId
+     * 消息路由到IM示例
      * @param imMsg
      */
-    void sendMsg(ImMsgBody imMsg);
+    void routeMsg(ImMsg imMsg, Integer receiverId);
+    void routeMsg(ImMsg imMsg, List<Integer> receiverIds);
 }

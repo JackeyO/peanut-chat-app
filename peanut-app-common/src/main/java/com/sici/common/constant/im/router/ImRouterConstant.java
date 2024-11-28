@@ -11,5 +11,5 @@ package com.sici.common.constant.im.router;
 
 public class ImRouterConstant {
     // ip Rpc context attribute name
-    public static final String IP_ATTRIBUTE_NAME = "ip";
+    public static final String ADDRESS_ATTRIBUTE_NAME = "address";
 }

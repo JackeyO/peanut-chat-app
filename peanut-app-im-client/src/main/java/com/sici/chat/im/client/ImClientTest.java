@@ -1,7 +1,6 @@
 package com.sici.chat.im.client;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.common.enums.im.AppIdEnums;
 import com.sici.common.enums.im.ImMsgBizCodeEnum;
 import com.sici.common.result.ResponseResult;
 import com.sici.chat.interfaces.im.rpc.ImTokenRpc;
@@ -15,7 +14,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.InitializingBean;

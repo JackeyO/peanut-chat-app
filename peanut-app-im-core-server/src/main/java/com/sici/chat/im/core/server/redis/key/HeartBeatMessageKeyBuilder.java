@@ -10,7 +10,7 @@ import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server.redis.key
+ * @package: com.sici.live.im.core.server.utilsredis.key
  * @author: 20148
  * @description:
  * @create-date: 9/17/2024 2:45 PM

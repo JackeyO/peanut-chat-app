@@ -1,7 +1,7 @@
 package com.sici.chat.im.core.server.handler.impl;
 
 import com.sici.common.enums.im.ImMsgCodeEnums;
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.im.core.server.handler.AbstractMessageHandler;
 import com.sici.chat.im.core.server.handler.ImHandlerFactory;
 import io.netty.channel.ChannelHandlerContext;

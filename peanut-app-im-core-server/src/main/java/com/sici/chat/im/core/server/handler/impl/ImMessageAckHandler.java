@@ -1,11 +1,9 @@
 package com.sici.chat.im.core.server.handler.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.im.core.server.common.util.ImContextUtil;
 import com.sici.chat.im.core.server.handler.AbstractMessageHandler;
 import com.sici.chat.im.core.server.service.ImMsgAckService;
-import com.sici.chat.model.im.dto.ImMsgBody;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,20 +26,16 @@ public class ImMessageAckHandler implements AbstractMessageHandler {
     private ImMsgAckService imMsgAckService;
     @Override
     public void handle(ChannelHandlerContext ctx, ImMsg imMsg) {
-        Long userId = ImContextUtil.getUserId(ctx);
-        Integer appId  = ImContextUtil.getAppId(ctx);
-        if (userId == null || appId == null) {
+        Integer userId = ImContextUtil.getUserId(ctx);
+        if (userId == null) {
             log.error("[im-core-server]==>[ImMessageAckHandler]==>连接无效");
             ctx.close();
             return ;
         }
 
-        byte[] body = imMsg.getBody();
-        ImMsgBody imMsgBody = JSON.parseObject(new String(body), ImMsgBody.class);
-
         // 已收到消息，执行确认
-        imMsgAckService.doMsgAck(imMsgBody);
-        log.info("[im-core-server]==>执行消息ACK成功, imMsgBody:{}", imMsgBody);
+        imMsgAckService.doMsgAck(imMsg);
+        log.info("[im-core-server]==>执行消息ACK成功, imMsg:{}", imMsg);
     }
 }
 

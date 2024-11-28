@@ -1,6 +1,6 @@
 package com.sici.chat.im.core.server.handler;
 
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import io.netty.channel.ChannelHandlerContext;
 
 /**

@@ -13,21 +13,11 @@ import io.netty.channel.ChannelHandlerContext;
  */
 
 public class ImContextUtil {
-
-    public static Long getUserId(ChannelHandlerContext ctx) {
+    public static Integer getUserId(ChannelHandlerContext ctx) {
         return ctx.attr(ImContextAttr.USER_ID).get();
     }
 
-    public static Integer getAppId(ChannelHandlerContext ctx) {
-        return ctx.attr(ImContextAttr.APP_ID).get();
-    }
-
-
-    public static void setUserId(ChannelHandlerContext ctx, Long userId) {
+    public static void setUserId(ChannelHandlerContext ctx, Integer userId) {
         ctx.attr(ImContextAttr.USER_ID).set(userId);
-    }
-
-    public static void setAppId(ChannelHandlerContext ctx, Integer appId) {
-        ctx.attr(ImContextAttr.APP_ID).set(appId);
     }
 }

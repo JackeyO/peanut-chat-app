@@ -2,8 +2,6 @@ package com.sici.chat.im.core.server.starter;
 
 import com.sici.common.constant.im.ImConstant;
 import com.sici.chat.im.core.server.common.ChannelHandlerContextCache;
-import com.sici.chat.im.core.server.common.ImMsgDecoder;
-import com.sici.chat.im.core.server.common.ImMsgEncoder;
 import com.sici.chat.im.core.server.handler.ImServerCoreHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -50,11 +48,6 @@ public class WsNettyImServerStarter implements InitializingBean {
             @Override
             protected void initChannel(Channel channel) {
                 log.info("channel initialized, channel:{}", channel);
-
-                // 增加编解码器
-                channel.pipeline().addLast(new ImMsgEncoder());
-                channel.pipeline().addLast(new ImMsgDecoder());
-
                 // 设置消息处理器handler
                 channel.pipeline().addLast(applicationContext.getBean(ImServerCoreHandler.class));
             }

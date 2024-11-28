@@ -1,6 +1,7 @@
 package com.sici.chat.provider.im.router.rpc;
 
 import com.sici.chat.interfaces.im.router.rpc.ImRouterRpc;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.model.im.dto.ImMsgBody;
 import com.sici.chat.provider.im.router.service.ImRouterService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @projectName: qiyu-live-app
@@ -24,9 +26,14 @@ import javax.annotation.Resource;
 public class ImRouterRpcImpl implements ImRouterRpc {
     @Resource
     private ImRouterService imRouterService;
+
     @Override
-    public void sendMsg(ImMsgBody imMsg) {
-        imRouterService.sendMsg(imMsg);
+    public void routeMsg(ImMsg imMsg, Integer receiverId) {
+    }
+
+    @Override
+    public void routeMsg(ImMsg imMsg, List<Integer> receiverIds) {
+
     }
 }
 
