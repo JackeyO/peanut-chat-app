@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.framework.redis.value
+ * @package: com.sici.framework.utilsredis.value
  * @author: 20148
- * @description: redis value
+ * @description: utilsredis value
  * @create-date: 9/11/2024 5:56 PM
  * @version: 1.0
  */

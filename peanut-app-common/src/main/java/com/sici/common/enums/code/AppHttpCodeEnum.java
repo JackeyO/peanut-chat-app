@@ -35,7 +35,8 @@ public enum AppHttpCodeEnum {
     WMNEWS_ID_IS_ABSENT(501, "自媒体文章ID不存在"),
     WMNEWS_NOT_PUBLISHED(501, "自媒体文章未发布,不能进行上下架操作"),
     ID_SEGMENT_IS_FULL(501, "id段已经满了"),
-    NEED_LIVING_ROOM_TYPE(501, "需要直播间类型");
+    NEED_LIVING_ROOM_TYPE(501, "需要直播间类型"),
+    BUSINESS_ERROR(503, "业务处理失败");
 
     Integer code;
 

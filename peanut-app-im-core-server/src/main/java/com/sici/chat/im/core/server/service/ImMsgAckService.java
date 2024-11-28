@@ -1,6 +1,7 @@
 package com.sici.chat.im.core.server.service;
 
-import com.sici.chat.model.im.dto.ImMsgBody;
+
+import com.sici.chat.model.im.bo.ImMsg;
 
 /**
  * @projectName: qiyu-live-app
@@ -12,11 +13,11 @@ import com.sici.chat.model.im.dto.ImMsgBody;
  */
 
 public interface ImMsgAckService {
-    void doMsgAck(ImMsgBody imMsgBody);
+    void doMsgAck(ImMsg imMsg);
 
-    void sendDelayMessage(ImMsgBody imMsgBody);
+    void recordMsgAck(ImMsg imMsg);
 
-    void recordMsgAck(ImMsgBody imMsgBody);
+    Integer getMsgAckTimes(ImMsg imMsg);
 
-    Integer getMsgAckTimes(ImMsgBody imMsgBody);
+    void sendDelayMessage(ImMsg imMsg, int delay);
 }

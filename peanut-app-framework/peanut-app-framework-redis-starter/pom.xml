@@ -18,7 +18,7 @@
     </properties>
 
     <dependencies>
-        <!--spring data redis & cache-->
+        <!--spring data utilsredis & cache-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

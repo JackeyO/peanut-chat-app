@@ -1,7 +1,7 @@
 package com.sici.chat.im.core.server.handler.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.im.core.server.common.ImMsgBuilder;
 import com.sici.chat.im.core.server.common.util.ImCacheUtil;
 import com.sici.chat.im.core.server.common.util.ImContextUtil;

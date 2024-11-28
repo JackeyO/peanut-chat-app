@@ -1,10 +1,9 @@
 package com.sici.chat.im.core.server.handler.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.common.enums.im.AppIdEnums;
 import com.sici.common.result.ResponseResult;
 import com.sici.chat.im.core.server.common.ChannelHandlerContextCache;
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.im.core.server.common.ImMsgBuilder;
 import com.sici.chat.im.core.server.common.util.ImCacheUtil;
 import com.sici.chat.im.core.server.common.util.ImContextUtil;
@@ -57,7 +56,7 @@ public class LoginMessageHandler implements AbstractMessageHandler {
         }
 
         ResponseResult<Long> userIdByToken = imTokenRpc.getUserIdByToken(token);
-        Long userId = userIdByToken != null ? userIdByToken.getData() : null;
+        Integer userId = userIdByToken != null ? userIdByToken.getData() : null;
 
         if (userId == null || !userId.equals(imMsgBody.getUserId())) {
             ctx.close();
@@ -68,7 +67,6 @@ public class LoginMessageHandler implements AbstractMessageHandler {
         log.info("[loginMessageHandler]==>[server received message]: " + imMsg);
         ChannelHandlerContextCache.put(userId, ctx);
         ImContextUtil.setUserId(ctx, userId);
-        ImContextUtil.setAppId(ctx, imMsgBody.getAppId());
 
         // 设置当前用户连接的IM服务器地址，方便后面router RPC调用im服务(通过mq)
         imCacheUtil.recordImBindAddressOfUserId(userId, imMsgBody.getAppId());

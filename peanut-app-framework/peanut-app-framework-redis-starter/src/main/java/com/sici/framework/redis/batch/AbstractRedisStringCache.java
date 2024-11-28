@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.framework.redis.batch
+ * @package: com.sici.framework.utilsredis.batch
  * @author: 20148
  * @description: Redis string Key类型批量缓存
  * @create-date: 11/21/2024 4:26 PM

@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>com.sici</groupId>
-            <artifactId>peanut-app-model</artifactId>
+            <artifactId>peanut-app-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sici</groupId>

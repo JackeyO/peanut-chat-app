@@ -1,6 +1,9 @@
 package com.sici.chat.provider.im.router.service;
 
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.model.im.dto.ImMsgBody;
+
+import java.util.List;
 
 /**
  * @projectName: qiyu-live-app
@@ -13,9 +16,9 @@ import com.sici.chat.model.im.dto.ImMsgBody;
 
 public interface ImRouterService {
     /**
-     * 调用IM RPC发消息
-     * @param objectId
+     * 消息路由到IM示例
      * @param imMsg
      */
-    void sendMsg(ImMsgBody imMsg);
+    void routeMsg(ImMsg imMsg, Integer receiverId);
+    void routeMsg(ImMsg imMsg, List<Integer> receiverIds);
 }

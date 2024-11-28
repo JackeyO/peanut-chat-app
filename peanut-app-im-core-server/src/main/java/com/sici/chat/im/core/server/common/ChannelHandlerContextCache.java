@@ -30,7 +30,7 @@ public class ChannelHandlerContextCache {
 
     private static Map<Long, ChannelHandlerContext> channelHandlerContextCacheMap = new HashMap<>();
 
-    public static ChannelHandlerContext get(Long userId) {
+    public static ChannelHandlerContext get(Integer userId) {
         return channelHandlerContextCacheMap.get(userId);
     }
 

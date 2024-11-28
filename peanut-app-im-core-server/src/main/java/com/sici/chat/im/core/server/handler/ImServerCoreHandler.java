@@ -1,8 +1,7 @@
 package com.sici.chat.im.core.server.handler;
 
-import com.sici.common.enums.im.AppIdEnums;
 import com.sici.chat.im.core.server.common.ChannelHandlerContextCache;
-import com.sici.chat.im.core.server.common.ImMsg;
+import com.sici.chat.model.im.bo.ImMsg;
 import com.sici.chat.im.core.server.common.util.ImCacheUtil;
 import com.sici.chat.im.core.server.common.util.ImContextUtil;
 import io.netty.channel.ChannelHandler;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sici.chat.mapper.FileMessageMapper">
+
+    <resultMap id="BaseResultMap" type="generator.domain.FileMessage">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="msgId" column="msg_id" jdbcType="INTEGER"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="BIGINT"/>
+            <result property="extra" column="extra" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,msg_id,url,
+        size,extra,type
+    </sql>
+</mapper>

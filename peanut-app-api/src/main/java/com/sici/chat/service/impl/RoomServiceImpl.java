@@ -1,5 +1,8 @@
 package com.sici.chat.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sici.chat.mapper.RoomMapper;
+import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.service.RoomService;
 
 /**

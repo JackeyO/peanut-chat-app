@@ -1,5 +1,8 @@
 package com.sici.chat.service;
 
+import com.sici.chat.model.chat.message.dto.MessageRequestDto;
+import com.sici.common.result.ResponseResult;
+
 /**
  * @projectName: qiyu-live-app
  * @package: com.sici.live.service
@@ -10,4 +13,5 @@ package com.sici.chat.service;
  */
 
 public interface ChatService {
+    ResponseResult send(MessageRequestDto messageRequestDto);
 }

@@ -28,8 +28,8 @@ public class ImRouterClusterInvoker<T> extends AbstractClusterInvoker<T> {
     protected Result doInvoke(Invocation invocation, List list, LoadBalance loadbalance) throws RpcException {
         checkWhetherDestroyed();
 
-        String ip = (String) RpcContext.getContext().get(ImRouterConstant.IP_ATTRIBUTE_NAME);
-        if (StringUtils.isEmpty(ip)) {
+        String address = (String) RpcContext.getContext().get(ImRouterConstant.ADDRESS_ATTRIBUTE_NAME);
+        if (StringUtils.isEmpty(address)) {
             log.error("[ImRouterClusterInvoker]==>ip is null");
             throw new RuntimeException("[ImRouterClusterInvoker]==>ip is null");
         }
@@ -42,7 +42,7 @@ public class ImRouterClusterInvoker<T> extends AbstractClusterInvoker<T> {
                     String host = invoker.getUrl().getHost();
                     int port = invoker.getUrl().getPort();
 
-                    return ip.equals(host + ":" + port);
+                    return address.equals(host + ":" + port);
                 }).findFirst().orElse(null);
 
 
@@ -52,6 +52,4 @@ public class ImRouterClusterInvoker<T> extends AbstractClusterInvoker<T> {
         }
         return matchedInvoker.invoke(invocation);
     }
-
-
 }
