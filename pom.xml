@@ -5,20 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sici</groupId>
-    <artifactId>peanut-app</artifactId>
+    <artifactId>peanut-chat-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>peanut-app-utils</module>
-        <module>peanut-app-common</module>
-        <module>peanut-app-domain</module>
-        <module>peanut-app-api</module>
-        <module>peanut-app-framework</module>
-        <module>peanut-app-rpc-provider</module>
-        <module>peanut-app-rpc-interface</module>
-        <module>peanut-app-test</module>
-        <module>peanut-app-im-core-server</module>
-        <module>peanut-app-im-client</module>
+        <module>peanut-chat-app-utils</module>
+        <module>peanut-chat-app-common</module>
+        <module>peanut-chat-app-domain</module>
+        <module>peanut-chat-app-api</module>
+        <module>peanut-chat-app-framework</module>
+        <module>peanut-chat-app-rpc-provider</module>
+        <module>peanut-chat-app-rpc-interface</module>
+        <module>peanut-chat-app-test</module>
+        <module>peanut-chat-app-im-core-server</module>
+        <module>peanut-chat-app-im-client</module>
     </modules>
 
     <properties>
@@ -105,22 +105,22 @@
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-rpc-interface-im-router</artifactId>
+                <artifactId>peanut-chat-app-rpc-interface-im-router</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-rpc-provider-im-router</artifactId>
+                <artifactId>peanut-chat-app-rpc-provider-im-router</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-rpc-interface-im-core-server</artifactId>
+                <artifactId>peanut-chat-app-rpc-interface-im-core-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-framework-rocketmq-starter</artifactId>
+                <artifactId>peanut-chat-app-framework-rocketmq-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -138,33 +138,33 @@
             <!--内部依赖工程-->
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-framework-redis-starter</artifactId>
+                <artifactId>peanut-chat-app-framework-redis-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.sici</groupId>
-                <artifactId>peanut-app-framework-frequency-control-starter</artifactId>
+                <artifactId>peanut-chat-app-framework-frequency-control-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <artifactId>peanut-app-domain</artifactId>
+                <artifactId>peanut-chat-app-domain</artifactId>
                 <groupId>com.sici</groupId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <artifactId>peanut-app-utils</artifactId>
+                <artifactId>peanut-chat-app-utils</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>peanut-app-common</artifactId>
+                <artifactId>peanut-chat-app-common</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>peanut-app-api</artifactId>
+                <artifactId>peanut-chat-app-api</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>
