@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageMarkVo {
-    public Integer likes;
-    public Integer disLikes;
-    public Integer currentUserLike;
-    public Integer currentUserDisLike;
+    private Long likes = 0L;
+    private Long disLikes = 0L;
+    private Integer currentUserLike = 0;
+    private Integer currentUserDisLike = 0;
 }

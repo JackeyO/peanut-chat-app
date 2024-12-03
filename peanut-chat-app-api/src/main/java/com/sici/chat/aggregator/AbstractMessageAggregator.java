@@ -5,6 +5,7 @@ import com.sici.chat.model.chat.message.vo.CommonMessageVo;
 import com.sici.common.enums.chat.message.MessageTypeEnum;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @projectName: qiyu-live-app
@@ -17,7 +18,9 @@ import java.util.List;
 
 public abstract class AbstractMessageAggregator<OUT extends CommonMessageVo> {
     public abstract MessageTypeEnum getSupportedMessageEnum();
-    public abstract OUT aggregateAll(Message messageMeta, List<Integer> receiverIds);
+    public abstract OUT aggregateAll(Message messageMeta);
+    public abstract OUT aggregateAllRelationToReceiver(Message messageMeta, Integer receiver);
+    public abstract Map<Integer, OUT> aggregateAllRelationToReceiver(Message messageMeta, List<Integer> receiverIds);
 
     public AbstractMessageAggregator() {
         MessageAggregatorFactory.register(this);
