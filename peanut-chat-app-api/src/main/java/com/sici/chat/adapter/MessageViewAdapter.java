@@ -6,6 +6,7 @@ import com.sici.chat.model.chat.message.vo.CommonMessageVo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @projectName: qiyu-live-app
@@ -18,8 +19,16 @@ import java.util.List;
 
 @Component
 public class MessageViewAdapter {
-    public CommonMessageVo doAdapt(Message message, List<Integer> receiverIds) {
+    public CommonMessageVo doAdapt(Message message) {
         return MessageAggregatorFactory.getMessageAggregator(message.getType())
-                .aggregateAll(message, receiverIds);
+                .aggregateAll(message);
+    }
+    public Map<Integer, CommonMessageVo> doAdaptRelationToReceiver(Message message, List<Integer> receiverIds) {
+        return MessageAggregatorFactory.getMessageAggregator(message.getType())
+                .aggregateAllRelationToReceiver(message, receiverIds);
+    }
+    public CommonMessageVo doAdaptRelationToReceiver(Message message, Integer receiverIds) {
+        return MessageAggregatorFactory.getMessageAggregator(message.getType())
+                .aggregateAllRelationToReceiver(message, receiverIds);
     }
 }

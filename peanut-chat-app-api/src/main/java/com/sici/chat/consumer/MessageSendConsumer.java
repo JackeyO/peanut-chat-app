@@ -60,7 +60,7 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
                 twoPersonRoomCache.getOne(roomId) : groupRoomMemberCache.getOne(roomId);
 
         // 构建ImMsg,准备进行消息路由
-        ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage((ChatMessageVo) messageViewAdapter.doAdapt(message, null));
+        ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage((ChatMessageVo) messageViewAdapter.doAdapt(message));
 
         // 执行消息路由
         imRouterRpc.routeMsg(imMsg, roomMemberIds);
