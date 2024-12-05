@@ -1,0 +1,38 @@
+server:
+  port: ${peanut.server.port}
+
+spring:
+  application:
+    name: peanut-chat-app
+
+  profiles:
+    active: dev
+
+  redis:
+    host: ${peanut.redis.host}
+    port: ${peanut.redis.port}
+
+
+# RocketMq
+rocketmq:
+  name-server: ${peanut.rocketmq.name-server}
+  producer:
+    group: ${peanut.rocketmq.producer.group}
+
+
+
+peanut:
+  # WeChat
+  wx:
+    mp:
+      callback: ${peanut.wx.callback}
+      configs:
+        - appId: ${peanut.wx.appId} # 第一个公众号的appid
+          secret: ${peanut.wx.secret} # 公众号的appsecret
+          token: ${peanut.wx.token} # 接口配置里的Token值
+
+
+  # im
+  im:
+    ws:
+      port: ${peanut.im.ws.port}

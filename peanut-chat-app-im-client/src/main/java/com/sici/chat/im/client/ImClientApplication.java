@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server
+ * @package: com.sici.live.ws.core.server
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:41 PM

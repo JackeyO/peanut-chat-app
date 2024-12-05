@@ -1,16 +1,16 @@
 package com.sici.chat.im.client;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.common.enums.im.ImMsgCodeEnums;
-import com.sici.chat.model.im.dto.ImMsgBody;
-import com.sici.chat.model.im.dto.ImMsgDto;
+import com.sici.common.enums.im.ImMsgTypeEnums;
+import com.sici.chat.model.ws.dto.ImMsgBody;
+import com.sici.chat.model.ws.dto.ImMsgDto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server
+ * @package: com.sici.live.ws.core.server
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:47 PM
@@ -26,7 +26,7 @@ public class ImClientHandler extends ChannelInboundHandlerAdapter {
         byte[] body = imMsg.getBody();
 
         // 如果是业务消息，发送ACK确认
-        if (imMsg.getCode() == ImMsgCodeEnums.IM_MSG_BIZ.getCode()) {
+        if (imMsg.getCode() == ImMsgTypeEnums.IM_MSG_BIZ.getCode()) {
             ImMsgBody imMsgBody = JSON.parseObject(new String(body), ImMsgBody.class);
 
             imMsgBody.setData(JSON.toJSONString(

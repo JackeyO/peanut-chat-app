@@ -1,11 +1,10 @@
 package com.sici.chat.im.client;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.common.enums.im.ImMsgBizCodeEnum;
 import com.sici.common.result.ResponseResult;
 import com.sici.chat.interfaces.im.rpc.ImTokenRpc;
-import com.sici.chat.model.im.dto.ImMsgBody;
-import com.sici.chat.model.im.dto.ImMsgDto;
+import com.sici.chat.model.ws.dto.ImMsgBody;
+import com.sici.chat.model.ws.dto.ImMsgDto;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -27,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server
+ * @package: com.sici.live.ws.core.server
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 8:39 PM

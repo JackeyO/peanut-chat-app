@@ -2,7 +2,7 @@ package com.sici.common.constant.im;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.im
+ * @package: com.sici.common.constant.ws
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:06 PM
@@ -14,8 +14,8 @@ public class ImConstant {
     public static final short DEFAULT_MAGIC = 18673;
     // 默认心跳间隔
     public static final int DEFAULT_HEART_BEAT_INTERVAL = 30000;
-    // im 业务消息主题
-    public static final String IM_BIZ_MESSAGE_TOPIC = "im";
+    // ws 业务消息主题
+    public static final String IM_BIZ_MESSAGE_TOPIC = "ws";
 
 
     // dubbo对外暴露的ip
@@ -24,7 +24,7 @@ public class ImConstant {
     public static final String DUBBO_REGISTRY_PORT_ENV_NAME = "DUBBO_REGISTRY_PORT";
 
     // im服务对外部暴露的服务地址--缓存key前缀
-    public static final String IM_CORE_SERVER_ADDRESS_CACHE_KEY_PREFIX = "im-core-server:bind:address:";
+    public static final String IM_CORE_SERVER_ADDRESS_CACHE_KEY_PREFIX = "ws-core-server:bind:address:";
 
     // IM 消息重试次数上限
     public static final int IM_MSG_RETRY_TIMES = 3;

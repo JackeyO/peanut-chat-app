@@ -2,7 +2,7 @@ package com.sici.common.constant.im.router;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.im.router
+ * @package: com.sici.common.constant.ws.router
  * @author: 20148
  * @description: Im路由相关常量
  * @create-date: 9/17/2024 5:23 PM

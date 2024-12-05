@@ -12,12 +12,9 @@
         <module>peanut-chat-app-utils</module>
         <module>peanut-chat-app-common</module>
         <module>peanut-chat-app-domain</module>
-        <module>peanut-chat-app-api</module>
+        <module>peanut-chat-app-server</module>
         <module>peanut-chat-app-framework</module>
-        <module>peanut-chat-app-rpc-provider</module>
-        <module>peanut-chat-app-rpc-interface</module>
         <module>peanut-chat-app-test</module>
-        <module>peanut-chat-app-im-core-server</module>
         <module>peanut-chat-app-im-client</module>
     </modules>
 
@@ -74,6 +71,8 @@
         <dubbo.version>2.7.8</dubbo.version>
         <rocketmq.spring.version>2.2.2</rocketmq.spring.version>
         <netty-all.version>4.1.89.Final</netty-all.version>
+
+        <weixin-java-mp.version>4.4.0</weixin-java-mp.version>
     </properties>
 
     <parent>
@@ -99,24 +98,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java-mp.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq.spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>peanut-chat-app-rpc-interface-im-router</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>peanut-chat-app-rpc-provider-im-router</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sici</groupId>
-                <artifactId>peanut-chat-app-rpc-interface-im-core-server</artifactId>
-                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
@@ -164,7 +153,7 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>peanut-chat-app-api</artifactId>
+                <artifactId>peanut-chat-app-server</artifactId>
                 <groupId>com.sici</groupId>
                 <version>${project.version}</version>
             </dependency>

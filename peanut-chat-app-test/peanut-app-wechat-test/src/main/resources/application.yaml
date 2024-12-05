@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: test
+
+wx:
+  mp:
+    callback: ${peanut.wx.callback}
+    configs:
+      - appId: ${peanut.wx.appId} # 第一个公众号的appid
+        secret: ${peanut.wx.secret} # 公众号的appsecret
+        token: ${peanut.wx.token} # 接口配置里的Token值
+#      -  aesKey: ${peanut.wx.aesKey} # 接口配置里的EncodingAESKey值

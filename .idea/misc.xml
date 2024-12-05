@@ -20,6 +20,9 @@
         <option value="$PROJECT_DIR$/peanut-app-rpc-interface/qiyu-live-interface-message/pom.xml" />
         <option value="$PROJECT_DIR$/peanut-app-rpc-interface/qiyu-live-interface-user/pom.xml" />
         <option value="$PROJECT_DIR$/peanut-app-rpc-provider/qiyu-live-provider-user/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-chat-app-im-core-server/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-chat-app-rpc-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/peanut-chat-app-rpc-provider/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-api/qiyu-live-api-living/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-im/pom.xml" />
         <option value="$PROJECT_DIR$/qiyu-live-interface/qiyu-live-interface-id-generate/pom.xml" />
