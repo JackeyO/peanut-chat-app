@@ -1,11 +1,11 @@
 package com.sici.chat.im.client;
 
 import com.sici.common.constant.im.ImConstant;
-import com.sici.common.enums.im.ImMsgCodeEnums;
+import com.sici.common.enums.im.ImMsgTypeEnums;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server.common
+ * @package: com.sici.live.ws.core.server.common
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:50 PM
@@ -35,7 +35,7 @@ public class ImMsgBuilder {
     public static ImMsg buildLogin(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImMsgCodeEnums.IM_MSG_LOGIN.getCode())
+                .code(ImMsgTypeEnums.IM_MSG_LOGIN.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -45,7 +45,7 @@ public class ImMsgBuilder {
     public static ImMsg buildLogout(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImMsgCodeEnums.IM_MSG_LOGOUT.getCode())
+                .code(ImMsgTypeEnums.IM_MSG_LOGOUT.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -55,7 +55,7 @@ public class ImMsgBuilder {
     public static ImMsg buildBiz(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImMsgCodeEnums.IM_MSG_BIZ.getCode())
+                .code(ImMsgTypeEnums.IM_MSG_BIZ.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -64,7 +64,7 @@ public class ImMsgBuilder {
     public static ImMsg buildHeartBeat(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImMsgCodeEnums.IM_MSG_HEARTBEAT.getCode())
+                .code(ImMsgTypeEnums.IM_MSG_HEARTBEAT.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();
@@ -74,7 +74,7 @@ public class ImMsgBuilder {
     public static ImMsg buildAck(String body) {
         ImMsg imMsg = ImMsg.builder()
                 .magic(ImConstant.DEFAULT_MAGIC)
-                .code(ImMsgCodeEnums.IM_MSG_ACK.getCode())
+                .code(ImMsgTypeEnums.IM_MSG_ACK.getCode())
                 .len(body.getBytes().length)
                 .body(body.getBytes())
                 .build();

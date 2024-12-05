@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server.common
+ * @package: com.sici.live.ws.core.server.common
  * @author: 20148
  * @description: IM消息体
  * @create-date: 9/16/2024 2:57 PM
@@ -21,5 +21,4 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImMsg implements Serializable {
-
 }

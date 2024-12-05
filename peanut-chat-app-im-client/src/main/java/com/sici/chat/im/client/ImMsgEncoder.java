@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.im.core.server.common
+ * @package: com.sici.live.ws.core.server.common
  * @author: 20148
  * @description: IM消息编码器
  * @create-date: 9/16/2024 3:00 PM

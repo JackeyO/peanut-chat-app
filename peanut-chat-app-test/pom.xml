@@ -14,6 +14,7 @@
     <modules>
         <module>peanut-chat-app-net-demo</module>
         <module>peanut-chat-app-rocketmq-test</module>
+        <module>peanut-app-wechat-test</module>
     </modules>
 
     <properties>
