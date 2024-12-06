@@ -33,41 +33,29 @@ public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> 
     }
 
     @Override
-    public TextMessageVo aggregateAll(Message messageMeta) {
+    public TextMessageVo fillInfo(MessageVo messageVo, MessageMarkVo messageMarkVo) {
         TextMessageVo textMessageVo = new TextMessageVo();
         // 聚合消息META
-        textMessageVo.setMessage(super.aggregateMessageMetaInfo(messageMeta));
+        textMessageVo.setMessage(messageVo);
         // 聚合消息标记信息
-        textMessageVo.setMessageMarkVo(super.aggregateMessageMarkInfo(messageMeta));
+        textMessageVo.setMessageMarkVo(messageMarkVo);
         // 聚合消息文本内容
-        textMessageVo.setContent(textMessageDao.getContentById(messageMeta.getId()));
+        textMessageVo.setContent(textMessageDao.getContentById(messageVo.getId()));
         return textMessageVo;
     }
+
+
     @Override
-    public TextMessageVo aggregateAllRelationToReceiver(Message messageMeta, Integer receiver) {
-        TextMessageVo textMessageVo = new TextMessageVo();
-        // 聚合消息META
-        textMessageVo.setMessage(super.aggregateMessageMetaInfo(messageMeta));
-        // 聚合消息标记信息
-        textMessageVo.setMessageMarkVo(super.aggregateMessageMarkInfoWithCurrentUserAction(messageMeta, receiver));
-        // 聚合消息文本内容
-        textMessageVo.setContent(textMessageDao.getContentById(messageMeta.getId()));
-        return textMessageVo;
+    public TextMessageVo fillInfoRelationToReceiver(MessageVo messageVo, MessageMarkVo messageMarkVo, Integer receiver) {
+        return fillInfo(messageVo, messageMarkVo);
     }
+
     @Override
-    public Map<Integer, TextMessageVo> aggregateAllRelationToReceiver(Message messageMeta, List<Integer> receiverIds) {
-        HashMap<Integer, TextMessageVo> textMessageVoMap = new HashMap<>();
-        Map<Integer, MessageMarkVo> messageMarkVoMap = super.aggregateMessageMarkInfoWithCurrentUserAction(messageMeta, receiverIds);
-        receiverIds.forEach(receiverId -> {
-            TextMessageVo textMessageVo = new TextMessageVo();
-            // 聚合消息META
-            textMessageVo.setMessage(super.aggregateMessageMetaInfo(messageMeta));
-            // 聚合消息标记信息
-            textMessageVo.setMessageMarkVo(messageMarkVoMap.get(receiverId));
-            // 聚合消息文本内容
-            textMessageVo.setContent(textMessageDao.getContentById(messageMeta.getId()));
-            textMessageVoMap.put(receiverId, textMessageVo);
+    public Map<Integer, TextMessageVo> fillInfoRelationToReceiver(MessageVo messageVo, Map<Integer, MessageMarkVo> messageMarkVo, List<Integer> receivers) {
+        HashMap<Integer, TextMessageVo> out = new HashMap<>();
+        receivers.forEach(receiver -> {
+            out.put(receiver, fillInfo(messageVo, messageMarkVo.get(receiver)));
         });
-        return textMessageVoMap;
+        return out;
     }
 }

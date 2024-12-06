@@ -1,7 +1,6 @@
 package com.sici.chat.im.client;
 
 import com.alibaba.fastjson.JSON;
-import com.sici.common.enums.im.ImMsgTypeEnums;
 import com.sici.chat.model.ws.dto.ImMsgBody;
 import com.sici.chat.model.ws.dto.ImMsgDto;
 import io.netty.channel.ChannelHandlerContext;
