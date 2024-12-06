@@ -2,7 +2,6 @@ package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.ws.service.WebSocketService;
-import com.sici.common.enums.im.ImMsgTypeEnums;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

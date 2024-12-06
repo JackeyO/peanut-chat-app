@@ -1,5 +1,6 @@
 package com.sici.chat.model.user.vo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,14 +24,44 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserVO implements Serializable {
-    private Long userId;
+    private Integer id;
+    /**
+     * 用户openId
+     */
+    private String openId;
+
+    /**
+     * 用户昵称
+     */
     private String nickName;
-    private String trueName;
-    private String avatar;
+
+    /**
+     * 0:男，1：女
+     */
     private Integer sex;
-    private Integer workCity;
-    private Integer bornCity;
-    private Date bornDate;
-    private Date createTime;
-    private Date updateTime;
+
+    /**
+     * 生日
+     */
+    private Date birthday;
+
+    /**
+     * 省份
+     */
+    private String province;
+
+    /**
+     * 城市
+     */
+    private String city;
+
+    /**
+     * 国际啊
+     */
+    private String country;
+
+    /**
+     * 注册时间
+     */
+    private Date registerTime;
 }

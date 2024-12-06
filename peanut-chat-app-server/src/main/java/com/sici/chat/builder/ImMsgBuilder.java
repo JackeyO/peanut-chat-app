@@ -1,8 +1,11 @@
 package com.sici.chat.builder;
 
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
+import com.sici.chat.model.chat.message.vo.LoginMessageVo;
 import com.sici.chat.model.chat.message.vo.MessageVo;
+import com.sici.chat.model.chat.message.vo.ScanMessageVo;
 import com.sici.chat.model.ws.bo.ImMsg;
+import com.sici.common.enums.chat.message.MessageTypeEnum;
 
 /**
  * @projectName: qiyu-live-app
@@ -21,5 +24,19 @@ public class ImMsgBuilder {
         imMsg.setMsgId(message.getId());
         imMsg.setData(messageVo);
         return imMsg;
+    }
+
+    public static ImMsg<ScanMessageVo> buildScanMessage(ScanMessageVo scanMessageVo) {
+        ImMsg<ScanMessageVo> imMsg = new ImMsg<>();
+        imMsg.setType(MessageTypeEnum.SCAN_SUCCESS.getType());
+        imMsg.setData(scanMessageVo);
+        return imMsg;
+    }
+
+    public static ImMsg buildLoginMessage(LoginMessageVo loginMessageVo) {
+        ImMsg<LoginMessageVo> imMsg = new ImMsg<>();
+        imMsg.setType(MessageTypeEnum.LOGIN_SUCCESS.getType());
+        imMsg.setData(loginMessageVo);
+        return null;
     }
 }

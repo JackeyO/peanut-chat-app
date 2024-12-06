@@ -22,7 +22,7 @@ peanut:
     producer:
       group: hello
 
-  # im
+  # ws
   im:
     ws:
       port: 9999

@@ -5,16 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @projectName: qiyu-live-app
+ * @projectName: peanut-chat-app
  * @package: com.sici.chat.model.chat.message.vo
  * @author: 20148
- * @description: 通用消息VO
- * @create-date: 12/2/2024 4:08 PM
+ * @description: 扫码后消息
+ * @create-date: 12/6/2024 2:38 PM
  * @version: 1.0
  */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommonMessageVo {
+public class ScanMessageVo extends CommonMessageVo {
+    Boolean scanSuccess;
 }

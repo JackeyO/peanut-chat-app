@@ -1,5 +1,6 @@
 package com.sici.chat.controller;
 
+import com.sici.chat.service.WxMsgService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
@@ -11,6 +12,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.annotation.Resource;
 
 /**
  * @projectName: peanut-chat-app
@@ -28,6 +31,8 @@ import org.springframework.web.servlet.view.RedirectView;
 public class WxPortalController {
     private final WxMpService wxService;
     private final WxMpMessageRouter messageRouter;
+    @Resource
+    private WxMsgService wxMsgService;
 
     /**
      * 微信签名认证
@@ -118,6 +123,7 @@ public class WxPortalController {
         try {
             WxOAuth2AccessToken accessToken = wxService.getOAuth2Service().getAccessToken(code);
             WxOAuth2UserInfo userInfo = wxService.getOAuth2Service().getUserInfo(accessToken, "zh_CN");
+            wxMsgService.authorize(userInfo);
         } catch (Exception e) {
             log.info("callBack error", e);
         }

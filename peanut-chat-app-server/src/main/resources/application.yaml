@@ -32,7 +32,7 @@ peanut:
           token: ${peanut.wx.token} # 接口配置里的Token值
 
 
-  # im
+  # ws
   im:
     ws:
       port: ${peanut.im.ws.port}

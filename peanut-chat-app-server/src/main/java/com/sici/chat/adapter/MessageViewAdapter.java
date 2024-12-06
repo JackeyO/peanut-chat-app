@@ -1,8 +1,19 @@
 package com.sici.chat.adapter;
 
+import com.sici.chat.aggregator.ChatMessageAggregator;
+import com.sici.chat.aggregator.LoginMessageAggregator;
 import com.sici.chat.aggregator.MessageAggregatorFactory;
+import com.sici.chat.aggregator.ScanMessageAggregator;
+import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
+import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
 import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.message.vo.CommonMessageVo;
+import com.sici.chat.model.chat.message.vo.LoginMessageVo;
+import com.sici.chat.model.chat.message.vo.ScanMessageVo;
+import com.sici.chat.model.user.entity.User;
+import com.sici.common.enums.chat.message.MessageTypeEnum;
+import org.apache.calcite.avatica.proto.Common;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,9 +35,21 @@ public class MessageViewAdapter {
      * @param message
      * @return
      */
-    public CommonMessageVo doAdapt(Message message) {
-        return MessageAggregatorFactory.getMessageAggregator(message.getType())
+    public ChatMessageVo adaptChatMessage(Message message) {
+        return ((ChatMessageAggregator) MessageAggregatorFactory.getMessageAggregator(message.getType()))
                 .aggregateAll(message);
+    }
+
+    /**
+     * 需要根据接收者来适配消息信息
+     *
+     * @param message
+     * @param receiverId
+     * @return
+     */
+    public ChatMessageVo adaptChatMessageRelationToReceiver(Message message, Integer receiverId) {
+        return ((ChatMessageAggregator) MessageAggregatorFactory.getMessageAggregator(message.getType()))
+                .aggregateAllRelationToReceiver(message, receiverId);
     }
 
     /**
@@ -35,18 +58,18 @@ public class MessageViewAdapter {
      * @param receiverIds
      * @return
      */
-    public CommonMessageVo doAdaptRelationToReceiver(Message message, Integer receiverIds) {
-        return MessageAggregatorFactory.getMessageAggregator(message.getType())
+    public Map<Integer, CommonMessageVo> adaptChatMessageRelationToReceiver(Message message, List<Integer> receiverIds) {
+        return ((ChatMessageAggregator) MessageAggregatorFactory.getMessageAggregator(message.getType()))
                 .aggregateAllRelationToReceiver(message, receiverIds);
     }
-    /**
-     * 需要根据接收者来适配消息信息
-     * @param message
-     * @param receiverIds
-     * @return
-     */
-    public Map<Integer, CommonMessageVo> doAdaptRelationToReceiver(Message message, List<Integer> receiverIds) {
-        return MessageAggregatorFactory.getMessageAggregator(message.getType())
-                .aggregateAllRelationToReceiver(message, receiverIds);
+
+    public LoginMessageVo adaptLoginMessage(LoginMessageAggregateParam loginMessageAggregateParam) {
+        return ((LoginMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageTypeEnum.LOGIN_SUCCESS.getType()))
+                .aggregateAll(loginMessageAggregateParam);
+    }
+
+    public ScanMessageVo adaptScanMessage(ScanMessageAggregateParam scanMessageAggregateParam) {
+        return ((ScanMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageTypeEnum.SCAN_SUCCESS.getType()))
+                .aggregateAll(scanMessageAggregateParam);
     }
 }

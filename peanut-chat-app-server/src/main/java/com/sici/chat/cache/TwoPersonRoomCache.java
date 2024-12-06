@@ -1,8 +1,6 @@
 package com.sici.chat.cache;
 
-import cn.hutool.core.lang.Pair;
-import com.sici.chat.builder.cache.RoomCacheKeyBuilder;
-import com.sici.chat.builder.cache.RoomMemberCacheKeyBuilder;
+import com.sici.chat.builder.cache.RoomMemberCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,7 @@ public class TwoPersonRoomCache extends AbstractRedisStringCache<Integer, List<I
     @Resource
     private RoomMemberDao roomMemberDao;
     @Resource
-    private RoomMemberCacheKeyBuilder roomMemberCacheKeyBuilder;
+    private RoomMemberCacheRedisKeyBuilder roomMemberCacheKeyBuilder;
 
     @Override
     public String getKey(Integer req) {

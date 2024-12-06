@@ -9,7 +9,7 @@ package com.sici.framework.redis.key;
  * @version: 1.0
  */
 
-public interface KeyBuilder<IN, OUT> {
+public interface RedisKeyBuilder<IN, OUT> {
 
     /**
      * @param req 请求参数

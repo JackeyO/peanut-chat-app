@@ -1,6 +1,6 @@
 package com.sici.chat.builder.cache;
 
-import com.sici.framework.redis.key.KeyBuilder;
+import com.sici.framework.redis.key.RedisKeyBuilder;
 import org.springframework.stereotype.Component;
 
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
@@ -16,10 +16,10 @@ import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_
  */
 
 @Component
-public class RoomCacheKeyBuilder implements KeyBuilder<Integer, String> {
+public class RoomMemberCacheRedisKeyBuilder implements RedisKeyBuilder<Integer, String> {
     @Override
     public String build(Integer req) {
-        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room"
+        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room-friend"
                 + ALL_KEY_SPLIT_ITEM + req;
     }
 }

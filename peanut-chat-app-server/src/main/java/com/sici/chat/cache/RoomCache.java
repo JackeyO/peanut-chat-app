@@ -1,6 +1,6 @@
 package com.sici.chat.cache;
 
-import com.sici.chat.builder.cache.RoomCacheKeyBuilder;
+import com.sici.chat.builder.cache.RoomCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomDao;
 import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class RoomCache extends AbstractRedisStringCache<Integer, Room> {
     @Resource
-    private RoomCacheKeyBuilder roomCacheKeyBuilder;
+    private RoomCacheRedisKeyBuilder roomCacheKeyBuilder;
     @Resource
     private RoomDao roomDao;
 

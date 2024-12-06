@@ -1,7 +1,6 @@
 package com.sici.chat.im.client;
 
 import com.sici.common.constant.im.ImConstant;
-import com.sici.common.enums.im.ImMsgTypeEnums;
 
 /**
  * @projectName: qiyu-live-app

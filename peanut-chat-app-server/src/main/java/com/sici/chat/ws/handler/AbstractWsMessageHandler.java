@@ -1,7 +1,6 @@
 package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
-import com.sici.common.enums.im.ImMsgTypeEnums;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
