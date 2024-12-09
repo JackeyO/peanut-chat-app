@@ -3,6 +3,7 @@ package com.sici.chat.service;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.ws.bo.ImMsg;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;
 
@@ -50,5 +51,5 @@ public interface WebSocketService {
     /**
      * 处理登录请求
      */
-    void handlerLoginReq();
+    void handlerLoginReq(ChannelHandlerContext ctx);
 }

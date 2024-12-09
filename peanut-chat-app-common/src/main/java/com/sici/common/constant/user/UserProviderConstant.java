@@ -2,7 +2,7 @@ package com.sici.common.constant.user;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.user
+ * @package: com.sici.channel.constant.user
  * @author: 20148
  * @description: user provider RPC服务相关常量
  * @create-date: 9/11/2024 4:58 PM

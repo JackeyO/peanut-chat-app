@@ -19,7 +19,7 @@ public class WsMessageHandlerFactory {
     private static Map<Integer, AbstractWsMessageHandler> wsMessageHandlers = new HashMap<>();
 
     public static void registerWsMessageHandler(AbstractWsMessageHandler messageHandler) {
-        wsMessageHandlers.put(messageHandler.getSupportedMessageType().getCode(), messageHandler);
+        wsMessageHandlers.put(messageHandler.getSupportedMessageType().getType(), messageHandler);
     }
 
     public static AbstractWsMessageHandler getWsMessageHandler(Integer wsMsgType) {

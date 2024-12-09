@@ -4,7 +4,7 @@ import com.sici.common.constant.im.ImConstant;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.ws.core.server.common
+ * @package: com.sici.live.ws.core.server.channel
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:50 PM

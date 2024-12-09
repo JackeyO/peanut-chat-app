@@ -4,29 +4,29 @@ import com.sici.framework.redis.key.RedisKeyBuilder;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_ITEM;
 
 /**
- * @projectName: qiyu-live-app
+ * @projectName: peanut-chat-app
  * @package: com.sici.chat.builder.cache
  * @author: 20148
- * @description: 房间信息缓存key生成器
- * @create-date: 12/2/2024 3:10 PM
+ * @description: 用户登陆码生成值
+ * @create-date: 12/9/2024 3:07 PM
  * @version: 1.0
  */
 
 @Component
-public class RoomCacheRedisKeyBuilder implements RedisKeyBuilder<Integer, String> {
+public class UserLoginCodeKeyBuilder implements RedisKeyBuilder {
     @Override
-    public String build(Integer req) {
-        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room"
-                + ALL_KEY_SPLIT_ITEM + req;
+    public String build(Object req) {
+        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM
+                + "loginCode";
     }
+
     @Override
     public Duration getExpireTime() {
-        return Duration.ofSeconds(50);
+        return Duration.ofHours(2);
     }
 }

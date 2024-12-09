@@ -2,7 +2,7 @@ package com.sici.common.constant.im;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.ws
+ * @package: com.sici.channel.constant.ws
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 3:06 PM

@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 /**
  * @projectName: sici-leadnews
- * @package: com.sici.common.log.util
+ * @package: com.sici.channel.log.util
  * @author: 20148
  * @description: 获取logger工具类
  * @create-date: 8/8/2024 4:45 PM

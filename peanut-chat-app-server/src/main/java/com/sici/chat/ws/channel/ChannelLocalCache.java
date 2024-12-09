@@ -1,9 +1,8 @@
-package com.sici.chat.ws.common;
+package com.sici.chat.ws.channel;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.sici.chat.model.ws.bo.WsChannelInfo;
-import com.sici.chat.ws.common.util.ChannelAttrUtil;
 import io.netty.channel.Channel;
 
 import java.time.Duration;
@@ -15,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.ws.core.server.common
+ * @package: com.sici.live.ws.core.server.channel
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 8:12 PM
@@ -97,5 +96,15 @@ public class ChannelLocalCache {
     }
     public static void removeWaitLoginChannel(Integer loginCode) {
         WAIT_LOGIN_CHANNEL_MAP.invalidate(loginCode);
+    }
+
+    /**
+     * 检查loginCode是否已经被一个客户端占用了
+     * @param loginCode
+     * @return
+     */
+    public static boolean checkLoginCodeExists(Integer loginCode) {
+        return WAIT_LOGIN_CHANNEL_MAP.asMap()
+                .containsKey(loginCode);
     }
 }

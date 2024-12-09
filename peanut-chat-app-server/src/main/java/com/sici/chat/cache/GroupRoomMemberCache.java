@@ -1,6 +1,6 @@
 package com.sici.chat.cache;
 
-import com.sici.chat.builder.cache.RoomMemberCacheRedisKeyBuilder;
+import com.sici.chat.builder.cache.RoomMemberCacheKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class GroupRoomMemberCache extends AbstractRedisStringCache<Integer, List<Integer>> {
     @Resource
-    private RoomMemberCacheRedisKeyBuilder roomMemberCacheKeyBuilder;
+    private RoomMemberCacheKeyBuilder roomMemberCacheKeyBuilder;
     @Resource
     private RoomMemberDao roomMemberDao;
     @Override
@@ -30,7 +30,7 @@ public class GroupRoomMemberCache extends AbstractRedisStringCache<Integer, List
     }
     @Override
     public long getExpireSeconds() {
-        return 50 * 1000;
+        return roomMemberCacheKeyBuilder.getExpireTime().toSeconds();
     }
 
     @Override

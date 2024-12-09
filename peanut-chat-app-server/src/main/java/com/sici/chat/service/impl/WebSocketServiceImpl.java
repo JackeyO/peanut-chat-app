@@ -2,21 +2,32 @@ package com.sici.chat.service.impl;
 
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
+import com.sici.chat.builder.cache.UserLoginCodeKeyBuilder;
+import com.sici.chat.event.UserOfflineEvent;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
+import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
+import com.sici.chat.model.chat.message.vo.LoginQrCodeMessageVo;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.model.ws.bo.WsChannelInfo;
 import com.sici.chat.service.UserService;
 import com.sici.chat.service.WebSocketService;
-import com.sici.chat.ws.common.ChannelLocalCache;
+import com.sici.chat.ws.channel.ChannelAttr;
+import com.sici.chat.ws.channel.ChannelLocalCache;
+import com.sici.chat.ws.channel.ChannelAttrUtil;
+import com.sici.framework.redis.RedisUtils;
 import io.netty.channel.Channel;
-import nonapi.io.github.classgraph.scanspec.ScanSpec;
+import io.netty.channel.ChannelHandlerContext;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @projectName: peanut-chat-app
@@ -35,6 +46,10 @@ public class WebSocketServiceImpl implements WebSocketService {
     private MessageViewAdapter messageViewAdapter;
     @Resource
     private UserService userService;
+    @Resource
+    private WxMpService wxMpService;
+    @Resource
+    private UserLoginCodeKeyBuilder userLoginCodeKeyBuilder;
 
     private void sendMsgToChannel(Channel channel, ImMsg imMsg) {
         channel.writeAndFlush(imMsg);
@@ -59,17 +74,18 @@ public class WebSocketServiceImpl implements WebSocketService {
     @Override
     public void offline(Channel channel) {
         ChannelLocalCache.removeOnlineChannelAndInfo(channel);
-        // TODO: 发布用户下线事件  || created by 20148 at 12/4/2024 2:50 PM
-//        applicationEventPublisher.publishEvent(new );
+        applicationEventPublisher.publishEvent(new UserOfflineEvent(this, ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID)));
     }
 
     @Override
     public Boolean scanSuccess(Integer loginCode) {
         Channel waitLoginChannel = ChannelLocalCache.getWaitLoginChannel(loginCode);
         Boolean success = waitLoginChannel != null;
-        sendMsgToChannel(waitLoginChannel,
-                ImMsgBuilder.buildScanMessage(messageViewAdapter.adaptScanMessage(new ScanMessageAggregateParam(success))));
-        return Boolean.FALSE;
+        if (success) {
+            sendMsgToChannel(waitLoginChannel,
+                    ImMsgBuilder.buildScanMessage(messageViewAdapter.adaptScanMessage(new ScanMessageAggregateParam(true))));
+        }
+        return success;
     }
 
     @Override
@@ -83,13 +99,47 @@ public class WebSocketServiceImpl implements WebSocketService {
         // 从等待登录的channel里删除
         ChannelLocalCache.removeWaitLoginChannel(loginCode);
 
+        // 告知客户端登陆成功
         sendMsgToChannel(waitLoginChannel,
                 ImMsgBuilder.buildLoginMessage(messageViewAdapter.adaptLoginMessage(new LoginMessageAggregateParam(token, user))));
         return Boolean.TRUE;
     }
 
     @Override
-    public void handlerLoginReq() {
+    public void handlerLoginReq(ChannelHandlerContext ctx) {
+        // 生成登陆码
+        Integer loginCode = generateLoginCode();
 
+        try {
+            WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(loginCode,
+                    (int) userLoginCodeKeyBuilder.getExpireTime().toSeconds());
+            LoginQrCodeMessageVo loginQrCodeMessageVo =
+                    messageViewAdapter.adaptLoginQrCodeMessage(LoginQrCodeMessageAggregateParam
+                            .builder()
+                            .ticket(wxMpQrCodeTicket.getTicket())
+                            .url(wxMpQrCodeTicket.getUrl())
+                            .expireSeconds(wxMpQrCodeTicket.getExpireSeconds())
+                            .build());
+
+            // 保存登陆码与channel的关联
+            ChannelLocalCache.addWaitLoginChannel(loginCode, ctx.channel());
+            // 发送给前端，展示二维码
+            sendMsgToChannel(ctx.channel(), ImMsgBuilder.buildLoginQrCodeMessage(loginQrCodeMessageVo));
+        } catch (WxErrorException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 生成登陆码
+     * @return
+     */
+    private Integer generateLoginCode() {
+        int loginCode;
+        do {
+            loginCode = RedisUtils.integerInc(userLoginCodeKeyBuilder.build(null), (int) userLoginCodeKeyBuilder.getExpireTime().toSeconds(),
+                    TimeUnit.SECONDS);
+        } while (ChannelLocalCache.checkLoginCodeExists(loginCode));
+        return loginCode;
     }
 }

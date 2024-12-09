@@ -1,19 +1,12 @@
 package com.sici.chat.adapter;
 
-import com.sici.chat.aggregator.ChatMessageAggregator;
-import com.sici.chat.aggregator.LoginMessageAggregator;
-import com.sici.chat.aggregator.MessageAggregatorFactory;
-import com.sici.chat.aggregator.ScanMessageAggregator;
+import com.sici.chat.aggregator.*;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
+import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
 import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.chat.model.chat.message.vo.ChatMessageVo;
-import com.sici.chat.model.chat.message.vo.CommonMessageVo;
-import com.sici.chat.model.chat.message.vo.LoginMessageVo;
-import com.sici.chat.model.chat.message.vo.ScanMessageVo;
-import com.sici.chat.model.user.entity.User;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
-import org.apache.calcite.avatica.proto.Common;
+import com.sici.chat.model.chat.message.vo.*;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -64,12 +57,17 @@ public class MessageViewAdapter {
     }
 
     public LoginMessageVo adaptLoginMessage(LoginMessageAggregateParam loginMessageAggregateParam) {
-        return ((LoginMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageTypeEnum.LOGIN_SUCCESS.getType()))
+        return ((LoginMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageRespTypeEnum.LOGIN_SUCCESS.getType()))
                 .aggregateAll(loginMessageAggregateParam);
     }
 
     public ScanMessageVo adaptScanMessage(ScanMessageAggregateParam scanMessageAggregateParam) {
-        return ((ScanMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageTypeEnum.SCAN_SUCCESS.getType()))
+        return ((ScanMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageRespTypeEnum.SCAN_SUCCESS.getType()))
                 .aggregateAll(scanMessageAggregateParam);
+    }
+
+    public LoginQrCodeMessageVo adaptLoginQrCodeMessage(LoginQrCodeMessageAggregateParam loginQrCodeMessageAggregateParam) {
+        return ((LoginQrCodeMessageAggregator) MessageAggregatorFactory.getMessageAggregator(MessageRespTypeEnum.LOGIN_QR_CODE.getType()))
+                .aggregateAll(loginQrCodeMessageAggregateParam);
     }
 }

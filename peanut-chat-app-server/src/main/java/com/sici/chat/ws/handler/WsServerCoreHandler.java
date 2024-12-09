@@ -1,8 +1,7 @@
 package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
-import com.sici.chat.ws.common.util.ChannelAttrUtil;
-import com.sici.chat.ws.service.WebSocketService;
+import com.sici.chat.service.WebSocketService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

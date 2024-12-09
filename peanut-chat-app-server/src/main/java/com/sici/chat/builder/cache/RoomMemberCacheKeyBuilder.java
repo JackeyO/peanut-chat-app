@@ -3,6 +3,8 @@ package com.sici.chat.builder.cache;
 import com.sici.framework.redis.key.RedisKeyBuilder;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_ITEM;
 
@@ -16,10 +18,14 @@ import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_
  */
 
 @Component
-public class RoomMemberCacheRedisKeyBuilder implements RedisKeyBuilder<Integer, String> {
+public class RoomMemberCacheKeyBuilder implements RedisKeyBuilder<Integer, String> {
     @Override
     public String build(Integer req) {
         return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room-friend"
                 + ALL_KEY_SPLIT_ITEM + req;
+    }
+    @Override
+    public Duration getExpireTime() {
+        return Duration.ofSeconds(50);
     }
 }

@@ -2,7 +2,7 @@ package com.sici.common.enums.chat.message;
 
 /**
  * @projectName: peanut-chat-app
- * @package: com.sici.common.enums.chat.message
+ * @package: com.sici.channel.enums.chat.message
  * @author: 20148
  * @description: 消息标记类型状态枚举
  * @create-date: 12/3/2024 1:54 PM

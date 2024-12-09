@@ -1,7 +1,7 @@
 package com.sici.chat.aggregator;
 
 import com.sici.chat.model.chat.message.vo.CommonMessageVo;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 
 /**
  * @projectName: qiyu-live-app
@@ -13,7 +13,7 @@ import com.sici.common.enums.chat.message.MessageTypeEnum;
  */
 
 public abstract class AbstractMessageAggregator<IN, OUT extends CommonMessageVo> {
-    public abstract MessageTypeEnum getSupportedMessageEnum();
+    public abstract MessageRespTypeEnum getSupportedMessageEnum();
     public abstract OUT aggregateAll(IN toAggregateInfo);
     public AbstractMessageAggregator() {
         MessageAggregatorFactory.register(this);

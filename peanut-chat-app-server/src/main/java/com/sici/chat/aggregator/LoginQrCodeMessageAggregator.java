@@ -1,7 +1,9 @@
 package com.sici.chat.aggregator;
 
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
+import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
 import com.sici.chat.model.chat.message.vo.LoginMessageVo;
+import com.sici.chat.model.chat.message.vo.LoginQrCodeMessageVo;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.user.vo.UserVO;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
@@ -18,22 +20,18 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class LoginMessageAggregator extends AbstractMessageAggregator<LoginMessageAggregateParam, LoginMessageVo>{
+public class LoginQrCodeMessageAggregator extends AbstractMessageAggregator<LoginQrCodeMessageAggregateParam, LoginQrCodeMessageVo>{
     @Override
     public MessageRespTypeEnum getSupportedMessageEnum() {
         return MessageRespTypeEnum.LOGIN_SUCCESS;
     }
 
     @Override
-    public LoginMessageVo aggregateAll(LoginMessageAggregateParam loginMessageAggregateParam) {
-        LoginMessageVo loginMessageVo = new LoginMessageVo();
-
-        String token = loginMessageAggregateParam.getToken();
-        User user = loginMessageAggregateParam.getUser();
-
-        UserVO userVO = ConvertBeanUtil.convertSingle(user, UserVO.class);
-        loginMessageVo.setUserVO(userVO);
-
-        return loginMessageVo;
+    public LoginQrCodeMessageVo aggregateAll(LoginQrCodeMessageAggregateParam toAggregateInfo) {
+        LoginQrCodeMessageVo loginQrCodeMessageVo = new LoginQrCodeMessageVo();
+        loginQrCodeMessageVo.setTicket(toAggregateInfo.getTicket());
+        loginQrCodeMessageVo.setUrl(toAggregateInfo.getUrl());
+        loginQrCodeMessageVo.setExpireSeconds(toAggregateInfo.getExpireSeconds());
+        return loginQrCodeMessageVo;
     }
 }
