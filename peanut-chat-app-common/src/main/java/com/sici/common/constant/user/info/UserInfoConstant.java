@@ -2,7 +2,7 @@ package com.sici.common.constant.user.info;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.user.info
+ * @package: com.sici.channel.constant.user.info
  * @author: 20148
  * @description: 用户信息相关常量
  * @create-date: 9/15/2024 3:00 PM

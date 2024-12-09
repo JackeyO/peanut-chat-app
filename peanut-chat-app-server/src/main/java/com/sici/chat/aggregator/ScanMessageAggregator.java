@@ -2,7 +2,7 @@ package com.sici.chat.aggregator;
 
 import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
 import com.sici.chat.model.chat.message.vo.ScanMessageVo;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScanMessageAggregator extends AbstractMessageAggregator<ScanMessageAggregateParam, ScanMessageVo> {
     @Override
-    public MessageTypeEnum getSupportedMessageEnum() {
-        return MessageTypeEnum.SCAN_SUCCESS;
+    public MessageRespTypeEnum getSupportedMessageEnum() {
+        return MessageRespTypeEnum.SCAN_SUCCESS;
     }
 
     @Override

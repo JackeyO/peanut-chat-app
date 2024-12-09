@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.constant.user.tag
+ * @package: com.sici.channel.constant.user.tag
  * @author: 20148
  * @description: 用户标签相关常量
  * @create-date: 9/14/2024 8:58 PM

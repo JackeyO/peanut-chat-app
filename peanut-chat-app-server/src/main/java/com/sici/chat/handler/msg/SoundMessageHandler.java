@@ -5,7 +5,7 @@ import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.SoundMessageDto;
 import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,8 +25,8 @@ public class SoundMessageHandler extends AbstractMessageHandler<SoundMessageDto>
     private FileMessageDao fileMessageDao;
 
     @Override
-    public MessageTypeEnum getMessageTypeEnum() {
-        return MessageTypeEnum.SOUND;
+    public MessageRespTypeEnum getMessageTypeEnum() {
+        return MessageRespTypeEnum.SOUND;
     }
 
     @Override

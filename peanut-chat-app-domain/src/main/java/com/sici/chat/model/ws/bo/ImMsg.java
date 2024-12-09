@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.ws.core.server.common
+ * @package: com.sici.live.ws.core.server.channel
  * @author: 20148
  * @description: IM消息体
  * @create-date: 9/16/2024 2:57 PM

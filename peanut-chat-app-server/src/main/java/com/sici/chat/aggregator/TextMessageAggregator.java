@@ -1,12 +1,10 @@
 package com.sici.chat.aggregator;
 
 import com.sici.chat.dao.TextMessageDao;
-import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.MessageMarkVo;
 import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.model.chat.message.vo.TextMessageVo;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
-import org.springframework.context.annotation.ComponentScan;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -28,8 +26,8 @@ public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> 
     @Resource
     private TextMessageDao textMessageDao;
     @Override
-    public MessageTypeEnum getSupportedMessageEnum() {
-        return MessageTypeEnum.TEXT;
+    public MessageRespTypeEnum getSupportedMessageEnum() {
+        return MessageRespTypeEnum.TEXT;
     }
 
     @Override

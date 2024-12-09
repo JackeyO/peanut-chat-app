@@ -1,10 +1,10 @@
-package com.sici.chat.ws.common;
+package com.sici.chat.ws.channel;
 
 import io.netty.util.AttributeKey;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.ws.core.server.common
+ * @package: com.sici.live.ws.core.server.channel
  * @author: 20148
  * @description:
  * @create-date: 9/16/2024 8:23 PM

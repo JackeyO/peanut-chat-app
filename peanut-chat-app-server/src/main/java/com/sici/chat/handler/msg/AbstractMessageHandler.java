@@ -5,7 +5,7 @@ import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -39,7 +39,7 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
         return messageRequestDto.getBody() != null && messageBodyClass.isInstance(messageRequestDto.getBody());
     }
 
-    public abstract MessageTypeEnum getMessageTypeEnum();
+    public abstract MessageRespTypeEnum getMessageTypeEnum();
 
     /**
      * 解构出消息体

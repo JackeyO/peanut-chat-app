@@ -6,7 +6,7 @@ import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.TextMessageDto;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.entity.TextMessage;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,8 +25,8 @@ public class TextMessageHandler extends AbstractMessageHandler<TextMessageDto> {
     @Resource
     private TextMessageDao textMessageDao;
     @Override
-    public MessageTypeEnum getMessageTypeEnum() {
-        return MessageTypeEnum.TEXT;
+    public MessageRespTypeEnum getMessageTypeEnum() {
+        return MessageRespTypeEnum.TEXT;
     }
 
     @Override

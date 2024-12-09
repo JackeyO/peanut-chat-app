@@ -1,7 +1,8 @@
 package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
-import com.sici.chat.ws.service.WebSocketService;
+import com.sici.chat.service.WebSocketService;
+import com.sici.common.enums.chat.message.MessageReqTypeEnum;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,11 +25,17 @@ public class WsLoginMessageHandler extends AbstractWsMessageHandler {
     @Resource
     private WebSocketService webSocketService;
     @Override
-    public ImMsgTypeEnums getSupportedMessageType() {
-        return ImMsgTypeEnums.IM_MSG_LOGIN;
+    public MessageReqTypeEnum getSupportedMessageType() {
+        return MessageReqTypeEnum.LOIN_REQUEST;
     }
 
+    /**
+     * 处理客户端登录请求
+     * @param ctx
+     * @param imMsg
+     */
     @Override
     public void handle(ChannelHandlerContext ctx, ImMsg imMsg) {
+        this.webSocketService.handlerLoginReq(ctx);
     }
 }

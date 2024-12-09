@@ -34,7 +34,7 @@ public class RoomCache extends AbstractRedisStringCache<Integer, Room> {
 
     @Override
     public long getExpireSeconds() {
-        return 50 * 1000;
+        return roomCacheKeyBuilder.getExpireTime().toSeconds();
     }
 
     @Override

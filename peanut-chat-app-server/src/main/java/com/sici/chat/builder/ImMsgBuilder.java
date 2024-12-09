@@ -1,15 +1,12 @@
 package com.sici.chat.builder;
 
-import com.sici.chat.model.chat.message.vo.ChatMessageVo;
-import com.sici.chat.model.chat.message.vo.LoginMessageVo;
-import com.sici.chat.model.chat.message.vo.MessageVo;
-import com.sici.chat.model.chat.message.vo.ScanMessageVo;
+import com.sici.chat.model.chat.message.vo.*;
 import com.sici.chat.model.ws.bo.ImMsg;
-import com.sici.common.enums.chat.message.MessageTypeEnum;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.builder
+ * @package: com.sici.channel.builder
  * @author: 20148
  * @description: 构建ImMsg
  * @create-date: 11/30/2024 4:09 PM
@@ -28,15 +25,22 @@ public class ImMsgBuilder {
 
     public static ImMsg<ScanMessageVo> buildScanMessage(ScanMessageVo scanMessageVo) {
         ImMsg<ScanMessageVo> imMsg = new ImMsg<>();
-        imMsg.setType(MessageTypeEnum.SCAN_SUCCESS.getType());
+        imMsg.setType(MessageRespTypeEnum.SCAN_SUCCESS.getType());
         imMsg.setData(scanMessageVo);
         return imMsg;
     }
 
     public static ImMsg buildLoginMessage(LoginMessageVo loginMessageVo) {
         ImMsg<LoginMessageVo> imMsg = new ImMsg<>();
-        imMsg.setType(MessageTypeEnum.LOGIN_SUCCESS.getType());
+        imMsg.setType(MessageRespTypeEnum.LOGIN_SUCCESS.getType());
         imMsg.setData(loginMessageVo);
         return null;
+    }
+
+    public static ImMsg buildLoginQrCodeMessage(LoginQrCodeMessageVo loginQrCodeMessageVo) {
+        ImMsg<LoginQrCodeMessageVo> imMsg = new ImMsg<>();
+        imMsg.setType(MessageRespTypeEnum.LOGIN_QR_CODE.getType());
+        imMsg.setData(loginQrCodeMessageVo);
+        return imMsg;
     }
 }

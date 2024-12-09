@@ -2,6 +2,7 @@ package com.sici.chat.model.chat.message.bo.aggregate;
 
 import com.sici.chat.model.user.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginMessageAggregateParam {

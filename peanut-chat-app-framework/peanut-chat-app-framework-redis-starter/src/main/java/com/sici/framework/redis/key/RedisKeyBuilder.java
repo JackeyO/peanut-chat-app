@@ -1,5 +1,7 @@
 package com.sici.framework.redis.key;
 
+import java.time.Duration;
+
 /**
  * @projectName: qiyu-live-app
  * @package: com.sici.framework.redis.key
@@ -16,4 +18,5 @@ public interface RedisKeyBuilder<IN, OUT> {
      * @return key
      */
     OUT build(IN req);
+    Duration getExpireTime();
 }

@@ -2,7 +2,7 @@ package com.sici.common.enums.chat.room;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.common.enums.chat.room
+ * @package: com.sici.channel.enums.chat.room
  * @author: 20148
  * @description: 房间类型枚举类
  * @create-date: 12/2/2024 5:11 PM

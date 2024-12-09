@@ -13,7 +13,9 @@ import org.springframework.context.ApplicationEvent;
 
 public class UserOfflineEvent extends ApplicationEvent {
     // TODO: 定义用户事件详细信息UserEventInfo(建表来保存用户上线和下线记录)  || created by 20148 at 12/4/2024 2:54 PM
-    public UserOfflineEvent(Object source) {
+    private Integer userId;
+    public UserOfflineEvent(Object source, Integer userId) {
         super(source);
+        this.userId = userId;
     }
 }

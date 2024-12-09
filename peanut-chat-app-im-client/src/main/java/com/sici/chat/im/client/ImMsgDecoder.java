@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @projectName: qiyu-live-app
- * @package: com.sici.live.ws.core.server.common
+ * @package: com.sici.live.ws.core.server.channel
  * @author: 20148
  * @description: IM消息解码器
  * @create-date: 9/16/2024 3:03 PM
