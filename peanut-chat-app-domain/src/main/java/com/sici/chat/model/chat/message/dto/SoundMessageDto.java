@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class SoundMessageDto extends BaseFileMessageDto {
     /**
      * 总时长(以s为单位)

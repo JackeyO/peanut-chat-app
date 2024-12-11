@@ -17,7 +17,6 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class MessageSendDTO implements Serializable {
     private Integer msgId;
 }
