@@ -1,7 +1,7 @@
 package com.sici.chat.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.sici.chat.builder.cache.UserOpenIdBindLoginCodeRedisRedisKeyBuilder;
+import com.sici.chat.builder.cache.UserOpenIdBindLoginCodeKeyBuilder;
 import com.sici.chat.builder.user.UserInfoBuilder;
 import com.sici.chat.builder.wx.TextBuilder;
 import com.sici.chat.dao.UserDao;
@@ -47,7 +47,7 @@ public class WxMsgServiceImpl implements WxMsgService {
     @Resource
     private UserService userService;
     @Resource
-    private UserOpenIdBindLoginCodeRedisRedisKeyBuilder userOpenIdBindLoginCodeRedisRedisKeyBuilder;
+    private UserOpenIdBindLoginCodeKeyBuilder userOpenIdBindLoginCodeRedisRedisKeyBuilder;
 
     @Override
     public WxMpXmlOutMessage scan(WxMpXmlMessage wxMpXmlMessage) {

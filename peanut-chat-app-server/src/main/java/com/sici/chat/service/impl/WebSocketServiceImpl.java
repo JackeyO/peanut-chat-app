@@ -3,6 +3,7 @@ package com.sici.chat.service.impl;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.builder.cache.UserLoginCodeKeyBuilder;
+import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.event.UserOfflineEvent;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
@@ -22,12 +23,16 @@ import io.netty.channel.ChannelHandlerContext;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.sici.chat.config.thread.ThreadPoolConfiguration.CHAT_WS_EXECUTOR;
 
 /**
  * @projectName: peanut-chat-app
@@ -50,6 +55,9 @@ public class WebSocketServiceImpl implements WebSocketService {
     private WxMpService wxMpService;
     @Resource
     private UserLoginCodeKeyBuilder userLoginCodeKeyBuilder;
+    @Resource
+    @Qualifier(CHAT_WS_EXECUTOR)
+    private ThreadPoolTaskExecutor executor;
 
     private void sendMsgToChannel(Channel channel, ImMsg imMsg) {
         channel.writeAndFlush(imMsg);
@@ -57,17 +65,19 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public void sendMsg(ImMsg imMsg, Integer receiverId) {
-        // TODO: 使用线程池异步任务来执行此操作  || created by 20148 at 12/4/2024 2:52 PM
-        List<Channel> channelsToSend = ChannelLocalCache.getChannel(receiverId);
-        channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+        executor.execute(() -> {
+            List<Channel> channelsToSend = ChannelLocalCache.getChannel(receiverId);
+            channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+        });
     }
 
     @Override
     public void sendMsg(ImMsg imMsg, List<Integer> receiverId) {
-        // TODO: 使用线程池异步任务来执行此操作  || created by 20148 at 12/4/2024 2:52 PM
-        receiverId.forEach(id -> {
-            List<Channel> channelsToSend = ChannelLocalCache.getChannel(id);
-            channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+        executor.execute(() -> {
+            receiverId.forEach(id -> {
+                List<Channel> channelsToSend = ChannelLocalCache.getChannel(id);
+                channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+            });
         });
     }
 

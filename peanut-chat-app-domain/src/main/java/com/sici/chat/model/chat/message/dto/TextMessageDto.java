@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class TextMessageDto extends MessageDto{
     private String content;
 }
