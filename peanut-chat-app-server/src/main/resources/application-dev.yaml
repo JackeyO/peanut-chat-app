@@ -18,16 +18,23 @@ peanut:
 
   # RocketMq
   rocketmq:
-    name-server: 47.96.140.250:9876
+    name-server: 192.168.1.12:9876
     producer:
       group: hello
 
   # ws
-  im:
-    ws:
-      port: 9999
+  ws:
+    port: 9999
 
   # Redis
   redis:
-    host: 8.136.101.218
+    host: 192.168.1.12 
     port: 6379
+
+  #mysql
+  mysql:
+    ip: 192.168.1.12 
+    port: 3306
+    db: peanut-chat
+    username: root
+    password: 345267

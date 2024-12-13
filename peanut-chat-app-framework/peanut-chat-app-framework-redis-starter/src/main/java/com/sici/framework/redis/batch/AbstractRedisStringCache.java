@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Pair;
 import com.sici.framework.redis.RedisUtils;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
 
     public AbstractRedisStringCache () {
         ParameterizedType superclass = (ParameterizedType) this.getClass().getGenericSuperclass();
-        outClass = (Class<OUT>) superclass.getActualTypeArguments()[1];
+        this.outClass = (Class<OUT>) superclass.getActualTypeArguments()[1];
     }
     /**
      * 由子类各种应用类型缓存来决定key的生成规则

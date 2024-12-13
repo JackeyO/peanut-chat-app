@@ -33,6 +33,8 @@ public class Message {
     private Integer fromUid;
     @TableField("from_uid")
     private Integer roomId;
+    @TableField("reply_msg_id")
+    private Integer replyMsgId;
     @TableField("type")
     private Integer type;
     @TableField("send_time")
@@ -41,6 +43,6 @@ public class Message {
     private Date updateTime;
     @TableField("status")
     private Integer status;
-    @TableField(value = "extra", typeHandler = JacksonTypeHandler.class)
-    private MessageExtra messageExtra;
+    @TableField("extra")
+    private String extra;
 }

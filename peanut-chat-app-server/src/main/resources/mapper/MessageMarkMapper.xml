@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sici.chat.mapper.MessageMarkMapper">
+
+    <resultMap id="BaseResultMap" type="com.sici.chat.model.chat.message.entity.MessageMark">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="msgId" column="msg_id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="like" column="like" jdbcType="INTEGER"/>
+            <result property="dislikeFlag" column="dislikeFlag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,msg_id,user_id,
+        like,dislikeFlag
+    </sql>
+</mapper>

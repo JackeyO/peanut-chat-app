@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sici.chat.mapper.MessageMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.Message">
+    <resultMap id="BaseResultMap" type="com.sici.chat.model.chat.message.entity.Message">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="fromUid" column="from_uid" jdbcType="INTEGER"/>
             <result property="roomId" column="room_id" jdbcType="INTEGER"/>

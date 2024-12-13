@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
 import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
+import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.user.entity.User;
 
 import java.lang.reflect.Method;
@@ -41,12 +42,13 @@ public class CursorPageUtil {
 
         // 封装返回数据
         CursorPageVo<T> cursorPageVo = new CursorPageVo<>();
-        Page<T> page = dao.page(new Page<T>(cursorPageDto.getCurrent(), cursorPageDto.getPageSize()));
+        Page<T> page = dao.page(new Page<T>(cursorPageDto.getCurrent(), cursorPageDto.getPageSize()), wrapper);
         List<T> records = page.getRecords();
         cursorPageVo.setCurrent((int) page.getCurrent());
         cursorPageVo.setPageSize(cursorPageDto.getPageSize());
         cursorPageVo.setRecords(records);
         cursorPageVo.setRecordSize(records.size());
+        cursorPageVo.setIsLast(records.size() == page.getTotal());
 
         // 设置下一次游标
         String nextCursor = cursorToString(cursorMap.apply(CollectionUtil.getLast(records)

@@ -1,6 +1,5 @@
 package com.sici.chat.model.chat.message.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -31,12 +30,12 @@ public class MessageMark implements Serializable {
     /**
      * 是否喜欢
      */
-    private Integer like;
+    private Integer likeFlag;
 
     /**
      * 是否不喜欢
      */
-    private Integer dislike;
+    private Integer dislikeFlag;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -86,29 +85,29 @@ public class MessageMark implements Serializable {
     /**
      * 是否喜欢
      */
-    public Integer getLike() {
-        return like;
+    public Integer getLikeFlag() {
+        return likeFlag;
     }
 
     /**
      * 是否喜欢
      */
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setLikeFlag(Integer like) {
+        this.likeFlag = like;
     }
 
     /**
      * 是否不喜欢
      */
-    public Integer getDislike() {
-        return dislike;
+    public Integer getDislikeFlag() {
+        return dislikeFlag;
     }
 
     /**
      * 是否不喜欢
      */
-    public void setDislike(Integer dislike) {
-        this.dislike = dislike;
+    public void setDislikeFlag(Integer dislikeFlag) {
+        this.dislikeFlag = dislikeFlag;
     }
 
     @Override
@@ -126,8 +125,8 @@ public class MessageMark implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getMsgId() == null ? other.getMsgId() == null : this.getMsgId().equals(other.getMsgId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getLike() == null ? other.getLike() == null : this.getLike().equals(other.getLike()))
-            && (this.getDislike() == null ? other.getDislike() == null : this.getDislike().equals(other.getDislike()));
+            && (this.getLikeFlag() == null ? other.getLikeFlag() == null : this.getLikeFlag().equals(other.getLikeFlag()))
+            && (this.getDislikeFlag() == null ? other.getDislikeFlag() == null : this.getDislikeFlag().equals(other.getDislikeFlag()));
     }
 
     @Override
@@ -137,8 +136,8 @@ public class MessageMark implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getMsgId() == null) ? 0 : getMsgId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getLike() == null) ? 0 : getLike().hashCode());
-        result = prime * result + ((getDislike() == null) ? 0 : getDislike().hashCode());
+        result = prime * result + ((getLikeFlag() == null) ? 0 : getLikeFlag().hashCode());
+        result = prime * result + ((getDislikeFlag() == null) ? 0 : getDislikeFlag().hashCode());
         return result;
     }
 
@@ -151,8 +150,8 @@ public class MessageMark implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", msgId=").append(msgId);
         sb.append(", userId=").append(userId);
-        sb.append(", like=").append(like);
-        sb.append(", dislike=").append(dislike);
+        sb.append(", like=").append(likeFlag);
+        sb.append(", dislikeFlag=").append(dislikeFlag);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

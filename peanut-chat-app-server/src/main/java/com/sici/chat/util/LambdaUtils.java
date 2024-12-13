@@ -24,7 +24,7 @@ public class LambdaUtils {
         String methodName = lambdaMeta.getImplMethodName();
 
         String fieldName = PropertyNamer.methodToProperty(methodName);
-        Field field = instantiatedClass.getField(fieldName);
+        Field field = instantiatedClass.getDeclaredField(fieldName);
         field.setAccessible(true);
         return field.getType();
     }

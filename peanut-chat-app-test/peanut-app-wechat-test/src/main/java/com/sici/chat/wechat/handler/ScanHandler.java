@@ -4,11 +4,14 @@ import com.sici.chat.wechat.TextBuilder;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.WxMpSubscribeMsgService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.URLEncoder;
 import java.util.Map;
 

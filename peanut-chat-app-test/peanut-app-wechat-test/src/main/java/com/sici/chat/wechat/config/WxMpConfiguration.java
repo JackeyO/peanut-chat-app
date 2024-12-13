@@ -13,6 +13,7 @@ import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,6 @@ import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 @EnableConfigurationProperties(WxMpProperties.class)
 public class WxMpConfiguration {
     private final WxMpProperties properties;
-
     private final LogHandler logHandler;
     private final SubscribeHandler subscribeHandler;
     private final ScanHandler scanHandler;
