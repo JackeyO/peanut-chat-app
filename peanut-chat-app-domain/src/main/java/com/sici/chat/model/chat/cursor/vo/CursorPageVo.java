@@ -24,4 +24,5 @@ public class CursorPageVo<T> {
     private Integer recordSize;
     private String cursor;
     private List<T> records;
+    private Boolean isLast;
 }

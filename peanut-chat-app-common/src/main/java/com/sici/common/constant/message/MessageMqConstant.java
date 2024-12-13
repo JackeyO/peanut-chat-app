@@ -10,6 +10,5 @@ package com.sici.common.constant.message;
  */
 
 public class MessageMqConstant {
-    public static final String SEND_MSG_TOPIC = "peanut-app:message:send";
-    public static final String SEND_MSG_CONSUMER_GROUP = "peanut-app:message:consumer:group";
+
 }

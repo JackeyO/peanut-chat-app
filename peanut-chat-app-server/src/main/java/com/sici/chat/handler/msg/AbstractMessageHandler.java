@@ -31,7 +31,7 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
     @PostConstruct
     public void init() {
         ParameterizedType superclass = (ParameterizedType) this.getClass().getGenericSuperclass();
-        this.messageBodyClass = (Class<Req>) superclass.getActualTypeArguments()[1];
+        this.messageBodyClass = (Class<Req>) superclass.getActualTypeArguments()[0];
         MessageHandlerFactory.register(this);
     }
 

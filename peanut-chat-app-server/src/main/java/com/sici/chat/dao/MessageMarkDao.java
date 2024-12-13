@@ -6,7 +6,6 @@ import com.sici.chat.mapper.MessageMarkMapper;
 import com.sici.chat.model.chat.message.entity.MessageMark;
 import com.sici.common.enums.chat.message.MessageMarkActionEnums;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class MessageMarkDao extends ServiceImpl<MessageMarkMapper, MessageMark> 
 
     public List<Integer> getLikeUser(Integer id) {
         return lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getLike, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getLikeFlag, MessageMarkActionEnums.YES.getCode())
                 .list().stream()
                 .map(MessageMark::getUserId)
                 .collect(Collectors.toList());
@@ -32,7 +31,7 @@ public class MessageMarkDao extends ServiceImpl<MessageMarkMapper, MessageMark> 
 
     public List<Integer> getDisLikeUser(Integer id) {
         return lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getDislike, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnums.YES.getCode())
                 .list().stream()
                 .map(MessageMark::getUserId)
                 .collect(Collectors.toList());
@@ -40,14 +39,14 @@ public class MessageMarkDao extends ServiceImpl<MessageMarkMapper, MessageMark> 
 
     public Long getLikeCount(Integer id) {
         Long likes = lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getLike, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getLikeFlag, MessageMarkActionEnums.YES.getCode())
                 .count();
         return likes;
     }
 
     public Long getDislikeCount(Integer id) {
         Long dislikes = lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getDislike, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnums.YES.getCode())
                 .count();
         return dislikes;
     }

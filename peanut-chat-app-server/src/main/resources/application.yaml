@@ -13,6 +13,18 @@ spring:
     port: ${peanut.redis.port}
 
 
+  datasource:
+    url: jdbc:mysql://${peanut.mysql.ip}:${peanut.mysql.port}/${peanut.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: ${peanut.mysql.username}
+    password: ${peanut.mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000   #不能小于30秒，否则默认回到1800秒
+  #      connection-test-query: SELECT
+
+
 # RocketMq
 rocketmq:
   name-server: ${peanut.rocketmq.name-server}
@@ -33,6 +45,5 @@ peanut:
 
 
   # ws
-  im:
-    ws:
-      port: ${peanut.im.ws.port}
+  ws:
+    port: ${peanut.im.ws.port}

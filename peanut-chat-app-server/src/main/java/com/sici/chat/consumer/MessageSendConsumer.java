@@ -12,6 +12,7 @@ import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.service.PushService;
+import com.sici.common.constant.im.ChatMqConstant;
 import com.sici.common.constant.message.MessageMqConstant;
 import com.sici.common.enums.chat.room.RoomTypeEnums;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -30,7 +31,7 @@ import java.util.List;
  * @version: 1.0
  */
 
-@RocketMQMessageListener(topic = MessageMqConstant.SEND_MSG_TOPIC, consumerGroup = MessageMqConstant.SEND_MSG_CONSUMER_GROUP)
+@RocketMQMessageListener(topic = ChatMqConstant.SEND_MSG_TOPIC, consumerGroup = ChatMqConstant.SEND_MSG_CONSUMER_GROUP)
 @Component
 public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
     @Resource
@@ -57,7 +58,7 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
         Room room = roomCache.getOne(roomId);
 
         List<Integer> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
-                twoPersonRoomCache.getOne(roomId) : groupRoomMemberCache.getOne(roomId);
+                twoPersonRoomCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
 
         // 构建ImMsg,准备进行消息推送
         ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage((ChatMessageVo) messageViewAdapter.adaptChatMessage(message));

@@ -2,6 +2,7 @@ package com.sici.chat.mapper;
 
 import com.sici.chat.model.chat.friend.UserFriend;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author 20148
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-11-25 18:13:49
 * @Entity com.sici.chat.model.chat.friend.UserFriend
 */
+@Mapper
 public interface UserFriendMapper extends BaseMapper<UserFriend> {
 
 }
