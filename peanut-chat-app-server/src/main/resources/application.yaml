@@ -11,6 +11,7 @@ spring:
   redis:
     host: ${peanut.redis.host}
     port: ${peanut.redis.port}
+    database: 0
 
 
   datasource:

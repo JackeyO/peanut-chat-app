@@ -1,5 +1,6 @@
 package com.sici.chat.model.chat.message.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -27,11 +28,11 @@ import java.util.Date;
 @NoArgsConstructor
 @TableName("message")
 public class Message {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
     @TableField("from_uid")
     private Integer fromUid;
-    @TableField("from_uid")
+    @TableField("room_id")
     private Integer roomId;
     @TableField("reply_msg_id")
     private Integer replyMsgId;
