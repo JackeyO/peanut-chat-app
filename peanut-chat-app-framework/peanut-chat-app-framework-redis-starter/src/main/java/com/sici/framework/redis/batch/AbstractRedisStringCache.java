@@ -50,7 +50,7 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
 
     @Override
     public OUT getOne(IN req) {
-        return RedisUtils.get(getKey(req), outClass);
+        return getBatch(List.of(req)).get(req);
     }
 
     @Override

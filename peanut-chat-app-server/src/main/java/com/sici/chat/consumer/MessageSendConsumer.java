@@ -53,15 +53,16 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
         // 获取消息META信息
         Message message = messageDao.getById(msgId);
 
-        // 获取房间成员信息
+        // 获取房间信息
         Integer roomId = message.getRoomId();
         Room room = roomCache.getOne(roomId);
 
+        // 获取房间成员列表
         List<Integer> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
                 twoPersonRoomCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
 
         // 构建ImMsg,准备进行消息推送
-        ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage((ChatMessageVo) messageViewAdapter.adaptChatMessage(message));
+        ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage(messageViewAdapter.adaptChatMessage(message));
 
         // 执行消息推送
         pushService.pushMsg(imMsg, roomMemberIds);
