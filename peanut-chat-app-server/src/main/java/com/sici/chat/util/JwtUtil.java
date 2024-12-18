@@ -3,13 +3,10 @@ package com.sici.chat.util;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWT;
-import cn.hutool.jwt.JWTHeader;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
-import cn.hutool.jwt.signers.JWTSigner;
-import cn.hutool.jwt.signers.JWTSignerUtil;
 import com.sici.chat.model.user.entity.User;
-import com.sici.common.constant.user.JwtConstant;
+import com.sici.common.constant.jwt.JwtConstant;
 
 import java.util.HashMap;
 import java.util.Map;
