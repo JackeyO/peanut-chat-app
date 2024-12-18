@@ -1,11 +1,17 @@
 package com.sici.chat.service.impl;
 
+import cn.hutool.jwt.JWTUtil;
 import com.sici.chat.dao.UserDao;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.service.UserService;
+import com.sici.chat.util.JwtUtil;
+import io.jsonwebtoken.Jwt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.swing.text.html.Option;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author 20148
@@ -24,6 +30,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String createToken(User user) {
-        return null;
+        String token = JwtUtil.createUserToken(user);
+        return token;
+    }
+
+    @Override
+    public User authorize(String token) {
+        Integer userId = JwtUtil.getUidFromToken(token);
+        if (userId == null) {
+            return null;
+        }
+        User user = userDao.getById(userId);
+        return user;
     }
 }

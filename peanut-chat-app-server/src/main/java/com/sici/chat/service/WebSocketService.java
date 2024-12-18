@@ -43,13 +43,25 @@ public interface WebSocketService {
     Boolean scanSuccess(Integer loginCode);
 
     /**
-     * 登录成功后WS处理
-     * @param loginCode
-     */
-    Boolean loginSuccess(Integer loginCode, User user);
-
-    /**
      * 处理登录请求
      */
     void handlerLoginReq(ChannelHandlerContext ctx);
+
+    /**
+     * token鉴权
+     * @param channel
+     */
+    void tokenAuthorize(Channel channel);
+
+    void loginSuccess(Channel channel, User user, String token);
+
+    /**
+     * 微信授权成功
+     * @param loginCode
+     * @param user
+     * @return
+     */
+    Boolean wxAuthorizeSuccess(Integer loginCode, User user);
+
+    void connect(Channel channel);
 }

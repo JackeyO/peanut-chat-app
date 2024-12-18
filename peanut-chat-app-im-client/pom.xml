@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.sici</groupId>
             <artifactId>peanut-chat-app-common</artifactId>
         </dependency>

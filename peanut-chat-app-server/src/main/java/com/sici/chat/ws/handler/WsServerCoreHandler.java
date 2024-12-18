@@ -5,10 +5,10 @@ import com.sici.chat.service.WebSocketService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.zookeeper.data.Id;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -51,8 +51,11 @@ public class WsServerCoreHandler extends SimpleChannelInboundHandler<ImMsg> {
             if (idleStateEvent.state().equals(IdleState.READER_IDLE)) {
                 userOffline(ctx);
             }
+        } else if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
+            this.webSocketService.connect(ctx.channel());
+            // ws连接建立后尝试机型token鉴权
+            this.webSocketService.tokenAuthorize(ctx.channel());
         }
-        // TODO: 补充HandShakeCompleteEvent  || created by 20148 at 12/4/2024 2:58 PM
         super.userEventTriggered(ctx, evt);
     }
 

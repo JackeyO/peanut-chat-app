@@ -13,4 +13,11 @@ public interface UserService {
     Integer register(User user);
 
     String createToken(User user);
+
+    /**
+     * 用户token鉴权，鉴权成功返回登录用户信息，否则返回空
+     * @param token
+     * @return
+     */
+    User authorize(String token);
 }

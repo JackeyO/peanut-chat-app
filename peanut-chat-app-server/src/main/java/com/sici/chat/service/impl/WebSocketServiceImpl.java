@@ -3,8 +3,8 @@ package com.sici.chat.service.impl;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.builder.cache.UserLoginCodeKeyBuilder;
-import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.event.UserOfflineEvent;
+import com.sici.chat.event.UserOnlineEvent;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -99,21 +100,19 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
 
     @Override
-    public Boolean loginSuccess(Integer loginCode, User user) {
+    public Boolean wxAuthorizeSuccess(Integer loginCode, User user) {
         String token = userService.createToken(user);
         Channel waitLoginChannel = ChannelLocalCache.getWaitLoginChannel(loginCode);
 
-        Integer userId = user.getId();
-        // 把channel以及其用户信息放到在线信息里
-        ChannelLocalCache.addOnlineChannelAndInfo(userId, waitLoginChannel, new WsChannelInfo(userId));
         // 从等待登录的channel里删除
         ChannelLocalCache.removeWaitLoginChannel(loginCode);
 
-        // 告知客户端登陆成功
-        sendMsgToChannel(waitLoginChannel,
-                ImMsgBuilder.buildLoginMessage(messageViewAdapter.adaptLoginMessage(new LoginMessageAggregateParam(token, user))));
+        // 登陆成功
+        loginSuccess(waitLoginChannel, user, token);
+
         return Boolean.TRUE;
     }
+
 
     @Override
     public void handlerLoginReq(ChannelHandlerContext ctx) {
@@ -151,5 +150,54 @@ public class WebSocketServiceImpl implements WebSocketService {
                     TimeUnit.SECONDS);
         } while (ChannelLocalCache.checkLoginCodeExists(loginCode));
         return loginCode;
+    }
+
+    @Override
+    public void tokenAuthorize(Channel channel) {
+        String token = ChannelAttrUtil.getAttr(channel, ChannelAttr.TOKEN);
+
+        if (!StringUtils.isEmpty(token)) {
+            User user = userService.authorize(token);
+            // 登录成功
+            if (user != null) {
+                loginSuccess(channel, user, token);
+            }
+        }
+    }
+
+    /**
+     * 更新本地在线channel信息
+     * @param channel
+     * @param user
+     */
+    private void updateOnlineChannel(Channel channel, User user) {
+        // 把channel以及其用户信息放到在线信息里
+        ChannelLocalCache.addOnlineChannelAndInfo(user.getId(), channel, new WsChannelInfo(user.getId()));
+    }
+
+    /**
+     * 用户上线行为
+     * @param channel
+     * @param user
+     */
+    private void userOnline(Channel channel, User user) {
+        // 更新本地在线channel信息
+        updateOnlineChannel(channel, user);
+        // 发布用户上线事件
+        applicationEventPublisher.publishEvent(new UserOnlineEvent(this, user.getId()));
+    }
+
+    @Override
+    public void loginSuccess(Channel channel, User user, String token) {
+        userOnline(channel, user);
+
+        // 告知客户端登陆成功
+        sendMsgToChannel(channel,
+                ImMsgBuilder.buildLoginMessage(messageViewAdapter.adaptLoginMessage(new LoginMessageAggregateParam(token, user))));
+    }
+
+    @Override
+    public void connect(Channel channel) {
+        ChannelLocalCache.addOnlineChannelInfo(channel, new WsChannelInfo());
     }
 }
