@@ -82,14 +82,26 @@ public class WebSocketServiceImpl implements WebSocketService {
         });
     }
 
+    /**
+     * 用户下线行为
+     * @param channel
+     */
     @Override
-    public void offline(Channel channel) {
+    public void userOffline(Channel channel) {
         ChannelLocalCache.removeOnlineChannelAndInfo(channel);
-        applicationEventPublisher.publishEvent(new UserOfflineEvent(this, ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID)));
+        Integer userId = ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID);
+        if (userId != null){
+            applicationEventPublisher.publishEvent(new UserOfflineEvent(this, userId));
+        }
     }
 
+    /**
+     * 微信扫码成功
+     * @param loginCode - 登陆码
+     * @return
+     */
     @Override
-    public Boolean scanSuccess(Integer loginCode) {
+    public Boolean wxScanSuccess(Integer loginCode) {
         Channel waitLoginChannel = ChannelLocalCache.getWaitLoginChannel(loginCode);
         Boolean success = waitLoginChannel != null;
         if (success) {
@@ -99,6 +111,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         return success;
     }
 
+    /**
+     * 微信授权成功
+     * @param loginCode - 登陆码
+     * @param user      - 登录用户信息
+     * @return
+     */
     @Override
     public Boolean wxAuthorizeSuccess(Integer loginCode, User user) {
         String token = userService.createToken(user);
@@ -113,7 +131,10 @@ public class WebSocketServiceImpl implements WebSocketService {
         return Boolean.TRUE;
     }
 
-
+    /**
+     * 处理登录请求
+     * @param ctx
+     */
     @Override
     public void handlerLoginReq(ChannelHandlerContext ctx) {
         // 生成登陆码
@@ -152,6 +173,10 @@ public class WebSocketServiceImpl implements WebSocketService {
         return loginCode;
     }
 
+    /**
+     * token鉴权
+     * @param channel
+     */
     @Override
     public void tokenAuthorize(Channel channel) {
         String token = ChannelAttrUtil.getAttr(channel, ChannelAttr.TOKEN);
@@ -187,6 +212,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         applicationEventPublisher.publishEvent(new UserOnlineEvent(this, user.getId()));
     }
 
+    /**
+     * 登录成功，微信授权成功后或者token鉴权成功后调用
+     * @param channel
+     * @param user
+     * @param token
+     */
     @Override
     public void loginSuccess(Channel channel, User user, String token) {
         userOnline(channel, user);
@@ -196,6 +227,10 @@ public class WebSocketServiceImpl implements WebSocketService {
                 ImMsgBuilder.buildLoginMessage(messageViewAdapter.adaptLoginMessage(new LoginMessageAggregateParam(token, user))));
     }
 
+    /**
+     * 处理连接请求
+     * @param channel
+     */
     @Override
     public void connect(Channel channel) {
         ChannelLocalCache.addOnlineChannelInfo(channel, new WsChannelInfo());

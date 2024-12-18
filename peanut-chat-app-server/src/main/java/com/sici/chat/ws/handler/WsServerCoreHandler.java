@@ -2,6 +2,7 @@ package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.service.WebSocketService;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -40,7 +41,7 @@ public class WsServerCoreHandler extends SimpleChannelInboundHandler<ImMsg> {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        userOffline(ctx);
+        userOffline(ctx.channel());
     }
 
     @Override
@@ -49,7 +50,7 @@ public class WsServerCoreHandler extends SimpleChannelInboundHandler<ImMsg> {
             IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
             // 没有接收到心跳包,就下线
             if (idleStateEvent.state().equals(IdleState.READER_IDLE)) {
-                userOffline(ctx);
+                userOffline(ctx.channel());
             }
         } else if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             this.webSocketService.connect(ctx.channel());
@@ -59,8 +60,8 @@ public class WsServerCoreHandler extends SimpleChannelInboundHandler<ImMsg> {
         super.userEventTriggered(ctx, evt);
     }
 
-    private void userOffline(ChannelHandlerContext ctx) {
-        webSocketService.offline(ctx.channel());
+    private void userOffline(Channel channel) {
+        webSocketService.userOffline(channel);
     }
 }
 

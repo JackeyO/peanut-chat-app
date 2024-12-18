@@ -1,4 +1,4 @@
-package com.sici.common.constant.user;
+package com.sici.common.constant.jwt;
 
 /**
  * @projectName: peanut-chat-app

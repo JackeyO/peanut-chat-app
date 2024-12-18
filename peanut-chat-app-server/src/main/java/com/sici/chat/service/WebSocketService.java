@@ -34,13 +34,13 @@ public interface WebSocketService {
      * 用户下线
      * @param channel
      */
-    void offline(Channel channel);
+    void userOffline(Channel channel);
 
     /**
      * 扫码成功后WS处理
      * @param loginCode
      */
-    Boolean scanSuccess(Integer loginCode);
+    Boolean wxScanSuccess(Integer loginCode);
 
     /**
      * 处理登录请求
@@ -63,5 +63,9 @@ public interface WebSocketService {
      */
     Boolean wxAuthorizeSuccess(Integer loginCode, User user);
 
+    /**
+     * 处理连接请求
+     * @param channel
+     */
     void connect(Channel channel);
 }
