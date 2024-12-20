@@ -1,11 +1,13 @@
 package com.sici.chat.ws.handler;
 
-import com.sici.chat.model.ws.bo.ImMsg;
+import com.alibaba.fastjson.JSON;
+import com.sici.chat.model.ws.bo.ImMsgReq;
 import com.sici.chat.service.WebSocketService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -26,13 +28,17 @@ import javax.annotation.Resource;
 @Component
 @Slf4j
 @ChannelHandler.Sharable
-public class WsServerCoreHandler extends SimpleChannelInboundHandler<ImMsg> {
+public class WsServerCoreHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     @Resource
     private WebSocketService webSocketService;
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ImMsg msg) {
-        AbstractWsMessageHandler wsMessageHandler = WsMessageHandlerFactory.getWsMessageHandler(msg.getType());
-        wsMessageHandler.handle(ctx, msg);
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
+        ImMsgReq msgReq = JSON.parseObject(msg.text(), ImMsgReq.class);
+        AbstractWsMessageHandler wsMessageHandler = WsMessageHandlerFactory.getWsMessageHandler(msgReq.getType());
+        // 只有登录请求需要处理
+        if (wsMessageHandler != null) {
+            wsMessageHandler.handle(ctx, msgReq);
+        }
     }
 
     /**

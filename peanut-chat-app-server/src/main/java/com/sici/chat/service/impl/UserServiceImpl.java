@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.swing.text.html.Option;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Override
     public Integer register(User user) {
+        user.setRegisterTime(new Date());
         userDao.save(user);
         return user.getId();
     }

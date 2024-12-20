@@ -11,7 +11,9 @@ package com.sici.common.constant.im;
 
 public class ChatMqConstant {
     public static final String WX_SCAN_SUCCESS_TOPIC = "peanut-chat_wx_scan-success_topic";
+    public static final String WX_SCAN_SUCCESS_GROUP = "peanut-chat_wx_scan-success_group";
     public static final String LOGIN_SUCCESS_TOPIC = "peanut-chat_wx_login-success_topic";
+    public static final String LOGIN_SUCCESS_GROUP = "peanut-chat_wx_login-success_group";
     public static final String SEND_MSG_TOPIC = "peanut-app_message_send";
-    public static final String SEND_MSG_CONSUMER_GROUP = "peanut-app_message_consumer_group";
+    public static final String SEND_MSG_GROUP = "peanut-app_message_group";
 }

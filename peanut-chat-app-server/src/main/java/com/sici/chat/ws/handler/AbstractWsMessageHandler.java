@@ -1,6 +1,7 @@
 package com.sici.chat.ws.handler;
 
 import com.sici.chat.model.ws.bo.ImMsg;
+import com.sici.chat.model.ws.bo.ImMsgReq;
 import com.sici.common.enums.chat.message.MessageReqTypeEnum;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,7 +21,7 @@ public abstract class AbstractWsMessageHandler {
      * @param ctx
      * @param imMsg
      */
-    public abstract void handle(ChannelHandlerContext ctx, ImMsg imMsg);
+    public abstract void handle(ChannelHandlerContext ctx, ImMsgReq msgReq);
     public abstract MessageReqTypeEnum getSupportedMessageType();
     public AbstractWsMessageHandler() {
         WsMessageHandlerFactory.registerWsMessageHandler(this);

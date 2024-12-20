@@ -1,6 +1,6 @@
 package com.sici.chat.ws.handler;
 
-import com.sici.chat.model.ws.bo.ImMsg;
+import com.sici.chat.model.ws.bo.ImMsgReq;
 import com.sici.chat.service.WebSocketService;
 import com.sici.common.enums.chat.message.MessageReqTypeEnum;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,10 +32,10 @@ public class WsLoginMessageHandler extends AbstractWsMessageHandler {
     /**
      * 处理客户端登录请求
      * @param ctx
-     * @param imMsg
+     * @param msgReq
      */
     @Override
-    public void handle(ChannelHandlerContext ctx, ImMsg imMsg) {
-        this.webSocketService.handlerLoginReq(ctx);
+    public void handle(ChannelHandlerContext ctx, ImMsgReq msgReq) {
+        this.webSocketService.handlerLoginReq(ctx, msgReq);
     }
 }

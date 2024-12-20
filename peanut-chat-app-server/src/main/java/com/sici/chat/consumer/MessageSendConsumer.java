@@ -31,7 +31,7 @@ import java.util.List;
  * @version: 1.0
  */
 
-@RocketMQMessageListener(topic = ChatMqConstant.SEND_MSG_TOPIC, consumerGroup = ChatMqConstant.SEND_MSG_CONSUMER_GROUP)
+@RocketMQMessageListener(topic = ChatMqConstant.SEND_MSG_TOPIC, consumerGroup = ChatMqConstant.SEND_MSG_GROUP)
 @Component
 public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
     @Resource
