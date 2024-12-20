@@ -13,6 +13,7 @@ import com.sici.chat.service.WxMsgService;
 import com.sici.common.constant.im.ChatMqConstant;
 import com.sici.framework.redis.RedisUtils;
 import com.sici.qiyu.live.framework.rmq.config.MQProducer;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @version: 1.0
  */
 
+@Slf4j
 @Service
 public class WxMsgServiceImpl implements WxMsgService {
     private static final String URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
@@ -56,7 +58,7 @@ public class WxMsgServiceImpl implements WxMsgService {
         Integer loginCode = Integer.valueOf(wxMpXmlMessage.getEventKey());
 
         // 检查是否注册过，如果没有注册过就注册
-        String openId = wxMpXmlMessage.getOpenId();
+        String openId = wxMpXmlMessage.getFromUser();
         User user = userDao.getByOpenId(openId);
         if (user == null) {
             user = User.builder()
@@ -64,6 +66,7 @@ public class WxMsgServiceImpl implements WxMsgService {
                     .build();
             userService.register(user);
         }
+        log.info("扫码成功, 登录码:{}, 用户信息:{}", loginCode, user);
 
         // 记录openId和loginCode对应关系
         String key = userOpenIdBindLoginCodeRedisRedisKeyBuilder.build(openId);
@@ -87,6 +90,8 @@ public class WxMsgServiceImpl implements WxMsgService {
 
         // 更新用户信息
         userDao.updateById(userRegistered);
+        log.info("授权成功，用户信息:{}", user);
+
 
         // 获取扫码成功后保存的openid对应的登陆码
         Integer loginCode = RedisUtils.get(userOpenIdBindLoginCodeRedisRedisKeyBuilder.build(userInfo.getOpenid()), Integer.class);

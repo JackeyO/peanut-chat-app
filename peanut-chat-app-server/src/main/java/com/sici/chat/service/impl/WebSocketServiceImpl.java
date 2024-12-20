@@ -11,6 +11,7 @@ import com.sici.chat.model.chat.message.bo.aggregate.ScanMessageAggregateParam;
 import com.sici.chat.model.chat.message.vo.LoginQrCodeMessageVo;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.ws.bo.ImMsg;
+import com.sici.chat.model.ws.bo.ImMsgReq;
 import com.sici.chat.model.ws.bo.WsChannelInfo;
 import com.sici.chat.service.UserService;
 import com.sici.chat.service.WebSocketService;
@@ -20,6 +21,7 @@ import com.sici.chat.ws.channel.ChannelAttrUtil;
 import com.sici.framework.redis.RedisUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
@@ -44,6 +46,7 @@ import static com.sici.chat.config.thread.ThreadPoolConfiguration.CHAT_WS_EXECUT
  * @version: 1.0
  */
 
+@Slf4j
 @Service
 public class WebSocketServiceImpl implements WebSocketService {
     @Resource
@@ -77,26 +80,30 @@ public class WebSocketServiceImpl implements WebSocketService {
         executor.execute(() -> {
             receiverId.forEach(id -> {
                 List<Channel> channelsToSend = ChannelLocalCache.getChannel(id);
-                channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+                if (channelsToSend != null) {
+                    channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
+                }
             });
         });
     }
 
     /**
      * 用户下线行为
+     *
      * @param channel
      */
     @Override
     public void userOffline(Channel channel) {
         ChannelLocalCache.removeOnlineChannelAndInfo(channel);
         Integer userId = ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID);
-        if (userId != null){
+        if (userId != null) {
             applicationEventPublisher.publishEvent(new UserOfflineEvent(this, userId));
         }
     }
 
     /**
      * 微信扫码成功
+     *
      * @param loginCode - 登陆码
      * @return
      */
@@ -113,6 +120,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 微信授权成功
+     *
      * @param loginCode - 登陆码
      * @param user      - 登录用户信息
      * @return
@@ -122,13 +130,18 @@ public class WebSocketServiceImpl implements WebSocketService {
         String token = userService.createToken(user);
         Channel waitLoginChannel = ChannelLocalCache.getWaitLoginChannel(loginCode);
 
-        // 从等待登录的channel里删除
-        ChannelLocalCache.removeWaitLoginChannel(loginCode);
+        log.info("用户授权成功，登陆码:{}, 用户信息:{}, channel:{}, token:{}", loginCode, user, waitLoginChannel, token);
 
-        // 登陆成功
-        loginSuccess(waitLoginChannel, user, token);
+        if (waitLoginChannel != null) {
+            // 从等待登录的channel里删除
+            ChannelLocalCache.removeWaitLoginChannel(loginCode);
 
-        return Boolean.TRUE;
+            // 登陆成功
+            loginSuccess(waitLoginChannel, user, token);
+
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     /**
@@ -136,10 +149,10 @@ public class WebSocketServiceImpl implements WebSocketService {
      * @param ctx
      */
     @Override
-    public void handlerLoginReq(ChannelHandlerContext ctx) {
+    public void handlerLoginReq(ChannelHandlerContext ctx, ImMsgReq msgReq) {
         // 生成登陆码
         Integer loginCode = generateLoginCode();
-
+        log.info("登录请求，channel:{}, loginCode:{}", ctx.channel(), loginCode);
         try {
             WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(loginCode,
                     (int) userLoginCodeKeyBuilder.getExpireTime().toSeconds());
@@ -153,6 +166,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 
             // 保存登陆码与channel的关联
             ChannelLocalCache.addWaitLoginChannel(loginCode, ctx.channel());
+
+            log.info("qr-code ticket:{}", loginQrCodeMessageVo.getTicket());
             // 发送给前端，展示二维码
             sendMsgToChannel(ctx.channel(), ImMsgBuilder.buildLoginQrCodeMessage(loginQrCodeMessageVo));
         } catch (WxErrorException e) {
@@ -162,6 +177,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 生成登陆码
+     *
      * @return
      */
     private Integer generateLoginCode() {
@@ -175,6 +191,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * token鉴权
+     *
      * @param channel
      */
     @Override
@@ -192,6 +209,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 更新本地在线channel信息
+     *
      * @param channel
      * @param user
      */
@@ -202,6 +220,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 用户上线行为
+     *
      * @param channel
      * @param user
      */
@@ -214,6 +233,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 登录成功，微信授权成功后或者token鉴权成功后调用
+     *
      * @param channel
      * @param user
      * @param token

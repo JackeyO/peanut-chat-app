@@ -28,11 +28,11 @@ public class RedisUtils {
     private static final String LUA_INCR_EXPIRE =
             "local key,ttl=KEYS[1],ARGV[1] \n" +
                     " \n" +
-                    "if utilsredis.call('EXISTS',key)==0 then   \n" +
-                    "  utilsredis.call('SETEX',key,ttl,1) \n" +
+                    "if redis.call('EXISTS',key)==0 then   \n" +
+                    "  redis.call('SETEX',key,ttl,1) \n" +
                     "  return 1 \n" +
                     "else \n" +
-                    "  return tonumber(utilsredis.call('INCR',key)) \n" +
+                    "  return tonumber(redis.call('INCR',key)) \n" +
                     "end ";
 
     public static Long inc(String key, int time, TimeUnit unit) {

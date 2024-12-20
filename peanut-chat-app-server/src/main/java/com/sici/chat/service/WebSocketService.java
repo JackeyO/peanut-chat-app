@@ -2,6 +2,7 @@ package com.sici.chat.service;
 
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.ws.bo.ImMsg;
+import com.sici.chat.model.ws.bo.ImMsgReq;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -45,7 +46,7 @@ public interface WebSocketService {
     /**
      * 处理登录请求
      */
-    void handlerLoginReq(ChannelHandlerContext ctx);
+    void handlerLoginReq(ChannelHandlerContext ctx, ImMsgReq msgReq);
 
     /**
      * token鉴权

@@ -34,8 +34,4 @@ public class ImMsg<T extends CommonMessageVo> implements Serializable {
      * 消息id
      */
     Integer msgId;
-    /**
-     * 消息接收方Id
-     */
-    Integer toUid;
 }

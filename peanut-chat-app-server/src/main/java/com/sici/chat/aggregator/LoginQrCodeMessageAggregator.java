@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class LoginQrCodeMessageAggregator extends AbstractMessageAggregator<LoginQrCodeMessageAggregateParam, LoginQrCodeMessageVo>{
     @Override
     public MessageRespTypeEnum getSupportedMessageEnum() {
-        return MessageRespTypeEnum.LOGIN_SUCCESS;
+        return MessageRespTypeEnum.LOGIN_QR_CODE;
     }
 
     @Override

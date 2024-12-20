@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.sici</groupId>
-            <artifactId>peanut-chat-app-common</artifactId>
+            <artifactId>peanut-chat-app-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
