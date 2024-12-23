@@ -54,6 +54,14 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
                             return list1;
                         })));
     }
+
+    public List<Integer> getRoomsByUserId(Integer userId) {
+        return lambdaQuery().eq(RoomMember::getUid1, userId)
+                .list()
+                .stream()
+                .map(RoomMember::getRoomId)
+                .collect(Collectors.toList());
+    }
 }
 
 

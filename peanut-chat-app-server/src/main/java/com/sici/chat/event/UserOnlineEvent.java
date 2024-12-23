@@ -1,5 +1,6 @@
 package com.sici.chat.event;
 
+import lombok.Data;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -16,6 +17,14 @@ public class UserOnlineEvent extends ApplicationEvent {
     private Integer userId;
     public UserOnlineEvent(Object source, Integer userId) {
         super(source);
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

@@ -1,5 +1,6 @@
 package com.sici.chat.dao;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.mapper.MessageMapper;
@@ -12,6 +13,7 @@ import com.sici.chat.util.CursorPageUtil;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.stream.Collectors;
 
 /**
  * @author 20148
@@ -33,10 +35,6 @@ public class MessageDao extends ServiceImpl<MessageMapper, Message> {
                 },
                 Message::getSendTime);
         return messagePageByCursor;
-    }
-    public ChatMessageVo getChatMessageDetail(Message message) {
-        ChatMessageVo chatMessageVo = messageViewAdapter.adaptChatMessage(message);
-        return chatMessageVo;
     }
 }
 

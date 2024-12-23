@@ -1,8 +1,14 @@
 package com.sici.chat.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.sici.chat.adapter.MessageViewAdapter;
+import com.sici.chat.asser.AssertUtil;
+import com.sici.chat.dao.MessageDao;
 import com.sici.chat.event.MessageSendEvent;
 import com.sici.chat.handler.msg.AbstractMessageHandler;
 import com.sici.chat.handler.msg.MessageHandlerFactory;
+import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
+import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
@@ -14,6 +20,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.stream.Collectors;
 
 /**
  * @projectName: qiyu-live-app
@@ -31,6 +38,10 @@ public class ChatServiceImpl implements ChatService {
      */
     @Resource
     private ApplicationEventPublisher applicationEventPublisher;
+    @Resource
+    private MessageDao messageDao;
+    @Resource
+    private MessageViewAdapter messageViewAdapter;
 
     @Override
     public ResponseResult send(MessageRequestDto messageRequestDto) {
@@ -40,5 +51,19 @@ public class ChatServiceImpl implements ChatService {
         // 发布消息发送事件
         applicationEventPublisher.publishEvent(new MessageSendEvent(this, message.getId()));
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult messagePage(CursorPageDto cursorPageDto) {
+        AssertUtil.isNotEmpty(cursorPageDto, "分页对象不能为空");
+        CursorPageVo<Message> messagePageByCursor = messageDao.getMessagePageByCursor(cursorPageDto);
+
+        CursorPageVo<ChatMessageVo> chatMessageVoCursorPageVo = new CursorPageVo<>();
+        BeanUtil.copyProperties(messagePageByCursor, chatMessageVoCursorPageVo, "records");
+
+        chatMessageVoCursorPageVo.setRecords(messagePageByCursor.getRecords().stream()
+                .map(message -> messageViewAdapter.adaptChatMessage(message))
+                .collect(Collectors.toList()));
+        return ResponseResult.okResult(chatMessageVoCursorPageVo);
     }
 }

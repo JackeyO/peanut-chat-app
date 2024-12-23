@@ -92,7 +92,6 @@ public class WxMsgServiceImpl implements WxMsgService {
         userDao.updateById(userRegistered);
         log.info("授权成功，用户信息:{}", user);
 
-
         // 获取扫码成功后保存的openid对应的登陆码
         Integer loginCode = RedisUtils.get(userOpenIdBindLoginCodeRedisRedisKeyBuilder.build(userInfo.getOpenid()), Integer.class);
         // 发送登录成功消息,告知前端登陆成功，并且更新ws相关信息
