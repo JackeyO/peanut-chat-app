@@ -1,5 +1,6 @@
 package com.sici.chat.service;
 
+import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
@@ -16,4 +17,6 @@ import com.sici.common.result.ResponseResult;
 
 public interface ChatService {
     ResponseResult send(MessageRequestDto messageRequestDto);
+
+    ResponseResult messagePage(CursorPageDto cursorPageDto);
 }

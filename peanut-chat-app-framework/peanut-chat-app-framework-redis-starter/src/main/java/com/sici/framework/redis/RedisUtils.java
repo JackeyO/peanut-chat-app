@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisConnectionUtils;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -35,9 +32,17 @@ public class RedisUtils {
                     "  return tonumber(redis.call('INCR',key)) \n" +
                     "end ";
 
+    public static Long dec(String key) {
+        Long result = stringRedisTemplate.opsForValue().decrement(key);
+        return result;
+    }
     public static Long inc(String key, int time, TimeUnit unit) {
         RedisScript<Long> redisScript = new DefaultRedisScript<>(LUA_INCR_EXPIRE, Long.class);
         return stringRedisTemplate.execute(redisScript, Collections.singletonList(key), String.valueOf(unit.toSeconds(time)));
+    }
+
+    public static void executePipelined(RedisCallback<?> redisCallback) {
+        stringRedisTemplate.executePipelined(redisCallback);
     }
 
     /**
