@@ -1,5 +1,6 @@
 package com.sici.chat.builder;
 
+import com.sici.chat.model.chat.friend.dto.UserFriendApplyDto;
 import com.sici.chat.model.chat.message.vo.*;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
@@ -41,6 +42,13 @@ public class ImMsgBuilder {
         ImMsg<LoginQrCodeMessageVo> imMsg = new ImMsg<>();
         imMsg.setType(MessageRespTypeEnum.LOGIN_QR_CODE.getType());
         imMsg.setData(loginQrCodeMessageVo);
+        return imMsg;
+    }
+
+    public static ImMsg buildUserFriendApplyMessage(UserFriendApplyDto userFriendApplyDto) {
+        ImMsg<FriendApplyMessageVo> imMsg = new ImMsg<>();
+        imMsg.setType(MessageRespTypeEnum.FRIEND_APPLY.getType());
+        imMsg.setData(new FriendApplyMessageVo(userFriendApplyDto.getTargetId(), userFriendApplyDto.getApplyTime()));
         return imMsg;
     }
 }

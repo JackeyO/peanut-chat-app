@@ -2,6 +2,8 @@ package com.sici.chat.service;
 
 import com.sici.chat.model.chat.apply.entity.UserFriendApply;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sici.chat.model.chat.friend.dto.UserFriendApplyDto;
+import com.sici.common.result.ResponseResult;
 
 /**
 * @author 20148
@@ -9,5 +11,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2024-11-25 18:13:49
 */
 public interface UserFriendApplyService  {
+    /**
+     * 用户发送好友申请信息
+     * @param userFriendApplyDto
+     * @return
+     */
+    ResponseResult apply(UserFriendApplyDto userFriendApplyDto);
 
+    /**
+     * 确认申请信息(拒绝或接受)
+     * @param applyId
+     * @return
+     */
+    ResponseResult ack(Integer applyId, Integer accept);
 }

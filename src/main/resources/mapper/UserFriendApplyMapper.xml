@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sici.chat.mapper.UserFriendApplyMapper">
+<mapper namespace="generator.mapper.UserFriendApplyMapper">
 
-    <resultMap id="BaseResultMap" type="com.sici.chat.model.chat.apply.entity.UserFriendApply">
+    <resultMap id="BaseResultMap" type="generator.domain.UserFriendApply">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="uid" column="uid" jdbcType="INTEGER"/>
             <result property="targetId" column="target_id" jdbcType="INTEGER"/>

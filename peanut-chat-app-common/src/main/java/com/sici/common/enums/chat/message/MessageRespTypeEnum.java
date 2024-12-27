@@ -20,7 +20,7 @@ public enum MessageRespTypeEnum {
     CHAT_MESSAGE(6, "普通聊天消息"),
     SCAN_SUCCESS(7, "扫码成功"),
     LOGIN_SUCCESS(8, "登录成功"),
-    LOGIN_QR_CODE(9, "登陆二维码信息") ;
+    LOGIN_QR_CODE(9, "登陆二维码信息"), FRIEND_APPLY(10, "好友申请信息");
 
 
     private Integer type;

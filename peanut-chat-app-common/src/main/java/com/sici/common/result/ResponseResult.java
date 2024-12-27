@@ -54,6 +54,12 @@ public class ResponseResult<T> implements Serializable {
         setAppHttpCodeEnum(responseResult, AppHttpCodeEnum.SUCCESS);
         return responseResult;
     }
+    public static ResponseResult okResult(String msg) {
+        ResponseResult responseResult = generateResponseResult();
+        setAppHttpCodeEnum(responseResult, AppHttpCodeEnum.SUCCESS);
+        responseResult.setErrorMessage(msg);
+        return responseResult;
+    }
     public static ResponseResult okResult(int code, String msg) {
         ResponseResult responseResult = generateResponseResult();
         okSet(responseResult, code, null, msg);

@@ -30,8 +30,4 @@ public class ImMsg<T extends CommonMessageVo> implements Serializable {
      * 消息数据部分
      */
     T data;
-    /**
-     * 消息id
-     */
-    Integer msgId;
 }
