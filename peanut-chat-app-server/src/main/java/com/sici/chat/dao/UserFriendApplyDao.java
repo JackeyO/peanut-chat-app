@@ -15,6 +15,18 @@ import org.springframework.stereotype.Service;
 @Component
 public class UserFriendApplyDao extends ServiceImpl<UserFriendApplyMapper, UserFriendApply> {
 
+    /**
+     * 返回未被处理的申请信息
+     * @param userId
+     * @param targetId
+     * @return
+     */
+    public UserFriendApply getByUserIdAndTargetId(Integer userId, Integer targetId) {
+        return lambdaQuery().eq(UserFriendApply::getUid, userId)
+                .eq(UserFriendApply::getTargetId, targetId)
+                .eq(UserFriendApply::getDealStatus, 0)
+                .one();
+    }
 }
 
 

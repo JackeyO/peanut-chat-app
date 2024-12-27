@@ -1,7 +1,7 @@
-package com.sici.chat.mapper;
+package generator.mapper;
 
+import generator.domain.UserFriendApply;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sici.chat.model.chat.apply.entity.UserFriendApply;
 
 /**
 * @author 20148

@@ -1,14 +1,9 @@
-package com.sici.chat.model.chat.apply.entity;
+package generator.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,10 +12,6 @@ import java.util.Date;
  * @TableName user_friend_apply
  */
 @TableName(value ="user_friend_apply")
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserFriendApply implements Serializable {
     /**
      * 主键id
