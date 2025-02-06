@@ -19,7 +19,6 @@ public class ImMsgBuilder {
         ImMsg<ChatMessageVo> imMsg = new ImMsg<>();
         MessageVo message = messageVo.getMessage();
         imMsg.setType(message.getType());
-        imMsg.setMsgId(message.getId());
         imMsg.setData(messageVo);
         return imMsg;
     }
