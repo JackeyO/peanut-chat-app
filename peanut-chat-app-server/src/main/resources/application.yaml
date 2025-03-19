@@ -15,7 +15,7 @@ spring:
 
 
   datasource:
-    url: jdbc:mysql://${peanut.mysql.ip}:${peanut.mysql.port}/${peanut.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://${peanut.mysql.ip}:${peanut.mysql.port}/${peanut.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${peanut.mysql.username}
     password: ${peanut.mysql.password}
     driver-class-name: com.mysql.cj.jdbc.Driver

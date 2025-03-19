@@ -10,5 +10,9 @@ package com.sici.common.constant.message;
  */
 
 public class MessageMqConstant {
-
+    /**
+     * 点赞消息topic
+     */
+    public static final String LIKE_MESSAGE_TOPIC = "like_message_topic";
+    public static final String DISLIKE_MESSAGE_TOPIC = null;
 }

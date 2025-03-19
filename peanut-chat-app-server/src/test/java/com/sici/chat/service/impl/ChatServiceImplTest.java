@@ -1,19 +1,16 @@
 package com.sici.chat.service.impl;
 
-import com.sici.chat.model.chat.message.dto.MessageRequestDto;
-import com.sici.chat.model.chat.message.dto.TextMessageDto;
-import com.sici.chat.service.ChatService;
-import com.sici.common.enums.chat.message.MessageReqTypeEnum;
-import com.sici.common.enums.chat.message.MessageRespTypeEnum;
-import com.sici.common.result.ResponseResult;
-import com.sici.framework.redis.RedisUtils;
+import java.util.Date;
+
+import javax.annotation.Resource;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.sici.chat.model.chat.message.dto.MessageRequestDto;
+import com.sici.chat.model.chat.message.dto.TextMessageDto;
+import com.sici.chat.service.chat.ChatService;
+import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 
 @SpringBootTest
 class ChatServiceImplTest {

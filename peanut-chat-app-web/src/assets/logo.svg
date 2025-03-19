@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Peanut Chat Logo</title>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <circle fill="#12b7f5" cx="100" cy="100" r="90"></circle>
+    <path d="M150,85 C150,75 130,50 100,50 C70,50 50,75 50,85 C50,95 70,120 100,120 C130,120 150,95 150,85 Z" fill="#FFFFFF"></path>
+    <circle fill="#12b7f5" cx="75" cy="85" r="10"></circle>
+    <circle fill="#12b7f5" cx="125" cy="85" r="10"></circle>
+    <path d="M80,100 C90,110 110,110 120,100" stroke="#12b7f5" stroke-width="5" stroke-linecap="round"></path>
+  </g>
+</svg> 

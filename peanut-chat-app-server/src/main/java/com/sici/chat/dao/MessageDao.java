@@ -1,19 +1,16 @@
 package com.sici.chat.dao;
 
-import cn.hutool.core.bean.BeanUtil;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.mapper.MessageMapper;
-import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
+import com.sici.chat.model.chat.cursor.dto.MessageCursorPageDto;
 import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
 import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.chat.model.chat.message.vo.ChatMessageVo;
-import com.sici.chat.model.chat.message.vo.CommonMessageVo;
 import com.sici.chat.util.CursorPageUtil;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.util.stream.Collectors;
 
 /**
  * @author 20148
@@ -25,13 +22,14 @@ public class MessageDao extends ServiceImpl<MessageMapper, Message> {
     @Resource
     private MessageViewAdapter messageViewAdapter;
 
-    public CursorPageVo<Message> getMessagePageByCursor(CursorPageDto cursorPageDto) {
-        CursorPageVo<Message> messagePageByCursor = CursorPageUtil.getCursorPageOfMySql(this, cursorPageDto,
+    public CursorPageVo<Message> getMessagePageByCursor(MessageCursorPageDto messageCursorPageDto) {
+        CursorPageVo<Message> messagePageByCursor = CursorPageUtil.getCursorPageOfMySql(this, messageCursorPageDto,
                 (wrapper, cursorValue) -> {
                     if (cursorValue != null) {
                         wrapper.lt(Message::getSendTime, cursorValue);
                     }
                     wrapper.orderByDesc(Message::getSendTime);
+                    wrapper.eq(Message::getRoomId, messageCursorPageDto.getRoomId());
                 },
                 Message::getSendTime);
         return messagePageByCursor;

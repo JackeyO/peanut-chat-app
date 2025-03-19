@@ -1,7 +1,12 @@
 package com.sici.chat.builder;
 
 import com.sici.chat.model.chat.friend.dto.UserFriendApplyDto;
-import com.sici.chat.model.chat.message.vo.*;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
+import com.sici.chat.model.chat.message.vo.FriendApplyMessageVo;
+import com.sici.chat.model.chat.message.vo.LoginMessageVo;
+import com.sici.chat.model.chat.message.vo.LoginQrCodeMessageVo;
+import com.sici.chat.model.chat.message.vo.MessageVo;
+import com.sici.chat.model.chat.message.vo.ScanMessageVo;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 
@@ -34,7 +39,7 @@ public class ImMsgBuilder {
         ImMsg<LoginMessageVo> imMsg = new ImMsg<>();
         imMsg.setType(MessageRespTypeEnum.LOGIN_SUCCESS.getType());
         imMsg.setData(loginMessageVo);
-        return null;
+        return imMsg;
     }
 
     public static ImMsg buildLoginQrCodeMessage(LoginQrCodeMessageVo loginQrCodeMessageVo) {

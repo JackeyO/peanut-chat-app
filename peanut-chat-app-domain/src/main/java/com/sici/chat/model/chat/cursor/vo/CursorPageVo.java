@@ -1,10 +1,10 @@
 package com.sici.chat.model.chat.cursor.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 /**
  * @projectName: peanut-chat-app
@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CursorPageVo<T> {
-    private Integer current;
     private Integer pageSize;
     private Integer recordSize;
     private String cursor;

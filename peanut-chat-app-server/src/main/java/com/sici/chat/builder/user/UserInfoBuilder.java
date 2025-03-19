@@ -1,6 +1,7 @@
 package com.sici.chat.builder.user;
 
 import com.sici.chat.model.user.entity.User;
+
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
 /**
@@ -21,6 +22,7 @@ public class UserInfoBuilder {
                 .country(userInfo.getCountry())
                 .province(userInfo.getProvince())
                 .city(userInfo.getCity())
+                .avatar(userInfo.getHeadImgUrl())
                 .build();
     }
 }

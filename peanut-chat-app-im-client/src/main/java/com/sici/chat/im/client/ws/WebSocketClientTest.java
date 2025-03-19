@@ -1,20 +1,19 @@
 package com.sici.chat.im.client.ws;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.java_websocket.WebSocket;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
 import com.alibaba.fastjson.JSON;
 import com.sici.chat.model.chat.message.vo.LoginMessageVo;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.model.ws.bo.ImMsgReq;
 import com.sici.common.enums.chat.message.MessageReqTypeEnum;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import lombok.extern.slf4j.Slf4j;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.enums.ReadyState;
-import org.java_websocket.framing.TextFrame;
-import org.java_websocket.handshake.ServerHandshake;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @projectName: peanut-chat-app
@@ -34,48 +33,69 @@ public class WebSocketClientTest {
     }
 
     public static void main(String[] args) throws URISyntaxException {
-        WebSocketClient webSocketClient = new WebSocketClient(new URI("ws://localhost:9999"), new Draft_6455()) {
+        WebSocketClient webSocketClient = new WebSocketClient(new URI("ws://localhost:9999")) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                log.info("shake successfully!");
+                log.info("shake successfully! Status: {}", serverHandshake.getHttpStatus());
             }
 
             @Override
             public void onMessage(String s) {
-                ImMsg<LoginMessageVo> imMsg = JSON.parseObject(s, ImMsg.class);
-                LoginMessageVo data = imMsg.getData();
-                log.info("receive : " + s);
+                
+                try {
+                    ImMsg<LoginMessageVo> imMsg = JSON.parseObject(s, ImMsg.class);
+                    LoginMessageVo data = imMsg.getData();
+                    log.info("receive : " + s);
+                } catch (Exception e) {
+                    log.error("Error parsing message: {}", s, e);
+                }
             }
-
             @Override
-            public void onClose(int i, String s, boolean b) {
-                log.info("close");
+            public void onClose(int code, String reason, boolean remote) {
+                log.info("close with code: {}, reason: {}, remote: {}", code, reason, remote);
+                if (code == -1) {
+                    log.error("Connection closed abnormally. This might be due to handshake failure.");
+                }
             }
 
             @Override
             public void onError(Exception e) {
-                log.error("error");
+                log.error("WebSocket error", e);
             }
         };
 
         try {
+            log.info("准备 to connect to WebSocket server...");
             webSocketClient.connect();
+
+            Thread.sleep(3000);
+            
             //等待服务端响应
-            while (!webSocketClient.getReadyState().equals(ReadyState.OPEN)) {
-                log.info("connecting");
-                Thread.sleep(1000);
+            int retryCount = 0;
+            while (!webSocketClient.getReadyState().equals(WebSocket.READYSTATE.OPEN)) {
+                log.info("connecting, current state: {}, retry count: {}", 
+                    webSocketClient.getReadyState(), 
+                    retryCount++);
+                if (retryCount > 10) {
+                    log.error("Failed to connect after 10 retries");
+                    break;
+                }
+                Thread.sleep(3000);
             }
-            log.info("connect successfully!");
-            //向WebSocket服务端发送数据
-            webSocketClient.send(JSON.toJSONString(getLoginImMsgReq()));
-            log.info("login request send successfully");
-            while (true) {
-
+            
+            if (webSocketClient.getReadyState().equals(WebSocket.READYSTATE.OPEN)) {
+                log.info("connect successfully!");
+                //向WebSocket服务端发送数据
+                webSocketClient.send(JSON.toJSONString(getLoginImMsgReq()));
+                log.info("login request send successfully");
+                while (true) {
+                    Thread.sleep(1000);
+                }
+            } else {
+                log.error("Failed to establish WebSocket connection");
             }
-            //关闭连接
-//            webSocketClient.close();
         } catch (Exception e) {
-
+            log.error("Connection error", e);
         }
     }
 }

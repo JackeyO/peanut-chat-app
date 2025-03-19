@@ -1,12 +1,13 @@
 package com.sici.chat.aggregator;
 
+import org.springframework.stereotype.Component;
+
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
 import com.sici.chat.model.chat.message.vo.LoginMessageVo;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.user.vo.UserVO;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import com.sici.utils.bean.ConvertBeanUtil;
-import org.springframework.stereotype.Component;
 
 /**
  * @projectName: peanut-chat-app
@@ -33,6 +34,7 @@ public class LoginMessageAggregator extends AbstractMessageAggregator<LoginMessa
 
         UserVO userVO = ConvertBeanUtil.convertSingle(user, UserVO.class);
         loginMessageVo.setUserVO(userVO);
+        loginMessageVo.setToken(token);
 
         return loginMessageVo;
     }

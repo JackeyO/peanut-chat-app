@@ -1,9 +1,9 @@
 package com.sici.chat.util;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.func.LambdaUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.ReflectUtil;
+import java.util.Date;
+import java.util.List;
+import java.util.function.BiConsumer;
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -11,13 +11,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
 import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
-import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.chat.model.user.entity.User;
-
-import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.List;
-import java.util.function.BiConsumer;
 
 /**
  * @projectName: peanut-chat-app
@@ -42,17 +35,15 @@ public class CursorPageUtil {
 
         // 封装返回数据
         CursorPageVo<T> cursorPageVo = new CursorPageVo<>();
-        Page<T> page = dao.page(new Page<T>(cursorPageDto.getCurrent(), cursorPageDto.getPageSize()), wrapper);
+        Page<T> page = dao.page(new Page<T>(1, cursorPageDto.getPageSize()), wrapper);
         List<T> records = page.getRecords();
-        cursorPageVo.setCurrent((int) page.getCurrent());
         cursorPageVo.setPageSize(cursorPageDto.getPageSize());
         cursorPageVo.setRecords(records);
         cursorPageVo.setRecordSize(records.size());
         cursorPageVo.setIsLast(records.size() == page.getTotal());
 
         // 设置下一次游标
-        String nextCursor = cursorToString(cursorMap.apply(CollectionUtil.getLast(records)
-        ));
+        String nextCursor = records.isEmpty() ? null : cursorToString(cursorMap.apply(records.get(records.size() - 1)));
         cursorPageVo.setCursor(nextCursor);
         return cursorPageVo;
     }
@@ -78,6 +69,9 @@ public class CursorPageUtil {
      * @return
      */
     public static String cursorToString(Object cursor) {
+        if (cursor == null) {
+            return null;
+        }
         if (cursor instanceof Date) {
             return String.valueOf(((Date) cursor).getTime());
         }
