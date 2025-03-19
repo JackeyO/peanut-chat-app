@@ -1,20 +1,20 @@
 package com.sici.chat.dao;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.sici.chat.adapter.MessageViewAdapter;
-import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
-import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
-import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.chat.model.chat.message.vo.ChatMessageVo;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.annotation.Resource;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.sici.chat.adapter.MessageViewAdapter;
+import com.sici.chat.model.chat.cursor.dto.MessageCursorPageDto;
+import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
+import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
+
+import cn.hutool.core.bean.BeanUtil;
 
 @SpringBootTest
 class MessageDaoTest {
@@ -24,8 +24,9 @@ class MessageDaoTest {
     private MessageViewAdapter messageViewAdapter;
     @Test
     void getMessagePageByCursor() {
-        CursorPageDto cursorPageDto = new CursorPageDto();
-        CursorPageVo<Message> messagePageByCursor = messageDao.getMessagePageByCursor(cursorPageDto);
+        MessageCursorPageDto messageCursorPageDto = new MessageCursorPageDto();
+        messageCursorPageDto.setRoomId(1);
+        CursorPageVo<Message> messagePageByCursor = messageDao.getMessagePageByCursor(messageCursorPageDto);
         CursorPageVo<ChatMessageVo> chatMessageVos = new CursorPageVo<>();
         BeanUtil.copyProperties(messagePageByCursor, chatMessageVos, "records");
 

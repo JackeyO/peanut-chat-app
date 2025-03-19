@@ -1,8 +1,13 @@
 package com.sici.chat.ws.handler;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSON;
 import com.sici.chat.model.ws.bo.ImMsgReq;
-import com.sici.chat.service.WebSocketService;
+import com.sici.chat.service.ws.WebSocketService;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,9 +17,6 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * @projectName: qiyu-live-app

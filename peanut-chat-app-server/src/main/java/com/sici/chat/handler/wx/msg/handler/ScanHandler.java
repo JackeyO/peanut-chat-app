@@ -1,15 +1,18 @@
 package com.sici.chat.handler.wx.msg.handler;
 
-import com.sici.chat.service.WxMsgService;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+import com.sici.chat.service.wx.WxMsgService;
+
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.util.Map;
 
 @Component
 public class ScanHandler extends AbstractHandler {

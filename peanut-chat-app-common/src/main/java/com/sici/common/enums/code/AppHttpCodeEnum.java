@@ -30,15 +30,11 @@ public enum AppHttpCodeEnum {
     NEED_ADMIND(3001, "需要管理员权限"),
 
     // 素材引用失效
-    MATERIAL_REFERENCE_NOT_EXIST(501, "素材引用不存在"),
-    WMNEWS_NOT_EXIST(1002, "自媒体文章不存在"),
-    WMNEWS_ID_IS_ABSENT(501, "自媒体文章ID不存在"),
-    WMNEWS_NOT_PUBLISHED(501, "自媒体文章未发布,不能进行上下架操作"),
-    ID_SEGMENT_IS_FULL(501, "id段已经满了"),
-    NEED_LIVING_ROOM_TYPE(501, "需要直播间类型"),
-    BUSINESS_ERROR(503, "业务处理失败"),
     FRIEND_APPLY_EXISTS(504, "已经向该用户发过申请了"),
-    ALREADY_FRIEND(505, "已经是好友关系");
+    ALREADY_FRIEND(505, "已经是好友关系"),
+    USER_NOT_FOUND(506, "用户不存在"),
+    BUSINESS_ERROR(507, "业务处理失败"),
+    ROOM_NOT_FOUND(508, "房间不存在");
 
     Integer code;
 

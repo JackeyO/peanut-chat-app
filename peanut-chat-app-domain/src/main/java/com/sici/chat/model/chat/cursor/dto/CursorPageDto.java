@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 /**
  * @projectName: peanut-chat-app
@@ -19,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CursorPageDto {
-    private int current = 1;
     private int pageSize = 10;
     /**
      * 游标，第一次请求游标为空，然后游标返回前端，后面每次请求带上游标

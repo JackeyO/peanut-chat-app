@@ -1,13 +1,15 @@
 package com.sici.chat.ws.handler;
 
-import com.sici.chat.model.ws.bo.ImMsgReq;
-import com.sici.chat.service.WebSocketService;
-import com.sici.common.enums.chat.message.MessageReqTypeEnum;
-import io.netty.channel.ChannelHandlerContext;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import com.sici.chat.model.ws.bo.ImMsgReq;
+import com.sici.chat.service.ws.WebSocketService;
+import com.sici.common.enums.chat.message.MessageReqTypeEnum;
+
+import io.netty.channel.ChannelHandlerContext;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @projectName: qiyu-live-app

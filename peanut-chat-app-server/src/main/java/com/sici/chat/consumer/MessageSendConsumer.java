@@ -1,5 +1,13 @@
 package com.sici.chat.consumer;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.springframework.stereotype.Component;
+
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.cache.GroupRoomMemberCache;
@@ -11,16 +19,9 @@ import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.model.ws.bo.ImMsg;
-import com.sici.chat.service.PushService;
+import com.sici.chat.service.ws.PushService;
 import com.sici.common.constant.im.ChatMqConstant;
-import com.sici.common.constant.message.MessageMqConstant;
 import com.sici.common.enums.chat.room.RoomTypeEnums;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @projectName: qiyu-live-app

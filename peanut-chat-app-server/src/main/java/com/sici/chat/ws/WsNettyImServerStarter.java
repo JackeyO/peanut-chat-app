@@ -1,24 +1,31 @@
 package com.sici.chat.ws;
 
-import com.sici.chat.ws.handler.WsServerCoreHandler;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.handler.timeout.IdleStateHandler;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
+import com.sici.chat.ws.handler.WsServerCoreHandler;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author idea
@@ -43,14 +50,14 @@ public class WsNettyImServerStarter implements InitializingBean {
         serverBootstrap.group(bossGroup, workerGroup);
         serverBootstrap.channel(NioServerSocketChannel.class);
 
-        serverBootstrap.childHandler(new ChannelInitializer<>() {
+        serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
-            protected void initChannel(Channel channel) {
+            protected void initChannel(SocketChannel channel) {
                 log.info("channel initialized, channel:{}", channel);
                 // 设置消息处理器handler
-                channel.pipeline().addLast(new IdleStateHandler(30, 0, 0));
+                 channel.pipeline().addLast(new IdleStateHandler(30, 0, 0));
 
-                // 因为使用http协议，所以需要使用http的编码器，解码器
+//                 因为使用http协议，所以需要使用http的编码器，解码器
                 channel.pipeline().addLast(new HttpServerCodec());
                 // 以块方式写，添加 chunkedWriter 处理器
                 channel.pipeline().addLast(new ChunkedWriteHandler());
@@ -60,11 +67,25 @@ public class WsNettyImServerStarter implements InitializingBean {
                  *  2. 这就是为什么当浏览器发送大量数据时，就会发出多次 http请求的原因
                  */
                 channel.pipeline().addLast(new HttpObjectAggregator(8192));
-                //保存用户ip
-//                channel.pipeline().addLast(new HttpHeadersHandler());
                 
+                // 添加WebSocket异常处理器
+                channel.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                    @Override
+                    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+                        log.error("WebSocket error: {}", cause.getMessage(), cause);
+                        ctx.close();
+                    }
+                });
                 
-                channel.pipeline().addLast(new WebSocketServerProtocolHandler("/"));
+                // 设置WebSocket路径处理器，并启用详细日志
+                channel.pipeline().addLast(new WebSocketServerProtocolHandler("/", null, true) {
+                    @Override
+                    protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+                        log.info("WebSocket protocol handler received frame: {}", frame.getClass().getSimpleName());
+                        super.decode(ctx, frame, out);
+                    }
+                });
+                
                 channel.pipeline().addLast(applicationContext.getBean(WsServerCoreHandler.class));
             }
         });
@@ -77,9 +98,7 @@ public class WsNettyImServerStarter implements InitializingBean {
             log.info("netty stopped gracefully!");
         }));
 
-        log.info("netty started successfully!, bind port: " + port);
-
-        channelFuture.channel().closeFuture().sync();
+        log.info("netty 启动成功, 绑定端口: {}", port);
     }
 
     @Override

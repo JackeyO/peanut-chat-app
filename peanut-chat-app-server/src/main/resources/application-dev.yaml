@@ -10,7 +10,7 @@ peanut:
 
   # WeChat
   wx:
-    callback: http://749291.s7.tunnelfrp.com
+    callback: http://749291su.s7.tunnelfrp.com
     appId: wx6ce73b6ffb0ae646
     secret: 9898baf308136a87bd289726bcd7654d
     token: suxiaowen
@@ -18,7 +18,7 @@ peanut:
 
   # RocketMq
   rocketmq:
-    name-server: 192.168.1.12:9876
+    name-server: 192.168.17.124:9876
     producer:
       group: hello
 
@@ -28,12 +28,12 @@ peanut:
 
   # Redis
   redis:
-    host: 192.168.1.12 
+    host: 192.168.17.124 
     port: 6379
 
   #mysql
   mysql:
-    ip: 192.168.1.12 
+    ip: 192.168.17.124 
     port: 3306
     db: peanut-chat
     username: root

@@ -1,12 +1,13 @@
 package com.sici.chat.builder.cache;
 
-import com.sici.common.constant.redis.key.RedisKeyConstant;
-import com.sici.framework.redis.key.RedisKeyBuilder;
+import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
+import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_ITEM;
 
 import java.time.Duration;
 
-import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
-import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_ITEM;
+import org.springframework.stereotype.Component;
+
+import com.sici.framework.redis.key.RedisKeyBuilder;
 
 /**
  * @projectName: peanut-chat-app
@@ -17,6 +18,7 @@ import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_
  * @version: 1.0
  */
 
+@Component
 public class RoomOnlineCountCacheKeyBuilder implements RedisKeyBuilder<Integer, String> {
     @Override
     public String build(Integer roomId) {

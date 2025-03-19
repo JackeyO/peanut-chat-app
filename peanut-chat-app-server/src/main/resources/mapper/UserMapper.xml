@@ -14,11 +14,13 @@
             <result property="city" column="city" jdbcType="VARCHAR"/>
             <result property="country" column="country" jdbcType="VARCHAR"/>
             <result property="registerTime" column="register_time" jdbcType="DATE"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,open_id,nick_name,
         sex,birthday,province,
-        city,country,register_time
+        city,country,register_time,
+        avatar
     </sql>
 </mapper>

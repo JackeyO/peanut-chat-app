@@ -1,11 +1,10 @@
 package com.sici.chat.dao;
 
+import org.springframework.stereotype.Component;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sici.chat.mapper.UserFriendApplyMapper;
 import com.sici.chat.model.chat.apply.entity.UserFriendApply;
-import com.sici.chat.service.UserFriendApplyService;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * @author 20148

@@ -1,13 +1,12 @@
 package com.sici.chat.model.user.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @projectName: qiyu-live-app
@@ -64,4 +63,9 @@ public class UserVO implements Serializable {
      * 注册时间
      */
     private Date registerTime;
+
+    /**
+     * 头像
+     */
+    private String avatar;
 }

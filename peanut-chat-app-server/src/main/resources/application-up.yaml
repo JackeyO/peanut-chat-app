@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+
+peanut:
+  #server
+  server:
+    port: 8080
+
+
+  # WeChat
+  wx:
+    callback: http://749291su.s7.tunnelfrp.com
+    appId: wx6ce73b6ffb0ae646
+    secret: 9898baf308136a87bd289726bcd7654d
+    token: suxiaowen
+
+
+  # RocketMq
+  rocketmq:
+    name-server: 182.254.134.208:9876
+    producer:
+      group: hello
+
+  # ws
+  ws:
+    port: 9999
+
+  # Redis
+  redis:
+    host: 182.254.134.208 
+    port: 6379
+    password: 111111
+
+  #mysql
+  mysql:
+    ip: 182.254.134.208 
+    port: 3306
+    db: peanut-chat
+    username: root
+    password: 345267

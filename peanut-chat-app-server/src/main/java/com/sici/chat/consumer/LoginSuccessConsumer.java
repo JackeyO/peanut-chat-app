@@ -1,13 +1,14 @@
 package com.sici.chat.consumer;
 
-import com.sici.chat.model.chat.wx.WxLoginSuccessMqDto;
-import com.sici.chat.service.WebSocketService;
-import com.sici.common.constant.im.ChatMqConstant;
+import javax.annotation.Resource;
+
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import com.sici.chat.model.chat.wx.WxLoginSuccessMqDto;
+import com.sici.chat.service.ws.WebSocketService;
+import com.sici.common.constant.im.ChatMqConstant;
 
 /**
  * @projectName: peanut-chat-app
