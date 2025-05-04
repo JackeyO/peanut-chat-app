@@ -1,3 +1,5 @@
 {
-  "remoteUser": "root"
+  "name": "peanut-chat-app-devcontainer",
+  "remoteUser": "root",
+  "image": "ubuntu:latest",
 }
