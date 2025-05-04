@@ -1,6 +1,8 @@
 package com.sici.chat.asser;
 
 import cn.hutool.core.util.ObjectUtil;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sici.common.enums.code.AppHttpCodeEnum;
 import com.sici.common.exception.BusinessException;
 import org.hibernate.validator.HibernateValidator;

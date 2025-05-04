@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sici.chat.service.room.RoomService;
 import com.sici.common.result.ResponseResult;
 
+import lombok.extern.slf4j.Slf4j;
+
+
 /**
  * @projectName: qiyu-live-app
  * @package: com.sici.live.controller
