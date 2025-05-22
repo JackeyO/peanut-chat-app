@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sici.chat.service.room.RoomService;
+import com.sici.chat.util.AssertUtil;
 import com.sici.common.result.ResponseResult;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,9 @@ public class RoomController {
      */
     @GetMapping("info")
     public ResponseResult getRoomInfo(@RequestParam Integer roomId) {
-        // TODO: 完成该接口后续（见Service), 并测试该接口 created by 749291 at 2025-03-19 22:33
+        // 参数校验
+        AssertUtil.notNull(roomId, "房间ID不能为空");
+        
         return roomService.getRoomInfo(roomId);
     }
 }

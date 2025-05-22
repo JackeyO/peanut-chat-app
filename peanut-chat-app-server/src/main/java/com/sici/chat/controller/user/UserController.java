@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sici.chat.model.user.dto.UserProfileDto;
 import com.sici.chat.service.user.UserService;
+import com.sici.chat.util.AssertUtil;
 import com.sici.common.result.ResponseResult;
 
 import groovy.util.logging.Slf4j;
@@ -30,7 +31,9 @@ public class UserController {
 
     @GetMapping("profile")
     public ResponseResult profile(UserProfileDto userProfileDto) {
-        // TODO: 测试该接口 created by 749291 at 2025-03-19 22:28
+        // 参数校验
+        AssertUtil.notNull(userProfileDto, "用户信息不能为空");
+        AssertUtil.notNull(userProfileDto.getUserId(), "用户ID不能为空");
 
         return userService.profile(userProfileDto);
     }
