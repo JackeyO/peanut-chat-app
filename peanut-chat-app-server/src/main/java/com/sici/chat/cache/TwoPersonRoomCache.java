@@ -5,9 +5,9 @@ import com.sici.chat.builder.cache.RoomMemberCacheKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.chat.model.chat.message.vo.RoomMemberListBo;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class TwoPersonRoomCache extends AbstractRedisStringCache<Integer, RoomMemberListBo> {
+public class TwoPersonRoomCache extends AbstractRedisStringCache<Long, RoomMemberListBo> {
     @Resource
     private RoomMemberDao roomMemberDao;
     @Resource
@@ -31,7 +31,7 @@ public class TwoPersonRoomCache extends AbstractRedisStringCache<Integer, RoomMe
     private MessageViewAdapter messageViewAdapter;
 
     @Override
-    public String getKey(Integer req) {
+    public String getKey(Long req) {
         return roomMemberCacheKeyBuilder.build(req);
     }
 
@@ -41,10 +41,10 @@ public class TwoPersonRoomCache extends AbstractRedisStringCache<Integer, RoomMe
     }
 
     @Override
-    public Map<Integer, RoomMemberListBo> loadFromDb(List<Integer> req) {
-        Map<Integer, List<Integer>> twoPrivateGroupMember = roomMemberDao.getTwoPrivateGroupMember(req);
+    public Map<Long, RoomMemberListBo> loadFromDb(List<Long> req) {
+        Map<Long, List<Long>> twoPrivateGroupMember = roomMemberDao.getTwoPrivateGroupMember(req);
 
-        Map<Integer, RoomMemberListBo> result = twoPrivateGroupMember.entrySet().stream()
+        Map<Long, RoomMemberListBo> result = twoPrivateGroupMember.entrySet().stream()
                 .map(entry -> Map.entry(entry.getKey(), new RoomMemberListBo(entry.getValue())))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return result;

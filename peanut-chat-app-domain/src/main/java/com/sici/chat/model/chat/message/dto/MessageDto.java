@@ -27,6 +27,7 @@ public class MessageDto {
     private Integer fromUid;
     private Integer roomId;
     private Integer type;
+    private String content;
     private Date sendTime;
     private Date updateTime;
     private Integer status;

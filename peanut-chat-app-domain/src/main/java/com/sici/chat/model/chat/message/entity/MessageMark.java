@@ -1,32 +1,38 @@
 package com.sici.chat.model.chat.message.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * 
  * @TableName message_mark
  */
 @TableName(value ="message_mark")
-public class MessageMark implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class MessageMark {
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 消息id
      */
-    private Integer msgId;
+    private Long msgId;
 
     /**
      * 执行操作的用户id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 是否喜欢
@@ -38,48 +44,55 @@ public class MessageMark implements Serializable {
      */
     private Integer dislikeFlag;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
     /**
      * 主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * 消息id
      */
-    public Integer getMsgId() {
+    public Long getMsgId() {
         return msgId;
     }
 
     /**
      * 消息id
      */
-    public void setMsgId(Integer msgId) {
+    public void setMsgId(Long msgId) {
         this.msgId = msgId;
     }
 
     /**
      * 执行操作的用户id
      */
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * 执行操作的用户id
      */
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -93,8 +106,8 @@ public class MessageMark implements Serializable {
     /**
      * 是否喜欢
      */
-    public void setLikeFlag(Integer like) {
-        this.likeFlag = like;
+    public void setLikeFlag(Integer likeFlag) {
+        this.likeFlag = likeFlag;
     }
 
     /**
@@ -109,6 +122,34 @@ public class MessageMark implements Serializable {
      */
     public void setDislikeFlag(Integer dislikeFlag) {
         this.dislikeFlag = dislikeFlag;
+    }
+
+    /**
+     * 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * 更新时间
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * 更新时间
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -127,7 +168,9 @@ public class MessageMark implements Serializable {
             && (this.getMsgId() == null ? other.getMsgId() == null : this.getMsgId().equals(other.getMsgId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getLikeFlag() == null ? other.getLikeFlag() == null : this.getLikeFlag().equals(other.getLikeFlag()))
-            && (this.getDislikeFlag() == null ? other.getDislikeFlag() == null : this.getDislikeFlag().equals(other.getDislikeFlag()));
+            && (this.getDislikeFlag() == null ? other.getDislikeFlag() == null : this.getDislikeFlag().equals(other.getDislikeFlag()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -139,6 +182,8 @@ public class MessageMark implements Serializable {
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getLikeFlag() == null) ? 0 : getLikeFlag().hashCode());
         result = prime * result + ((getDislikeFlag() == null) ? 0 : getDislikeFlag().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -151,9 +196,10 @@ public class MessageMark implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", msgId=").append(msgId);
         sb.append(", userId=").append(userId);
-        sb.append(", like=").append(likeFlag);
+        sb.append(", likeFlag=").append(likeFlag);
         sb.append(", dislikeFlag=").append(dislikeFlag);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

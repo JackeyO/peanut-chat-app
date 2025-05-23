@@ -1,15 +1,14 @@
 package com.sici.chat.handler.msg;
 
-import com.sici.chat.asser.AssertUtil;
-import com.sici.chat.dao.TextMessageDao;
+import com.sici.chat.dao.MessageDao;
+import com.sici.chat.model.chat.message.dto.MessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
-import com.sici.chat.model.chat.message.dto.TextMessageDto;
 import com.sici.chat.model.chat.message.entity.Message;
-import com.sici.chat.model.chat.message.entity.TextMessage;
+import com.sici.chat.util.AssertUtil;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 /**
  * @projectName: qiyu-live-app
@@ -21,36 +20,30 @@ import javax.annotation.Resource;
  */
 
 @Component
-public class TextMessageHandler extends AbstractMessageHandler<TextMessageDto> {
+public class TextMessageHandler extends AbstractMessageHandler<MessageDto> {
     @Resource
-    private TextMessageDao textMessageDao;
+    private MessageDao messageDao;
     @Override
     public MessageRespTypeEnum getMessageTypeEnum() {
         return MessageRespTypeEnum.TEXT;
     }
 
     @Override
-    public TextMessageDto getBody(MessageRequestDto messageReq) {
+    public MessageDto getBody(MessageRequestDto messageReq) {
         AssertUtil.isTrue(super.support(messageReq), "消息类型不是文本消息, messageReq: " + messageReq);
-        TextMessageDto textMessageDto = (TextMessageDto) messageReq.getBody();
-        return textMessageDto;
+        MessageDto MessageDto = (MessageDto) messageReq.getBody();
+        return MessageDto;
     }
 
     @Override
     public void extCheck(MessageRequestDto messageReq) {
         // TODO: 检查文本消息的内容是否有敏感词  || created by 20148 at 11/27/2024 6:28 PM
         AssertUtil.isTrue(super.support(messageReq), "消息类型不符合文本消息, messageReq: " + messageReq);
-        TextMessageDto body = (TextMessageDto) messageReq.getBody();
+        MessageDto body = (MessageDto) messageReq.getBody();
     }
 
     @Override
     public void extSave(Message message, MessageRequestDto messageReq) {
-        TextMessageDto textMessageDto = getBody(messageReq);
-
-        // 保存文本消息的内容
-        textMessageDao.save(TextMessage.builder()
-                .msgId(message.getId())
-                .content(textMessageDto.getContent())
-                .build());
+        // to nothing
     }
 }

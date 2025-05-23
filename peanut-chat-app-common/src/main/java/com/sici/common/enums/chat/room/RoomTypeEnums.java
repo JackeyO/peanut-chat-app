@@ -10,8 +10,8 @@ package com.sici.common.enums.chat.room;
  */
 
 public enum RoomTypeEnums {
-    TWO_PRIVATE(0, "双人私聊"),
-    GROUP(1, "群聊");
+    TWO_PRIVATE(0, "多人群聊"),
+    GROUP(1, "1v1私聊"),;
 
     private Integer type;
     private String desc;

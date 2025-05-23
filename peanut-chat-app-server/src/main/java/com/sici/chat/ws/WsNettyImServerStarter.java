@@ -2,8 +2,8 @@ package com.sici.chat.ws;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;

@@ -1,7 +1,7 @@
 package com.sici.chat.service.impl.room;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.RoomDao;
@@ -21,7 +21,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomDao roomDao;
 
     @Override
-    public ResponseResult getRoomInfo(Integer roomId) {
+    public ResponseResult getRoomInfo(Long roomId) {
         Room room = roomDao.getById(roomId);
         if (room == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.ROOM_NOT_FOUND);

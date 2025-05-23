@@ -1,7 +1,7 @@
 package com.sici.chat.ws.handler;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;

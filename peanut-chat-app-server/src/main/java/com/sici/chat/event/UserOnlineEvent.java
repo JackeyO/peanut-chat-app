@@ -14,17 +14,17 @@ import org.springframework.context.ApplicationEvent;
 
 public class UserOnlineEvent extends ApplicationEvent {
     // TODO: 定义用户事件详细信息UserEventInfo(建表来保存用户上线和下线记录)  || created by 20148 at 12/4/2024 2:54 PM
-    private Integer userId;
-    public UserOnlineEvent(Object source, Integer userId) {
+    private Long userId;
+    public UserOnlineEvent(Object source, Long userId) {
         super(source);
         this.userId = userId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

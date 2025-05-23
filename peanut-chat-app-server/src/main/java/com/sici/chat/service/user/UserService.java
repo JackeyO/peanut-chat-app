@@ -12,7 +12,7 @@ import com.sici.common.result.ResponseResult;
 */
 public interface UserService {
 
-    Integer register(User user);
+    Long register(User user);
 
     String createToken(User user);
 

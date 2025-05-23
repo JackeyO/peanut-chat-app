@@ -1,101 +1,112 @@
 package com.sici.chat.model.chat.room.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 
  * @TableName room_member
  */
-@TableName(value = "room_member")
-public class RoomMember implements Serializable {
+@TableName(value ="room_member")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RoomMember {
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 房间id
      */
-    @TableField("room_id")
-    private Integer roomId;
+    private Long roomId;
 
     /**
      * 用户id
      */
-    @TableField("uid1")
-    private Integer uid1;
-    @TableField("uid2")
-    private Integer uid2;
+    private Long uid1;
+
+    /**
+     * 
+     */
+    private Long uid2;
 
     /**
      * 创建时间
      */
-    @TableField("create_time")
     private Date createTime;
 
     /**
      * 更新时间
      */
-    @TableField("update_time")
     private Date updateTime;
 
     /**
      * 0未删除，1已删除
      */
-
-    @TableField("delete_status")
     private Integer deleteStatus;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * 房间id
      */
-    public Integer getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
     /**
      * 房间id
      */
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 
-    public Integer getUid1() {
+    /**
+     * 用户id
+     */
+    public Long getUid1() {
         return uid1;
     }
 
-    public void setUid1(Integer uid1) {
+    /**
+     * 用户id
+     */
+    public void setUid1(Long uid1) {
         this.uid1 = uid1;
     }
 
-    public Integer getUid2() {
+    /**
+     * 
+     */
+    public Long getUid2() {
         return uid2;
     }
 
-    public void setUid2(Integer uid2) {
+    /**
+     * 
+     */
+    public void setUid2(Long uid2) {
         this.uid2 = uid2;
     }
 
@@ -154,12 +165,12 @@ public class RoomMember implements Serializable {
         }
         RoomMember other = (RoomMember) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getRoomId() == null ? other.getRoomId() == null : this.getRoomId().equals(other.getRoomId()))
-                && (this.getUid1() == null ? other.getUid1() == null : this.getUid1().equals(other.getUid1()))
-                && (this.getUid2() == null ? other.getUid2() == null : this.getUid2().equals(other.getUid2()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getDeleteStatus() == null ? other.getDeleteStatus() == null : this.getDeleteStatus().equals(other.getDeleteStatus()));
+            && (this.getRoomId() == null ? other.getRoomId() == null : this.getRoomId().equals(other.getRoomId()))
+            && (this.getUid1() == null ? other.getUid1() == null : this.getUid1().equals(other.getUid1()))
+            && (this.getUid2() == null ? other.getUid2() == null : this.getUid2().equals(other.getUid2()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getDeleteStatus() == null ? other.getDeleteStatus() == null : this.getDeleteStatus().equals(other.getDeleteStatus()));
     }
 
     @Override
@@ -189,7 +200,6 @@ public class RoomMember implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", deleteStatus=").append(deleteStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }

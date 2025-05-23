@@ -4,16 +4,13 @@ import com.sici.chat.builder.cache.RoomOnlineCountCacheKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.chat.event.UserOnlineEvent;
 import com.sici.framework.redis.RedisUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
+import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +34,7 @@ public class UserOlineEventListener {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = UserOnlineEvent.class, fallbackExecution = true)
     public void userOnline(UserOnlineEvent event) {
-        Integer userId = event.getUserId();
+        Long userId = event.getUserId();
 
         // 更新房间在线用户数缓存
         threadPoolTaskExecutor.execute(() -> {

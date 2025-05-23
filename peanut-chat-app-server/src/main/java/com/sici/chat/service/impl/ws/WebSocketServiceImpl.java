@@ -5,8 +5,8 @@ import static com.sici.chat.config.thread.ThreadPoolConfiguration.CHAT_WS_EXECUT
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -73,7 +73,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
 
     @Override
-    public void sendMsg(ImMsg imMsg, Integer receiverId) {
+    public void sendMsg(ImMsg imMsg, Long receiverId) {
         executor.execute(() -> {
             List<Channel> channelsToSend = ChannelLocalCache.getChannel(receiverId);
             channelsToSend.forEach(channel -> sendMsgToChannel(channel, imMsg));
@@ -81,7 +81,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
 
     @Override
-    public void sendMsg(ImMsg imMsg, List<Integer> receiverId) {
+    public void sendMsg(ImMsg imMsg, List<Long> receiverId) {
         executor.execute(() -> {
             receiverId.forEach(id -> {
                 List<Channel> channelsToSend = ChannelLocalCache.getChannel(id);
@@ -100,7 +100,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     @Override
     public void userOffline(Channel channel) {
         ChannelLocalCache.removeOnlineChannelAndInfo(channel);
-        Integer userId = ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID);
+        Long userId = ChannelAttrUtil.getAttr(channel, ChannelAttr.USER_ID);
         if (userId != null) {
             applicationEventPublisher.publishEvent(new UserOfflineEvent(this, userId));
         }
@@ -151,6 +151,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 处理登录请求
+     *
      * @param ctx
      */
     @Override
@@ -254,6 +255,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 处理连接请求
+     *
      * @param channel
      */
     @Override

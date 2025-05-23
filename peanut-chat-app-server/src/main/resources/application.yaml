@@ -8,10 +8,11 @@ spring:
   profiles:
     active: dev
 
-  redis:
-    host: ${peanut.redis.host}
-    port: ${peanut.redis.port}
-    database: 0
+  data:
+    redis:
+      host: ${peanut.redis.host}
+      port: ${peanut.redis.port}
+      database: 0
 
 
   datasource:
@@ -31,7 +32,6 @@ rocketmq:
   name-server: ${peanut.rocketmq.name-server}
   producer:
     group: ${peanut.rocketmq.producer.group}
-
 
 
 peanut:

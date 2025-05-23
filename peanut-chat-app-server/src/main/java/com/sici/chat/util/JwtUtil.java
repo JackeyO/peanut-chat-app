@@ -47,9 +47,9 @@ public class JwtUtil {
         return true;
     }
 
-    public static Integer getUidFromToken(String token) {
+    public static Long getUidFromToken(String token) {
         if (!verifyDefaultPayload(token, JwtConstant.USER_ID_KEY)) return null;
         JWT jwt = JWTUtil.parseToken(token);
-        return (Integer) jwt.getPayload(JwtConstant.USER_ID_PAYLOAD_KEY);
+        return (Long) jwt.getPayload(JwtConstant.USER_ID_PAYLOAD_KEY);
     }
 }

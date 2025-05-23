@@ -1,7 +1,7 @@
 package com.sici.chat.controller.room;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +34,7 @@ public class RoomController {
      * 根据房间id房间信息
      */
     @GetMapping("info")
-    public ResponseResult getRoomInfo(@RequestParam Integer roomId) {
+    public ResponseResult getRoomInfo(@RequestParam Long roomId) {
         // 参数校验
         AssertUtil.notNull(roomId, "房间ID不能为空");
         

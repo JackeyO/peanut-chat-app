@@ -21,5 +21,5 @@ import java.util.List;
 @Getter
 @Setter
 public class RoomMemberListBo {
-    private List<Integer> members;
+    private List<Long> members;
 }

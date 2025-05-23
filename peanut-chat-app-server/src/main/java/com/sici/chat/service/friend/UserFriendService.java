@@ -17,7 +17,7 @@ public interface UserFriendService {
      * @param targetId - 目标用户id
      * @return
      */
-    Boolean checkFriendRelation(Integer userId, Integer targetId);
+    Boolean checkFriendRelation(Long userId, Long targetId);
 
     /**
      * 保存好友关系
@@ -26,7 +26,7 @@ public interface UserFriendService {
      * @param targetId   - 目标用户id
      * @param createTime - 创建时间
      */
-    void saveFriendRelation(Integer uid, Integer targetId, Date createTime);
+    void saveFriendRelation(Long uid, Long targetId, Date createTime);
 
     /**
      * 获取好友列表
@@ -34,5 +34,5 @@ public interface UserFriendService {
      * @param userId - 用户id
      * @return
      */
-    ResponseResult getFriendList(Integer userId);
+    ResponseResult getFriendList(Long userId);
 }

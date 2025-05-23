@@ -1,7 +1,8 @@
 package com.sici.chat.controller.user;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,6 @@ import com.sici.chat.service.user.UserService;
 import com.sici.chat.util.AssertUtil;
 import com.sici.common.result.ResponseResult;
 
-import groovy.util.logging.Slf4j;
 
 /**
  * @projectName: peanut-chat-app

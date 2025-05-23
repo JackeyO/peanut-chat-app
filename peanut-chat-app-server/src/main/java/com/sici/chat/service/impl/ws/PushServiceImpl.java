@@ -2,8 +2,8 @@ package com.sici.chat.service.impl.ws;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.model.ws.bo.ImMsg;
@@ -28,12 +28,12 @@ public class PushServiceImpl implements PushService {
     private WebSocketService webSocketService;
     
     @Override
-    public void pushMsg(ImMsg imMsg, Integer receiverId) {
+    public void pushMsg(ImMsg imMsg, Long receiverId) {
         webSocketService.sendMsg(imMsg, receiverId);
     }
 
     @Override
-    public void pushMsg(ImMsg imMsg, List<Integer> receiverIds) {
+    public void pushMsg(ImMsg imMsg, List<Long> receiverIds) {
         // 根据ip进行分组
         webSocketService.sendMsg(imMsg, receiverIds);
     }

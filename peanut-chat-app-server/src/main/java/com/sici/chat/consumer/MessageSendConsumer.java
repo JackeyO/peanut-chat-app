@@ -2,8 +2,8 @@ package com.sici.chat.consumer;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
@@ -50,16 +50,16 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
 
     @Override
     public void onMessage(MessageSendDTO messageSendDTO) {
-        Integer msgId = messageSendDTO.getMsgId();
+        Long msgId = messageSendDTO.getMsgId();
         // 获取消息META信息
         Message message = messageDao.getById(msgId);
 
         // 获取房间信息
-        Integer roomId = message.getRoomId();
+        Long roomId = message.getRoomId();
         Room room = roomCache.getOne(roomId);
 
         // 获取房间成员列表
-        List<Integer> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
+        List<Long> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
                 twoPersonRoomCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
 
         // 构建ImMsg,准备进行消息推送

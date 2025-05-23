@@ -2,13 +2,13 @@ package com.sici.chat.service.impl.chat;
 
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
 
+import com.sici.chat.util.AssertUtil;
+import jakarta.annotation.Resource;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.adapter.MessageViewAdapter;
-import com.sici.chat.asser.AssertUtil;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.event.MessageSendEvent;
 import com.sici.chat.handler.msg.AbstractMessageHandler;
@@ -24,7 +24,7 @@ import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.service.chat.ChatService;
 import com.sici.common.constant.message.MessageMqConstant;
 import com.sici.common.result.ResponseResult;
-import com.sici.qiyu.live.framework.rmq.config.MQProducer;
+import com.sici.chat.framework.rmq.config.MQProducer;
 
 import cn.hutool.core.bean.BeanUtil;
 
@@ -49,8 +49,6 @@ public class ChatServiceImpl implements ChatService {
     @Resource
     private MessageViewAdapter messageViewAdapter;
     @Resource
-    private ChatService chatService;
-    @Resource
     private MQProducer mqProducer;
 
     @Override
@@ -65,7 +63,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ResponseResult messagePage(MessageCursorPageDto messageCursorPageDto) {
-        AssertUtil.isNotEmpty(messageCursorPageDto, "分页对象不能为空");
+        AssertUtil.notNull(messageCursorPageDto, "分页对象不能为空");
         CursorPageVo<Message> messagePageByCursor = messageDao.getMessagePageByCursor(messageCursorPageDto);
 
         CursorPageVo<ChatMessageVo> chatMessageVoCursorPageVo = new CursorPageVo<>();
@@ -80,8 +78,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void likeOrDislike(UserLikeOrDislikeDto userLikeOrDislikeDto) {
         // 参数校验
-        AssertUtil.isNotEmpty(userLikeOrDislikeDto, "点赞或踩对象不能为空");
-        AssertUtil.isNotEmpty(userLikeOrDislikeDto.getMessageId(), "消息id不能为空");
+        AssertUtil.notNull(userLikeOrDislikeDto, "点赞或踩对象不能为空");
+        AssertUtil.notNull(userLikeOrDislikeDto.getMessageId(), "消息id不能为空");
         // 根据消息id获取消息
         Message message = messageDao.getById(userLikeOrDislikeDto.getMessageId());
         // 获取消息的点赞或踩状态

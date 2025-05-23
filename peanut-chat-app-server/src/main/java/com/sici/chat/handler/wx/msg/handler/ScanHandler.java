@@ -2,8 +2,8 @@ package com.sici.chat.handler.wx.msg.handler;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.sici.chat.service.wx.WxMsgService;

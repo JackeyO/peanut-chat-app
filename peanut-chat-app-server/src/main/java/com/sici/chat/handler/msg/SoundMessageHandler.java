@@ -1,14 +1,14 @@
 package com.sici.chat.handler.msg;
 
-import com.sici.chat.asser.AssertUtil;
 import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.SoundMessageDto;
 import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.util.AssertUtil;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 /**
  * @projectName: qiyu-live-app

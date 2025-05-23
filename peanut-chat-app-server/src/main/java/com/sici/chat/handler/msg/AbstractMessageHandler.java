@@ -6,9 +6,9 @@ import com.sici.chat.model.chat.message.dto.MessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
 
 /**

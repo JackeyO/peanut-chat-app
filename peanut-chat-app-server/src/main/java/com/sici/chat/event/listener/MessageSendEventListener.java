@@ -3,13 +3,12 @@ package com.sici.chat.event.listener;
 import com.sici.chat.event.MessageSendEvent;
 import com.sici.chat.model.chat.message.dto.MessageSendDTO;
 import com.sici.common.constant.im.ChatMqConstant;
-import com.sici.common.constant.message.MessageMqConstant;
-import com.sici.qiyu.live.framework.rmq.config.MQProducer;
+import com.sici.chat.framework.rmq.config.MQProducer;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
-import javax.annotation.Resource;
 
 /**
  * @projectName: qiyu-live-app
@@ -27,7 +26,7 @@ public class MessageSendEventListener {
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT, classes = MessageSendEvent.class, fallbackExecution = true)
     public void messageRoute(MessageSendEvent event) {
-        Integer msgId = event.getMsgId();
+        Long msgId = event.getMsgId();
         mqProducer.sendSecureMsg(ChatMqConstant.SEND_MSG_TOPIC, new MessageSendDTO(msgId), msgId);
     }
 }

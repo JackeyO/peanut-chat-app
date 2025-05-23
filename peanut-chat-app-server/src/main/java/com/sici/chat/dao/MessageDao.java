@@ -1,7 +1,7 @@
 package com.sici.chat.dao;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

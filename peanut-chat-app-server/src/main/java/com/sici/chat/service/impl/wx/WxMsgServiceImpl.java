@@ -3,8 +3,8 @@ package com.sici.chat.service.impl.wx;
 import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import com.sici.chat.service.user.UserService;
 import com.sici.chat.service.wx.WxMsgService;
 import com.sici.common.constant.im.ChatMqConstant;
 import com.sici.framework.redis.RedisUtils;
-import com.sici.qiyu.live.framework.rmq.config.MQProducer;
+import com.sici.chat.framework.rmq.config.MQProducer;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;

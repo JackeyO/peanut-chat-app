@@ -24,14 +24,14 @@ public interface WebSocketService {
      * @param imMsg
      * @param receiverId
      */
-    void sendMsg(ImMsg imMsg, Integer receiverId);
+    void sendMsg(ImMsg imMsg, Long receiverId);
 
     /**
      * 发送消息到多个人
      * @param imMsg
      * @param receiverId
      */
-    void sendMsg(ImMsg imMsg, List<Integer> receiverId);
+    void sendMsg(ImMsg imMsg, List<Long> receiverId);
     /**
      * 用户下线
      * @param channel

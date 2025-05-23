@@ -4,7 +4,7 @@ import cn.hutool.core.lang.Pair;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sici.chat.mapper.MessageMarkMapper;
 import com.sici.chat.model.chat.message.entity.MessageMark;
-import com.sici.common.enums.chat.message.MessageMarkActionEnums;
+import com.sici.common.enums.chat.message.MessageMarkActionEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,36 +17,36 @@ import java.util.stream.Collectors;
  */
 @Component
 public class MessageMarkDao extends ServiceImpl<MessageMarkMapper, MessageMark> {
-    public Pair<Long, Long> getLikeAndDislikeCount(Integer id) {
+    public Pair<Long, Long> getLikeAndDislikeCount(Long id) {
         return Pair.of(getLikeCount(id), getDislikeCount(id));
     }
 
-    public List<Integer> getLikeUser(Integer id) {
+    public List<Long> getLikeUser(Long id) {
         return lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getLikeFlag, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getLikeFlag, MessageMarkActionEnum.YES.getCode())
                 .list().stream()
                 .map(MessageMark::getUserId)
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getDisLikeUser(Integer id) {
+    public List<Long> getDisLikeUser(Long id) {
         return lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnum.YES.getCode())
                 .list().stream()
                 .map(MessageMark::getUserId)
                 .collect(Collectors.toList());
     }
 
-    public Long getLikeCount(Integer id) {
+    public Long getLikeCount(Long id) {
         Long likes = lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getLikeFlag, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getLikeFlag, MessageMarkActionEnum.YES.getCode())
                 .count();
         return likes;
     }
 
-    public Long getDislikeCount(Integer id) {
+    public Long getDislikeCount(Long id) {
         Long dislikes = lambdaQuery().eq(MessageMark::getMsgId, id)
-                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnums.YES.getCode())
+                .eq(MessageMark::getDislikeFlag, MessageMarkActionEnum.YES.getCode())
                 .count();
         return dislikes;
     }

@@ -1,15 +1,12 @@
 package com.sici.chat.model.chat.apply.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -17,26 +14,25 @@ import java.util.Date;
  * @TableName user_friend_apply
  */
 @TableName(value ="user_friend_apply")
-@Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserFriendApply implements Serializable {
+@AllArgsConstructor
+public class UserFriendApply {
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 申请人id
      */
-    private Integer uid;
+    private Long uid;
 
     /**
      * 申请的目标对象id
      */
-    private Integer targetId;
+    private Long targetId;
 
     /**
      * 申请发起时间
@@ -44,62 +40,59 @@ public class UserFriendApply implements Serializable {
     private Date applyTime;
 
     /**
-     * 0：请求被拒绝，1：请求被接受
-     */
-    private Integer acceptStatus;
-
-    /**
      * 申请消息内容
      */
     private String applyMsg;
 
     /**
-     * 申请是否已经被处理
+     * 0：请求被拒绝，1：请求被接受 2:请求还未被处理
      */
-    private Integer dealStatus;
+    private Integer acceptStatus;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
     /**
      * 主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * 申请人id
      */
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
     /**
      * 申请人id
      */
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
     /**
      * 申请的目标对象id
      */
-    public Integer getTargetId() {
+    public Long getTargetId() {
         return targetId;
     }
 
     /**
      * 申请的目标对象id
      */
-    public void setTargetId(Integer targetId) {
+    public void setTargetId(Long targetId) {
         this.targetId = targetId;
     }
 
@@ -118,20 +111,6 @@ public class UserFriendApply implements Serializable {
     }
 
     /**
-     * 0：请求被拒绝，1：请求被接受
-     */
-    public Integer getAcceptStatus() {
-        return acceptStatus;
-    }
-
-    /**
-     * 0：请求被拒绝，1：请求被接受
-     */
-    public void setAcceptStatus(Integer acceptStatus) {
-        this.acceptStatus = acceptStatus;
-    }
-
-    /**
      * 申请消息内容
      */
     public String getApplyMsg() {
@@ -146,17 +125,31 @@ public class UserFriendApply implements Serializable {
     }
 
     /**
-     * 申请是否已经被处理
+     * 0：请求被拒绝，1：请求被接受 2:请求还未被处理
      */
-    public Integer getDealStatus() {
-        return dealStatus;
+    public Integer getAcceptStatus() {
+        return acceptStatus;
     }
 
     /**
-     * 申请是否已经被处理
+     * 0：请求被拒绝，1：请求被接受 2:请求还未被处理
      */
-    public void setDealStatus(Integer dealStatus) {
-        this.dealStatus = dealStatus;
+    public void setAcceptStatus(Integer acceptStatus) {
+        this.acceptStatus = acceptStatus;
+    }
+
+    /**
+     * 更新时间
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * 更新时间
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -175,9 +168,9 @@ public class UserFriendApply implements Serializable {
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
             && (this.getTargetId() == null ? other.getTargetId() == null : this.getTargetId().equals(other.getTargetId()))
             && (this.getApplyTime() == null ? other.getApplyTime() == null : this.getApplyTime().equals(other.getApplyTime()))
-            && (this.getAcceptStatus() == null ? other.getAcceptStatus() == null : this.getAcceptStatus().equals(other.getAcceptStatus()))
             && (this.getApplyMsg() == null ? other.getApplyMsg() == null : this.getApplyMsg().equals(other.getApplyMsg()))
-            && (this.getDealStatus() == null ? other.getDealStatus() == null : this.getDealStatus().equals(other.getDealStatus()));
+            && (this.getAcceptStatus() == null ? other.getAcceptStatus() == null : this.getAcceptStatus().equals(other.getAcceptStatus()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -188,9 +181,9 @@ public class UserFriendApply implements Serializable {
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
         result = prime * result + ((getTargetId() == null) ? 0 : getTargetId().hashCode());
         result = prime * result + ((getApplyTime() == null) ? 0 : getApplyTime().hashCode());
-        result = prime * result + ((getAcceptStatus() == null) ? 0 : getAcceptStatus().hashCode());
         result = prime * result + ((getApplyMsg() == null) ? 0 : getApplyMsg().hashCode());
-        result = prime * result + ((getDealStatus() == null) ? 0 : getDealStatus().hashCode());
+        result = prime * result + ((getAcceptStatus() == null) ? 0 : getAcceptStatus().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -204,10 +197,9 @@ public class UserFriendApply implements Serializable {
         sb.append(", uid=").append(uid);
         sb.append(", targetId=").append(targetId);
         sb.append(", applyTime=").append(applyTime);
-        sb.append(", acceptStatus=").append(acceptStatus);
         sb.append(", applyMsg=").append(applyMsg);
-        sb.append(", dealStatus=").append(dealStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", acceptStatus=").append(acceptStatus);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

@@ -20,5 +20,5 @@ public class WsChannelInfo {
     /**
      * 该Channel对应的用户id
      */
-    private Integer userId;
+    private Long userId;
 }

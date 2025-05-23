@@ -2,8 +2,9 @@ package com.sici.chat.service.impl.user;
 
 import java.util.Date;
 
-import javax.annotation.Resource;
 
+import com.sici.chat.util.ConvertBeanUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.UserDao;
@@ -14,7 +15,6 @@ import com.sici.chat.service.user.UserService;
 import com.sici.chat.util.JwtUtil;
 import com.sici.common.enums.code.AppHttpCodeEnum;
 import com.sici.common.result.ResponseResult;
-import com.sici.utils.bean.ConvertBeanUtil;
 
 /**
  * @author 20148
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
     @Override
-    public Integer register(User user) {
+    public Long register(User user) {
         user.setRegisterTime(new Date());
         userDao.save(user);
         return user.getId();
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User authorize(String token) {
-        Integer userId = JwtUtil.getUidFromToken(token);
+        Long userId = JwtUtil.getUidFromToken(token);
         if (userId == null) {
             return null;
         }

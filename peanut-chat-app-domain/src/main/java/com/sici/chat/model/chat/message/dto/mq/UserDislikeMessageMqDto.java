@@ -14,9 +14,9 @@ public class UserDislikeMessageMqDto {
     /**
      * 消息id
      */
-    private Integer messageId;
+    private Long messageId;
     /**
      * 用户id
      */
-    private Integer userId;
+    private Long userId;
 }

@@ -1,13 +1,8 @@
 package com.sici.chat.aggregator;
 
-import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginQrCodeMessageAggregateParam;
-import com.sici.chat.model.chat.message.vo.LoginMessageVo;
 import com.sici.chat.model.chat.message.vo.LoginQrCodeMessageVo;
-import com.sici.chat.model.user.entity.User;
-import com.sici.chat.model.user.vo.UserVO;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
-import com.sici.utils.bean.ConvertBeanUtil;
 import org.springframework.stereotype.Component;
 
 /**

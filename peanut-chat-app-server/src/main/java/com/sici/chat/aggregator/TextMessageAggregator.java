@@ -1,13 +1,12 @@
 package com.sici.chat.aggregator;
 
-import com.sici.chat.dao.TextMessageDao;
 import com.sici.chat.model.chat.message.vo.MessageMarkVo;
 import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.model.chat.message.vo.TextMessageVo;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +22,6 @@ import java.util.Map;
 
 @Component
 public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> {
-    @Resource
-    private TextMessageDao textMessageDao;
     @Override
     public MessageRespTypeEnum getSupportedMessageEnum() {
         return MessageRespTypeEnum.TEXT;
@@ -37,8 +34,6 @@ public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> 
         textMessageVo.setMessage(messageVo);
         // 聚合消息标记信息
         textMessageVo.setMessageMarkVo(messageMarkVo);
-        // 聚合消息文本内容
-        textMessageVo.setContent(textMessageDao.getContentById(messageVo.getId()));
         return textMessageVo;
     }
 

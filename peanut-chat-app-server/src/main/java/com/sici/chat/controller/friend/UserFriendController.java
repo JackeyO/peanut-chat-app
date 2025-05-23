@@ -1,8 +1,8 @@
 package com.sici.chat.controller.friend;
 
-import javax.annotation.Resource;
 
 import com.sici.chat.util.AssertUtil;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,7 +57,7 @@ public class UserFriendController {
      * @return
      */
     @GetMapping("ack")
-    public ResponseResult ackApply(@RequestParam Integer applyId, @RequestParam Integer apply) {
+    public ResponseResult ackApply(@RequestParam Long applyId, @RequestParam Integer apply) {
         AssertUtil.notNull(applyId, "申请ID不能为空");
         AssertUtil.notNull(apply, "确认状态不能为空");
         AssertUtil.isTrue(apply == 0 || apply == 1, "确认状态只能为0(拒绝)或1(接受)");
@@ -71,7 +71,7 @@ public class UserFriendController {
      * @return 好友列表
      */
     @GetMapping("list")
-    public ResponseResult getFriendList(Integer userId) {
+    public ResponseResult getFriendList(Long userId) {
         // TODO: 测试该接口 created by 749291 at 2025-03-19 22:26
         AssertUtil.notNull(userId, "用户ID不能为空");
         return userFriendService.getFriendList(userId);

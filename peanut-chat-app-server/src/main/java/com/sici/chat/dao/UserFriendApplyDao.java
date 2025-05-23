@@ -1,5 +1,6 @@
 package com.sici.chat.dao;
 
+import com.sici.common.enums.chat.apply.ApplyAcceptStatusEnum;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,10 +21,10 @@ public class UserFriendApplyDao extends ServiceImpl<UserFriendApplyMapper, UserF
      * @param targetId
      * @return
      */
-    public UserFriendApply getByUserIdAndTargetId(Integer userId, Integer targetId) {
+    public UserFriendApply getUnhandledApplyByUserIdAndTargetId(Long userId, Long targetId) {
         return lambdaQuery().eq(UserFriendApply::getUid, userId)
                 .eq(UserFriendApply::getTargetId, targetId)
-                .eq(UserFriendApply::getDealStatus, 0)
+                .eq(UserFriendApply::getAcceptStatus, ApplyAcceptStatusEnum.UNHANDLED.getStatus())
                 .one();
     }
 }

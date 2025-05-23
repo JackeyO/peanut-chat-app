@@ -1,10 +1,12 @@
 package com.sici.chat.model.chat.room.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
@@ -12,12 +14,15 @@ import java.util.Date;
  * @TableName room
  */
 @TableName(value ="room")
-public class Room implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Room {
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 房间名称
@@ -25,9 +30,9 @@ public class Room implements Serializable {
     private String roomName;
 
     /**
-     * 房间头像url
+     * 房间头像
      */
-    private String avatarUrl;
+    private String avatar;
 
     /**
      * 房间描述
@@ -59,20 +64,17 @@ public class Room implements Serializable {
      */
     private Integer type;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
     /**
      * 主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -91,17 +93,17 @@ public class Room implements Serializable {
     }
 
     /**
-     * 房间头像url
+     * 房间头像
      */
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
     /**
-     * 房间头像url
+     * 房间头像
      */
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     /**
@@ -202,7 +204,7 @@ public class Room implements Serializable {
         Room other = (Room) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getRoomName() == null ? other.getRoomName() == null : this.getRoomName().equals(other.getRoomName()))
-            && (this.getAvatarUrl() == null ? other.getAvatarUrl() == null : this.getAvatarUrl().equals(other.getAvatarUrl()))
+            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getDeleteStatus() == null ? other.getDeleteStatus() == null : this.getDeleteStatus().equals(other.getDeleteStatus()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -217,7 +219,7 @@ public class Room implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getRoomName() == null) ? 0 : getRoomName().hashCode());
-        result = prime * result + ((getAvatarUrl() == null) ? 0 : getAvatarUrl().hashCode());
+        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getDeleteStatus() == null) ? 0 : getDeleteStatus().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -235,14 +237,13 @@ public class Room implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", roomName=").append(roomName);
-        sb.append(", avatarUrl=").append(avatarUrl);
+        sb.append(", avatar=").append(avatar);
         sb.append(", description=").append(description);
         sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", extra=").append(extra);
         sb.append(", type=").append(type);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }

@@ -1,7 +1,7 @@
 package com.sici.chat.service.impl.room;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.RoomMemberDao;

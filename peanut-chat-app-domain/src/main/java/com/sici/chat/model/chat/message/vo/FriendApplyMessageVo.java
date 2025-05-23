@@ -19,6 +19,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FriendApplyMessageVo extends CommonMessageVo{
-    private Integer userId;
+    private Long userId;
     private Date applyTime;
 }

@@ -13,5 +13,5 @@ public interface RoomService  {
      * @param roomId - 房间id
      * @return 房间信息
      */
-    ResponseResult getRoomInfo(Integer roomId);
+    ResponseResult getRoomInfo(Long roomId);
 }

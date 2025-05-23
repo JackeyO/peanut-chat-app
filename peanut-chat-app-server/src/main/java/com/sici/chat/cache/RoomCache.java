@@ -4,9 +4,9 @@ import com.sici.chat.builder.cache.RoomCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomDao;
 import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class RoomCache extends AbstractRedisStringCache<Integer, Room> {
+public class RoomCache extends AbstractRedisStringCache<Long, Room> {
     @Resource
     private RoomCacheRedisKeyBuilder roomCacheKeyBuilder;
     @Resource
     private RoomDao roomDao;
 
     @Override
-    public String getKey(Integer req) {
+    public String getKey(Long req) {
         return roomCacheKeyBuilder.build(req);
     }
 
@@ -38,7 +38,7 @@ public class RoomCache extends AbstractRedisStringCache<Integer, Room> {
     }
 
     @Override
-    public Map<Integer, Room> loadFromDb(List<Integer> req) {
+    public Map<Long, Room> loadFromDb(List<Long> req) {
         return roomDao.listByIds(req).stream()
                 .collect(Collectors.toMap(Room::getId, room -> room));
     }

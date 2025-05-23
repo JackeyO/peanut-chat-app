@@ -6,11 +6,10 @@ import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.message.vo.MessageMarkVo;
 import com.sici.chat.model.chat.message.vo.MessageVo;
-import com.sici.chat.model.chat.message.vo.TextMessageVo;
-import com.sici.common.enums.chat.message.MessageMarkActionEnums;
-import com.sici.utils.bean.ConvertBeanUtil;
+import com.sici.chat.util.ConvertBeanUtil;
+import com.sici.common.enums.chat.message.MessageMarkActionEnum;
+import jakarta.annotation.Resource;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,42 +69,42 @@ public abstract class ChatMessageAggregator<OUT extends ChatMessageVo> extends A
 
     /**
      * 聚合消息标记信息(包括接收者对消息的标记行为)
-     * @param message
+     * @param messageMeta
      * @param receiverId
      * @return
      */
     public MessageMarkVo aggregateMessageMarkInfoRelationToReceiver(Message messageMeta, Integer receiverId) {
         // 获取消息的喜欢和不喜欢数量以及人员id
         Pair<Long, Long> likeAndDislikeCount = messageMarkDao.getLikeAndDislikeCount(messageMeta.getId());
-        List<Integer> likeUser = messageMarkDao.getLikeUser(messageMeta.getId());
-        List<Integer> disLikeUser = messageMarkDao.getDisLikeUser(messageMeta.getId());
+        List<Long> likeUser = messageMarkDao.getLikeUser(messageMeta.getId());
+        List<Long> disLikeUser = messageMarkDao.getDisLikeUser(messageMeta.getId());
 
         MessageMarkVo messageMarkVo = new MessageMarkVo();
         messageMarkVo.setLikes(likeAndDislikeCount.getKey());
         messageMarkVo.setDisLikes(likeAndDislikeCount.getValue());
-        messageMarkVo.setCurrentUserLike(likeUser.contains(receiverId) ? MessageMarkActionEnums.YES.getCode() : MessageMarkActionEnums.NO.getCode());
-        messageMarkVo.setCurrentUserDisLike(disLikeUser.contains(receiverId) ? MessageMarkActionEnums.YES.getCode() : MessageMarkActionEnums.NO.getCode());
+        messageMarkVo.setCurrentUserLike(likeUser.contains(receiverId) ? MessageMarkActionEnum.YES.getCode() : MessageMarkActionEnum.NO.getCode());
+        messageMarkVo.setCurrentUserDisLike(disLikeUser.contains(receiverId) ? MessageMarkActionEnum.YES.getCode() : MessageMarkActionEnum.NO.getCode());
         return messageMarkVo;
     }
     /**
      * 聚合消息标记信息(包括接收者对消息的标记行为)
-     * @param message
+     * @param messageMeta
      * @param receiverIds
      * @return
      */
     public Map<Integer, MessageMarkVo> aggregateMessageMarkInfoRelationToReceiver(Message messageMeta, List<Integer> receiverIds) {
         // 获取消息的喜欢和不喜欢数量以及人员id
         Pair<Long, Long> likeAndDislikeCount = messageMarkDao.getLikeAndDislikeCount(messageMeta.getId());
-        List<Integer> likeUser = messageMarkDao.getLikeUser(messageMeta.getId());
-        List<Integer> disLikeUser = messageMarkDao.getDisLikeUser(messageMeta.getId());
+        List<Long> likeUser = messageMarkDao.getLikeUser(messageMeta.getId());
+        List<Long> disLikeUser = messageMarkDao.getDisLikeUser(messageMeta.getId());
 
         HashMap<Integer, MessageMarkVo> messageMarkVoMap = new HashMap<>();
         receiverIds.forEach(receiverId -> {
             MessageMarkVo messageMarkVo = new MessageMarkVo();
             messageMarkVo.setLikes(likeAndDislikeCount.getKey());
             messageMarkVo.setDisLikes(likeAndDislikeCount.getValue());
-            messageMarkVo.setCurrentUserLike(likeUser.contains(receiverId) ? MessageMarkActionEnums.YES.getCode() : MessageMarkActionEnums.NO.getCode());
-            messageMarkVo.setCurrentUserDisLike(disLikeUser.contains(receiverId) ? MessageMarkActionEnums.YES.getCode() : MessageMarkActionEnums.NO.getCode());
+            messageMarkVo.setCurrentUserLike(likeUser.contains(receiverId) ? MessageMarkActionEnum.YES.getCode() : MessageMarkActionEnum.NO.getCode());
+            messageMarkVo.setCurrentUserDisLike(disLikeUser.contains(receiverId) ? MessageMarkActionEnum.YES.getCode() : MessageMarkActionEnum.NO.getCode());
             messageMarkVoMap.put(receiverId, messageMarkVo);
         });
         return messageMarkVoMap;
@@ -113,7 +112,7 @@ public abstract class ChatMessageAggregator<OUT extends ChatMessageVo> extends A
 
     /**
      * 聚合消息meta信息
-     * @param message
+     * @param messageMeta
      * @return
      */
     public MessageVo aggregateMessageMetaInfo(Message messageMeta) {

@@ -3,6 +3,7 @@ package com.sici.chat.dao;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.sici.common.constant.common.DeleteStatusEnum;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,10 +24,10 @@ public class UserFriendDao extends ServiceImpl<UserFriendMapper, UserFriend> {
      * @param uid2 - 目标用户id
      * @return
      */
-    public UserFriend getFriendRelation(Integer uid1, Integer uid2) {
+    public UserFriend getFriendRelation(Long uid1, Long uid2) {
         return lambdaQuery().eq(UserFriend::getUid1, uid1)
                 .eq(UserFriend::getUid2, uid1)
-                .eq(UserFriend::getDeleteStatus, 0)
+                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getstatus())
                 .one();
     }
 
@@ -35,9 +36,9 @@ public class UserFriendDao extends ServiceImpl<UserFriendMapper, UserFriend> {
      * @param userId - 用户id
      * @return
      */
-    public List<Integer> getFriendListById(Integer userId) {
+    public List<Long> getFriendListById(Long userId) {
         return lambdaQuery().eq(UserFriend::getUid1, userId)
-                .eq(UserFriend::getDeleteStatus, 0)
+                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getstatus())
                 .select(UserFriend::getUid2)
                 .list()
                 .stream()

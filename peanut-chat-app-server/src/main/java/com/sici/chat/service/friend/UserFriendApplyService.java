@@ -21,5 +21,5 @@ public interface UserFriendApplyService  {
      * @param applyId
      * @return
      */
-    ResponseResult ack(Integer applyId, Integer accept);
+    ResponseResult ack(Long applyId, Integer accept);
 }

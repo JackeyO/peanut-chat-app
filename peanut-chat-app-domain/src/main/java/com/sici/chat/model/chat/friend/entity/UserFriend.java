@@ -1,15 +1,12 @@
 package com.sici.chat.model.chat.friend.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -17,26 +14,25 @@ import java.util.Date;
  * @TableName user_friend
  */
 @TableName(value ="user_friend")
-@Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserFriend implements Serializable {
+@AllArgsConstructor
+public class UserFriend {
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 用户a
      */
-    private Integer uid1;
+    private Long uid1;
 
     /**
      * 用户b
      */
-    private Integer uid2;
+    private Long uid2;
 
     /**
      * 创建时间
@@ -53,48 +49,45 @@ public class UserFriend implements Serializable {
      */
     private Integer deleteStatus;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
     /**
      * 主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * 主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * 用户a
      */
-    public Integer getUid1() {
+    public Long getUid1() {
         return uid1;
     }
 
     /**
      * 用户a
      */
-    public void setUid1(Integer uid1) {
+    public void setUid1(Long uid1) {
         this.uid1 = uid1;
     }
 
     /**
      * 用户b
      */
-    public Integer getUid2() {
+    public Long getUid2() {
         return uid2;
     }
 
     /**
      * 用户b
      */
-    public void setUid2(Integer uid2) {
+    public void setUid2(Long uid2) {
         this.uid2 = uid2;
     }
 
@@ -185,7 +178,6 @@ public class UserFriend implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", deleteStatus=").append(deleteStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }

@@ -3,8 +3,8 @@ package com.sici.chat.service.impl.friend;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.UserFriendDao;
@@ -23,13 +23,13 @@ public class UserFriendServiceImpl implements UserFriendService {
     private UserFriendDao userFriendDao;
 
     @Override
-    public Boolean checkFriendRelation(Integer userId, Integer targetId) {
+    public Boolean checkFriendRelation(Long userId, Long targetId) {
         UserFriend userFriend = userFriendDao.getFriendRelation(userId, targetId);
         return userFriend != null;
     }
 
     @Override
-    public void saveFriendRelation(Integer uid, Integer targetId, Date createTime) {
+    public void saveFriendRelation(Long uid, Long targetId, Date createTime) {
         userFriendDao.save(UserFriend.builder()
                 .uid1(uid)
                 .uid2(targetId)
@@ -40,8 +40,8 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
-    public ResponseResult getFriendList(Integer userId) {
-        List<Integer> friends = userFriendDao.getFriendListById(userId);
+    public ResponseResult getFriendList(Long userId) {
+        List<Long> friends = userFriendDao.getFriendListById(userId);
         return ResponseResult.okResult(friends);
     }
 

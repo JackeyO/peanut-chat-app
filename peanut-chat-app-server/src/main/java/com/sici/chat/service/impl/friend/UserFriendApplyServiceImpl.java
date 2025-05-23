@@ -2,11 +2,12 @@ package com.sici.chat.service.impl.friend;
 
 import java.util.Date;
 
-import javax.annotation.Resource;
 
+import com.sici.chat.util.AssertUtil;
+import com.sici.common.enums.chat.apply.ApplyAcceptStatusEnum;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import com.sici.chat.asser.AssertUtil;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.dao.UserFriendApplyDao;
 import com.sici.chat.dao.UserFriendDao;
@@ -37,8 +38,8 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
 
     @Override
     public ResponseResult apply(UserFriendApplyDto userFriendApplyDto) {
-        Integer userId = userFriendApplyDto.getUserId();
-        Integer targetId = userFriendApplyDto.getTargetId();
+        Long userId = userFriendApplyDto.getUserId();
+        Long targetId = userFriendApplyDto.getTargetId();
 
         // 检查两人是否已经是好友关系
         Boolean isFriend = userFriendService.checkFriendRelation(userFriendApplyDto.getUserId(), userFriendApplyDto.getTargetId());
@@ -46,7 +47,7 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
             return ResponseResult.errorResult(AppHttpCodeEnum.ALREADY_FRIEND);
         }
         // 检查之前是否申请过
-        UserFriendApply existApply = userFriendApplyDao.getByUserIdAndTargetId(userId, targetId);
+        UserFriendApply existApply = userFriendApplyDao.getUnhandledApplyByUserIdAndTargetId(userId, targetId);
         if (existApply != null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.FRIEND_APPLY_EXISTS);
         }
@@ -57,6 +58,7 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
                 .targetId(userFriendApplyDto.getTargetId())
                 .applyTime(userFriendApplyDto.getApplyTime())
                 .applyMsg(userFriendApplyDto.getApplyMsg())
+                .acceptStatus(ApplyAcceptStatusEnum.UNHANDLED.getStatus())
                 .build());
 
         ImMsg imMsg = ImMsgBuilder.buildUserFriendApplyMessage(userFriendApplyDto);
@@ -66,11 +68,10 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
     }
 
     @Override
-    public ResponseResult ack(Integer applyId, Integer accept) {
+    public ResponseResult ack(Long applyId, Integer accept) {
         UserFriendApply userFriendApply = userFriendApplyDao.getById(applyId);
-        AssertUtil.isNotEmpty(userFriendApply, "申请不存在");
+        AssertUtil.notNull(userFriendApply, "申请不存在");
 
-        userFriendApply.setDealStatus(1);
         userFriendApply.setAcceptStatus(accept);
 
         // 更新申请信息

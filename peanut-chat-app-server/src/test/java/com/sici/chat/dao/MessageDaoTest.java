@@ -3,8 +3,9 @@ package com.sici.chat.dao;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,6 +18,7 @@ import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import cn.hutool.core.bean.BeanUtil;
 
 @SpringBootTest
+@Slf4j
 class MessageDaoTest {
     @Resource
     private MessageDao messageDao;
@@ -34,5 +36,15 @@ class MessageDaoTest {
                 .map(message -> messageViewAdapter.adaptChatMessage(message))
                 .collect(Collectors.toList());
         chatMessageVos.setRecords(newRecords);
+    }
+
+    @Test
+    void testSaveMessage() {
+        Message message = new Message();
+        message.setRoomId(1L);
+        message.setFromUid(1L);
+        message.setType(0);
+        boolean save = messageDao.save(message);
+        log.info(save ? "<UNK>" : "<UNK>");
     }
 }

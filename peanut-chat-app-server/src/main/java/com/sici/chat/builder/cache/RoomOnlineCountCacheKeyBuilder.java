@@ -19,9 +19,9 @@ import com.sici.framework.redis.key.RedisKeyBuilder;
  */
 
 @Component
-public class RoomOnlineCountCacheKeyBuilder implements RedisKeyBuilder<Integer, String> {
+public class RoomOnlineCountCacheKeyBuilder implements RedisKeyBuilder<Long, String> {
     @Override
-    public String build(Integer roomId) {
+    public String build(Long roomId) {
         return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM
                 + roomId;
     }

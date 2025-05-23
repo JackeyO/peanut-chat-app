@@ -14,7 +14,7 @@ public interface PushService {
      * @param imMsg      消息内容
      * @param receiverId 接收者ID
      */
-    void pushMsg(ImMsg imMsg, Integer receiverId);
+    void pushMsg(ImMsg imMsg, Long receiverId);
 
     /**
      * 推送消息给多个接收者
@@ -22,5 +22,5 @@ public interface PushService {
      * @param imMsg       消息内容
      * @param receiverIds 接收者ID列表
      */
-    void pushMsg(ImMsg imMsg, List<Integer> receiverIds);
+    void pushMsg(ImMsg imMsg, List<Long> receiverIds);
 } 

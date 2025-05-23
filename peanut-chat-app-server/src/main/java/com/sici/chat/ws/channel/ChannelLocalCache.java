@@ -49,13 +49,13 @@ public class ChannelLocalCache {
     /**
      * 用户id和Channel对应关系
      */
-    private static Map<Integer, CopyOnWriteArrayList<Channel>> ONLINE_CHANNE_MAP = new ConcurrentHashMap<>();
+    private static Map<Long, CopyOnWriteArrayList<Channel>> ONLINE_CHANNE_MAP = new ConcurrentHashMap<>();
 
-    public static List<Channel> getChannel(Integer userId) {
+    public static List<Channel> getChannel(Long userId) {
         return ONLINE_CHANNE_MAP.get(userId);
     }
 
-    public static void addOnlineChannel(Integer userId, Channel channel) {
+    public static void addOnlineChannel(Long userId, Channel channel) {
         ChannelAttrUtil.setUserId(channel, ChannelAttr.USER_ID, userId);
         ONLINE_CHANNE_MAP.computeIfAbsent(userId, key -> new CopyOnWriteArrayList<>())
                 .add(channel);
@@ -68,7 +68,7 @@ public class ChannelLocalCache {
     public static void addOnlineChannelInfo(Channel channel, WsChannelInfo wsChannelInfo) {
         ONLINE_CHANNE_INFO_MAP.put(channel, wsChannelInfo);
     }
-    public static void addOnlineChannelAndInfo(Integer userId, Channel channel, WsChannelInfo wsChannelInfo) {
+    public static void addOnlineChannelAndInfo(Long userId, Channel channel, WsChannelInfo wsChannelInfo) {
         addOnlineChannel(userId, channel);
         addOnlineChannelInfo(channel, wsChannelInfo);
     }
@@ -77,7 +77,7 @@ public class ChannelLocalCache {
     }
     public static void removeOnlineChannel(Channel channel) {
         WsChannelInfo channelInfo = getOnlineChannelInfo(channel);
-        Integer userId = channelInfo.getUserId();
+        Long userId = channelInfo.getUserId();
         if (userId != null) {
             List<Channel> channels = ONLINE_CHANNE_MAP.get(userId);
             channels.removeIf(ch -> Objects.equals(ch, channels));

@@ -17,8 +17,8 @@ import java.time.Clock;
 
 @Getter
 public class MessageSendEvent extends ApplicationEvent {
-    private Integer msgId;
-    public MessageSendEvent(Object source, Integer msgId) {
+    private Long msgId;
+    public MessageSendEvent(Object source, Long msgId) {
         super(source);
         this.msgId = msgId;
     }

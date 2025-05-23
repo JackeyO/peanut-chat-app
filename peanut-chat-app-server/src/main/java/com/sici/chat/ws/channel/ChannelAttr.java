@@ -12,7 +12,7 @@ import io.netty.util.AttributeKey;
  */
 
 public class ChannelAttr {
-    public static AttributeKey<Integer> USER_ID = AttributeKey.valueOf("userId");
-    public static AttributeKey<Integer> IP = AttributeKey.valueOf("ip");
+    public static AttributeKey<Long> USER_ID = AttributeKey.valueOf("userId");
+    public static AttributeKey<String> IP = AttributeKey.valueOf("ip");
     public static AttributeKey<String> TOKEN = AttributeKey.valueOf("token");
 }

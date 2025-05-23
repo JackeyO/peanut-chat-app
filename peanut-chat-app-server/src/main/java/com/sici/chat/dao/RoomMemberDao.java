@@ -25,7 +25,7 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
      * @param req
      * @return
      */
-    public Map<Integer, List<Integer>> getGroupRoomMember(List<Integer> req) {
+    public Map<Long, List<Long>> getGroupRoomMember(List<Long> req) {
         return lambdaQuery().in(RoomMember::getRoomId, req).list().stream()
                 .collect(Collectors.groupingBy(RoomMember::getRoomId, Collectors.mapping(RoomMember::getUid1, Collectors.toList())));
     }
@@ -36,17 +36,17 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
      * @param req
      * @return
      */
-    public List<Integer> getTwoPrivateGroupMember(Integer req) {
+    public List<Long> getTwoPrivateGroupMember(Long req) {
         RoomMember twoPersonRoomMember = lambdaQuery().eq(RoomMember::getRoomId, req)
                 .one();
         return List.of(twoPersonRoomMember.getUid1(), twoPersonRoomMember.getUid2());
     }
 
-    public Map<Integer, List<Integer>> getTwoPrivateGroupMember(List<Integer> req) {
+    public Map<Long, List<Long>> getTwoPrivateGroupMember(List<Long> req) {
         return lambdaQuery().in(RoomMember::getRoomId, req)
                 .list().stream()
                 .collect(Collectors.groupingBy(RoomMember::getRoomId,
-                        Collector.of(ArrayList<Integer>::new, (list, roomMember) -> {
+                        Collector.of(ArrayList<Long>::new, (list, roomMember) -> {
                             list.add(roomMember.getUid1());
                             list.add(roomMember.getUid2());
                         }, (list1, list2) -> {
@@ -55,7 +55,7 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
                         })));
     }
 
-    public List<Integer> getRoomsByUserId(Integer userId) {
+    public List<Long> getRoomsByUserId(Long userId) {
         return lambdaQuery().eq(RoomMember::getUid1, userId)
                 .list()
                 .stream()

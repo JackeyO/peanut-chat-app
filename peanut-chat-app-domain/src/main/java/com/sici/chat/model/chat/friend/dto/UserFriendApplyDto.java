@@ -1,6 +1,7 @@
 package com.sici.chat.model.chat.friend.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,17 +17,18 @@ import java.util.Date;
  */
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserFriendApplyDto {
     /**
      * 申请发起人id
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 申请目标id
      */
-    private Integer targetId;
+    private Long targetId;
     /**
      * 申请信息
      */
