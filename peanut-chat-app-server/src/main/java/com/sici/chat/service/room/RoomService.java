@@ -1,6 +1,7 @@
 package com.sici.chat.service.room;
 
-import com.sici.common.result.ResponseResult;
+import com.sici.chat.model.chat.room.entity.Room;
+import com.sici.chat.model.chat.room.vo.RoomVO;
 
 /**
 * @author 20148
@@ -13,5 +14,5 @@ public interface RoomService  {
      * @param roomId - 房间id
      * @return 房间信息
      */
-    ResponseResult getRoomInfo(Long roomId);
+    RoomVO getRoomInfo(Long roomId);
 }

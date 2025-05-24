@@ -1,16 +1,19 @@
 package com.sici.chat.controller.user;
 
 
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sici.chat.model.user.dto.UserProfileDto;
+import com.sici.chat.model.user.vo.UserVO;
 import com.sici.chat.service.user.UserService;
 import com.sici.chat.util.AssertUtil;
+import com.sici.common.exception.BusinessException;
 import com.sici.common.result.ResponseResult;
+
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -30,11 +33,20 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("profile")
-    public ResponseResult profile(UserProfileDto userProfileDto) {
+    public ResponseResult<UserVO> profile(UserProfileDto userProfileDto) {
         // 参数校验
         AssertUtil.notNull(userProfileDto, "用户信息不能为空");
         AssertUtil.notNull(userProfileDto.getUserId(), "用户ID不能为空");
 
-        return userService.profile(userProfileDto);
+        try {
+            UserVO userVO = userService.profile(userProfileDto);
+            return ResponseResult.okResult(userVO);
+        } catch (BusinessException e) {
+            log.error("获取用户信息失败", e);
+            return ResponseResult.errorResult(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            log.error("获取用户信息失败", e);
+            return ResponseResult.errorResult(500, e.getMessage());
+        }
     }
 }

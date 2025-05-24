@@ -3,14 +3,13 @@ package com.sici.chat.service.impl.friend;
 import java.util.Date;
 import java.util.List;
 
-
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.UserFriendDao;
 import com.sici.chat.model.chat.friend.entity.UserFriend;
 import com.sici.chat.service.friend.UserFriendService;
-import com.sici.common.result.ResponseResult;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author 20148
@@ -40,9 +39,9 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
-    public ResponseResult getFriendList(Long userId) {
+    public List<Long> getFriendList(Long userId) {
         List<Long> friends = userFriendDao.getFriendListById(userId);
-        return ResponseResult.okResult(friends);
+        return friends;
     }
 
     

@@ -1,10 +1,9 @@
 package com.sici.chat.aggregator;
 
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.message.vo.MessageMarkVo;
 import com.sici.chat.model.chat.message.vo.MessageVo;
-import com.sici.chat.model.chat.message.vo.TextMessageVo;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -21,15 +20,15 @@ import java.util.Map;
  */
 
 @Component
-public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> {
+public class TextMessageAggregator extends ChatMessageAggregator<ChatMessageVo> {
     @Override
     public MessageRespTypeEnum getSupportedMessageEnum() {
         return MessageRespTypeEnum.TEXT;
     }
 
     @Override
-    public TextMessageVo fillInfo(MessageVo messageVo, MessageMarkVo messageMarkVo) {
-        TextMessageVo textMessageVo = new TextMessageVo();
+    public ChatMessageVo fillInfo(MessageVo messageVo, MessageMarkVo messageMarkVo) {
+        ChatMessageVo textMessageVo = new ChatMessageVo();
         // 聚合消息META
         textMessageVo.setMessage(messageVo);
         // 聚合消息标记信息
@@ -39,13 +38,13 @@ public class TextMessageAggregator extends ChatMessageAggregator<TextMessageVo> 
 
 
     @Override
-    public TextMessageVo fillInfoRelationToReceiver(MessageVo messageVo, MessageMarkVo messageMarkVo, Integer receiver) {
+    public ChatMessageVo fillInfoRelationToReceiver(MessageVo messageVo, MessageMarkVo messageMarkVo, Integer receiver) {
         return fillInfo(messageVo, messageMarkVo);
     }
 
     @Override
-    public Map<Integer, TextMessageVo> fillInfoRelationToReceiver(MessageVo messageVo, Map<Integer, MessageMarkVo> messageMarkVo, List<Integer> receivers) {
-        HashMap<Integer, TextMessageVo> out = new HashMap<>();
+    public Map<Long, ChatMessageVo> fillInfoRelationToReceiver(MessageVo messageVo, Map<Long, MessageMarkVo> messageMarkVo, List<Long> receivers) {
+        HashMap<Long, ChatMessageVo> out = new HashMap<>();
         receivers.forEach(receiver -> {
             out.put(receiver, fillInfo(messageVo, messageMarkVo.get(receiver)));
         });

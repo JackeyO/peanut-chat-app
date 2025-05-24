@@ -3,7 +3,7 @@ package com.sici.chat.dao;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sici.common.constant.common.DeleteStatusEnum;
+import com.sici.common.enums.common.DeleteStatusEnum;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

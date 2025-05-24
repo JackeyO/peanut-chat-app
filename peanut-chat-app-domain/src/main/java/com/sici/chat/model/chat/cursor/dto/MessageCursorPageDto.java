@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageCursorPageDto extends CursorPageDto {
-    private Integer roomId;
+    private Long roomId;
 }

@@ -1,4 +1,4 @@
-package com.sici.common.constant.common;
+package com.sici.common.enums.common;
 
 /**
  * @author jackey

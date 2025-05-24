@@ -22,28 +22,41 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
     /**
      * 获取群聊房间成员id
      *
-     * @param req
+     * @param roomId
      * @return
      */
-    public Map<Long, List<Long>> getGroupRoomMember(List<Long> req) {
-        return lambdaQuery().in(RoomMember::getRoomId, req).list().stream()
+    public Map<Long, List<Long>> getGroupRoomMember(List<Long> roomId) {
+        return lambdaQuery().in(RoomMember::getRoomId, roomId).list().stream()
                 .collect(Collectors.groupingBy(RoomMember::getRoomId, Collectors.mapping(RoomMember::getUid1, Collectors.toList())));
+    }
+
+    /**
+     * 获取群聊房间成员id
+     *
+     * @param roomId
+     * @return
+     */
+    public List<Long> getGroupRoomMember(Long roomId) {
+        return lambdaQuery().eq(RoomMember::getRoomId, roomId).list()
+                .stream()
+                .map(RoomMember::getUid1)
+                .collect(Collectors.toList());
     }
 
     /**
      * 获取双人聊天房间的两个成员
      *
-     * @param req
+     * @param roomId
      * @return
      */
-    public List<Long> getTwoPrivateGroupMember(Long req) {
-        RoomMember twoPersonRoomMember = lambdaQuery().eq(RoomMember::getRoomId, req)
+    public List<Long> getTwoPrivateGroupMember(Long roomId) {
+        RoomMember twoPersonRoomMember = lambdaQuery().eq(RoomMember::getRoomId, roomId)
                 .one();
         return List.of(twoPersonRoomMember.getUid1(), twoPersonRoomMember.getUid2());
     }
 
-    public Map<Long, List<Long>> getTwoPrivateGroupMember(List<Long> req) {
-        return lambdaQuery().in(RoomMember::getRoomId, req)
+    public Map<Long, List<Long>> getTwoPrivateGroupMember(List<Long> roomId) {
+        return lambdaQuery().in(RoomMember::getRoomId, roomId)
                 .list().stream()
                 .collect(Collectors.groupingBy(RoomMember::getRoomId,
                         Collector.of(ArrayList<Long>::new, (list, roomMember) -> {

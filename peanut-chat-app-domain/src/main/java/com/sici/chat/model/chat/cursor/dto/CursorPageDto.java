@@ -23,4 +23,11 @@ public class CursorPageDto {
      * 游标，第一次请求游标为空，然后游标返回前端，后面每次请求带上游标
      */
     private String cursor;
+
+    public static CursorPageDto defaultOption() {
+        CursorPageDto cursorPageDto = new CursorPageDto();
+        cursorPageDto.setPageSize(10);
+        cursorPageDto.setCursor(null);
+        return cursorPageDto;
+    }
 }

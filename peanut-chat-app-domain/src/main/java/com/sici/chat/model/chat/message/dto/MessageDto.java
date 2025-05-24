@@ -24,8 +24,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDto {
-    private Integer fromUid;
-    private Integer roomId;
+    private Long fromUid;
+    private Long roomId;
     private Integer type;
     private String content;
     private Date sendTime;

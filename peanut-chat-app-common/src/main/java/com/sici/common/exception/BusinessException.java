@@ -1,38 +1,37 @@
 package com.sici.common.exception;
 
-import com.sici.common.enums.code.AppHttpCodeEnum;
-
+/**
+ * 业务异常类
+ */
 public class BusinessException extends RuntimeException {
-    private Integer errorCode;
-    private String errorMsg;
-
-    public BusinessException() {
-        super();
+    
+    private Integer code;
+    private String message;
+    
+    public BusinessException(String message) {
+        super(message);
+        this.message = message;
+        this.code = 500;
     }
-
-    public BusinessException(Integer errorCode, String errorMessage){
-        this.errorCode = errorCode;
-        this.errorMsg = errorMessage;
+    
+    public BusinessException(Integer code, String message) {
+        super(message);
+        this.code = code;
+        this.message = message;
     }
-
-    public Integer getErrorCode() {
-        return errorCode;
+    
+    public BusinessException(Integer code, String message, Throwable cause) {
+        super(message, cause);
+        this.code = code;
+        this.message = message;
     }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
+    
+    public Integer getCode() {
+        return code;
     }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
+    
     @Override
     public String getMessage() {
-        return errorMsg;
+        return message;
     }
-}
+} 

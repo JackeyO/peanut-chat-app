@@ -4,10 +4,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
+import com.sici.common.exception.BusinessException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.sici.chat.exception.BusinessException;
+import com.sici.common.enums.code.AppHttpCodeEnum;
 
 /**
  * 断言工具类
@@ -38,6 +39,18 @@ public class AssertUtil {
     }
 
     /**
+     * 断言条件为真，如果不为真则抛出异常
+     *
+     * @param condition 条件
+     * @param codeEnum  错误码枚举
+     */
+    public static void isTrue(boolean condition, AppHttpCodeEnum codeEnum) {
+        if (!condition) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
+        }
+    }
+
+    /**
      * 断言条件为假，如果不为假则抛出异常
      *
      * @param condition 条件
@@ -57,6 +70,18 @@ public class AssertUtil {
     public static void isFalse(boolean condition, Integer code, String message) {
         if (condition) {
             throw new BusinessException(code, message);
+        }
+    }
+
+    /**
+     * 断言条件为假，如果不为假则抛出异常
+     *
+     * @param condition 条件
+     * @param codeEnum  错误码枚举
+     */
+    public static void isFalse(boolean condition, AppHttpCodeEnum codeEnum) {
+        if (condition) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
         }
     }
 
@@ -84,6 +109,18 @@ public class AssertUtil {
     }
 
     /**
+     * 断言对象不为空，如果为空则抛出异常
+     *
+     * @param object   对象
+     * @param codeEnum 错误码枚举
+     */
+    public static void notNull(Object object, AppHttpCodeEnum codeEnum) {
+        if (Objects.isNull(object)) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
+        }
+    }
+
+    /**
      * 断言字符串不为空，如果为空则抛出异常
      *
      * @param text    字符串
@@ -103,6 +140,18 @@ public class AssertUtil {
     public static void hasText(String text, Integer code, String message) {
         if (!StringUtils.hasText(text)) {
             throw new BusinessException(code, message);
+        }
+    }
+
+    /**
+     * 断言字符串不为空，如果为空则抛出异常
+     *
+     * @param text     字符串
+     * @param codeEnum 错误码枚举
+     */
+    public static void hasText(String text, AppHttpCodeEnum codeEnum) {
+        if (!StringUtils.hasText(text)) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
         }
     }
 
@@ -130,6 +179,18 @@ public class AssertUtil {
     }
 
     /**
+     * 断言集合不为空，如果为空则抛出异常
+     *
+     * @param collection 集合
+     * @param codeEnum   错误码枚举
+     */
+    public static void notEmpty(Collection<?> collection, AppHttpCodeEnum codeEnum) {
+        if (CollectionUtils.isEmpty(collection)) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
+        }
+    }
+
+    /**
      * 断言Map不为空，如果为空则抛出异常
      *
      * @param map     Map
@@ -149,6 +210,18 @@ public class AssertUtil {
     public static void notEmpty(Map<?, ?> map, Integer code, String message) {
         if (CollectionUtils.isEmpty(map)) {
             throw new BusinessException(code, message);
+        }
+    }
+
+    /**
+     * 断言Map不为空，如果为空则抛出异常
+     *
+     * @param map      Map
+     * @param codeEnum 错误码枚举
+     */
+    public static void notEmpty(Map<?, ?> map, AppHttpCodeEnum codeEnum) {
+        if (CollectionUtils.isEmpty(map)) {
+            throw new BusinessException(codeEnum.getCode(), codeEnum.getErrorMessage());
         }
     }
 } 

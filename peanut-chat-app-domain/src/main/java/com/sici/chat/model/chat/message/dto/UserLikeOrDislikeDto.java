@@ -14,7 +14,7 @@ public class UserLikeOrDislikeDto {
     /**
      * 消息id
      */
-    private Integer messageId;
+    private Long messageId;
     /**
      * 是否点赞
      */

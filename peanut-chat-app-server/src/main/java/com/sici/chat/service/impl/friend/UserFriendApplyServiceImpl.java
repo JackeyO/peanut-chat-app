@@ -2,10 +2,6 @@ package com.sici.chat.service.impl.friend;
 
 import java.util.Date;
 
-
-import com.sici.chat.util.AssertUtil;
-import com.sici.common.enums.chat.apply.ApplyAcceptStatusEnum;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.builder.ImMsgBuilder;
@@ -17,8 +13,11 @@ import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.service.friend.UserFriendApplyService;
 import com.sici.chat.service.friend.UserFriendService;
 import com.sici.chat.service.ws.PushService;
+import com.sici.common.enums.chat.apply.ApplyAcceptStatusEnum;
 import com.sici.common.enums.code.AppHttpCodeEnum;
-import com.sici.common.result.ResponseResult;
+import com.sici.common.exception.BusinessException;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author 20148
@@ -37,19 +36,19 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
     private UserFriendService userFriendService;
 
     @Override
-    public ResponseResult apply(UserFriendApplyDto userFriendApplyDto) {
+    public void apply(UserFriendApplyDto userFriendApplyDto) {
         Long userId = userFriendApplyDto.getUserId();
         Long targetId = userFriendApplyDto.getTargetId();
 
         // 检查两人是否已经是好友关系
         Boolean isFriend = userFriendService.checkFriendRelation(userFriendApplyDto.getUserId(), userFriendApplyDto.getTargetId());
         if (isFriend) {
-            return ResponseResult.errorResult(AppHttpCodeEnum.ALREADY_FRIEND);
+            throw new BusinessException(AppHttpCodeEnum.ALREADY_FRIEND.getCode(), AppHttpCodeEnum.ALREADY_FRIEND.getErrorMessage());
         }
         // 检查之前是否申请过
         UserFriendApply existApply = userFriendApplyDao.getUnhandledApplyByUserIdAndTargetId(userId, targetId);
         if (existApply != null) {
-            return ResponseResult.errorResult(AppHttpCodeEnum.FRIEND_APPLY_EXISTS);
+            throw new BusinessException(AppHttpCodeEnum.FRIEND_APPLY_EXISTS.getCode(), AppHttpCodeEnum.FRIEND_APPLY_EXISTS.getErrorMessage());
         }
 
         // 保存申请记录
@@ -64,13 +63,14 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
         ImMsg imMsg = ImMsgBuilder.buildUserFriendApplyMessage(userFriendApplyDto);
         // 向目标用户推送好友申请信息
         pushService.pushMsg(imMsg, userFriendApplyDto.getTargetId());
-        return ResponseResult.okResult("好友申请已发送");
     }
 
     @Override
-    public ResponseResult ack(Long applyId, Integer accept) {
+    public String ack(Long applyId, Integer accept) {
         UserFriendApply userFriendApply = userFriendApplyDao.getById(applyId);
-        AssertUtil.notNull(userFriendApply, "申请不存在");
+        if (userFriendApply == null) {
+            throw new BusinessException(AppHttpCodeEnum.FRIEND_APPLY_NOT_FOUND.getCode(), AppHttpCodeEnum.FRIEND_APPLY_NOT_FOUND.getErrorMessage());
+        }
 
         userFriendApply.setAcceptStatus(accept);
 
@@ -80,8 +80,8 @@ public class UserFriendApplyServiceImpl implements UserFriendApplyService {
         // 如果同意,两人就成为好友
         if (accept == 1) {
             userFriendService.saveFriendRelation(userFriendApply.getUid(), userFriendApply.getTargetId(), new Date());
-            return ResponseResult.okResult("你们已成为好友!");
+            return "你们已成为好友!";
         }
-        return ResponseResult.okResult("已拒绝该申请!");
+        return "已拒绝该申请!";
     }
 }

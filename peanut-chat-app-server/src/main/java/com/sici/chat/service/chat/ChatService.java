@@ -1,9 +1,11 @@
 package com.sici.chat.service.chat;
 
 import com.sici.chat.model.chat.cursor.dto.MessageCursorPageDto;
+import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.UserLikeOrDislikeDto;
-import com.sici.common.result.ResponseResult;
+import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 
 /**
  * @projectName: qiyu-live-app
@@ -15,7 +17,7 @@ import com.sici.common.result.ResponseResult;
  */
 
 public interface ChatService {
-    ResponseResult send(MessageRequestDto messageRequestDto);
-    ResponseResult messagePage(MessageCursorPageDto messageCursorPageDto);
+    Message send(MessageRequestDto messageRequestDto);
+    CursorPageVo<ChatMessageVo> messagePage(MessageCursorPageDto messageCursorPageDto);
     void likeOrDislike(UserLikeOrDislikeDto userLikeOrDislikeDto);
 }

@@ -3,7 +3,7 @@ package com.sici.chat.service.user;
 
 import com.sici.chat.model.user.dto.UserProfileDto;
 import com.sici.chat.model.user.entity.User;
-import com.sici.common.result.ResponseResult;
+import com.sici.chat.model.user.vo.UserVO;
 
 /**
 * @author 20148
@@ -28,5 +28,5 @@ public interface UserService {
      * @param userProfileDto
      * @return
      */
-    ResponseResult profile(UserProfileDto userProfileDto);
+    UserVO profile(UserProfileDto userProfileDto);
 }

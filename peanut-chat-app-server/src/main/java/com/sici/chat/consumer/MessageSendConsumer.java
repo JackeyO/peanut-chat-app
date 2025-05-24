@@ -3,6 +3,7 @@ package com.sici.chat.consumer;
 import java.util.List;
 
 
+import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
 import jakarta.annotation.Resource;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -12,7 +13,7 @@ import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.cache.GroupRoomMemberCache;
 import com.sici.chat.cache.RoomCache;
-import com.sici.chat.cache.TwoPersonRoomCache;
+import com.sici.chat.cache.TwoPersonRoomMemberCache;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageSendDTO;
 import com.sici.chat.model.chat.message.entity.Message;
@@ -42,7 +43,7 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
     @Resource
     private GroupRoomMemberCache groupRoomMemberCache;
     @Resource
-    private TwoPersonRoomCache twoPersonRoomCache;
+    private TwoPersonRoomMemberCache twoPersonRoomMemberCache;
     @Resource
     private RoomCache roomCache;
     @Resource
@@ -56,11 +57,11 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
 
         // 获取房间信息
         Long roomId = message.getRoomId();
-        Room room = roomCache.getOne(roomId);
+        RoomCacheInfo room = roomCache.getOne(roomId);
 
         // 获取房间成员列表
         List<Long> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
-                twoPersonRoomCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
+                twoPersonRoomMemberCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
 
         // 构建ImMsg,准备进行消息推送
         ImMsg<ChatMessageVo> imMsg = ImMsgBuilder.buildChatMessage(messageViewAdapter.adaptChatMessage(message));

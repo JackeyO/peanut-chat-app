@@ -1,5 +1,8 @@
 package com.sici.chat.interceptor;
 
+import com.sici.chat.context.RequestInfo;
+import com.sici.chat.util.RequestHolder;
+import com.sici.common.constant.common.RequestConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Order;
@@ -21,13 +24,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class RequestInfoCollectInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // TODO: 设置RequestInfo到RequestHolder中  || created by 20148 at 12/27/2024 6:07 PM
+        RequestHolder.set((RequestInfo) request.getAttribute(RequestConstant.REQUEST_INFO_ATTRIBUTE));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // TODO: 从RequestHolder中移除  || created by 20148 at 12/27/2024 6:07 PM
+        RequestHolder.remove();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

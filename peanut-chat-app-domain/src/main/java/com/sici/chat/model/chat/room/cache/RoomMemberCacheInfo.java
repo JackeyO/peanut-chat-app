@@ -1,10 +1,9 @@
-package com.sici.chat.model.chat.message.vo;
+package com.sici.chat.model.chat.room.cache;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Service;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -17,9 +16,10 @@ import java.util.List;
  * @version: 1.0
  */
 
+@Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class RoomMemberListBo {
+public class RoomMemberCacheInfo {
     private List<Long> members;
 }

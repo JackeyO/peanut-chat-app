@@ -1,7 +1,6 @@
 package com.sici.chat.service.friend;
 
 import com.sici.chat.model.chat.friend.dto.UserFriendApplyDto;
-import com.sici.common.result.ResponseResult;
 
 /**
 * @author 20148
@@ -14,12 +13,12 @@ public interface UserFriendApplyService  {
      * @param userFriendApplyDto
      * @return
      */
-    ResponseResult apply(UserFriendApplyDto userFriendApplyDto);
+    void apply(UserFriendApplyDto userFriendApplyDto);
 
     /**
      * 确认申请信息(拒绝或接受)
      * @param applyId
      * @return
      */
-    ResponseResult ack(Long applyId, Integer accept);
+    String ack(Long applyId, Integer accept);
 }

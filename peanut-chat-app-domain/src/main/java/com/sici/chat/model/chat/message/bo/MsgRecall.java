@@ -15,7 +15,7 @@ public class MsgRecall {
     /**
      * 撤回用户id(并不一定是用户自己，也可能是管理员)
      */
-    private Integer recallUid;
+    private Long recallUid;
     /**
      * 撤回时间
      */

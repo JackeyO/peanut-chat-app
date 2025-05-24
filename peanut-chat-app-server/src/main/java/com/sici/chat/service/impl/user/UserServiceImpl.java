@@ -2,9 +2,6 @@ package com.sici.chat.service.impl.user;
 
 import java.util.Date;
 
-
-import com.sici.chat.util.ConvertBeanUtil;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sici.chat.dao.UserDao;
@@ -12,9 +9,12 @@ import com.sici.chat.model.user.dto.UserProfileDto;
 import com.sici.chat.model.user.entity.User;
 import com.sici.chat.model.user.vo.UserVO;
 import com.sici.chat.service.user.UserService;
+import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.chat.util.JwtUtil;
 import com.sici.common.enums.code.AppHttpCodeEnum;
-import com.sici.common.result.ResponseResult;
+import com.sici.common.exception.BusinessException;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author 20148
@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseResult profile(UserProfileDto userProfileDto) {
+    public UserVO profile(UserProfileDto userProfileDto) {
         User user = userDao.getById(userProfileDto.getUserId());
-        UserVO userVO = ConvertBeanUtil.convertSingle(user, UserVO.class);
         if (user == null) {
-            return ResponseResult.errorResult(AppHttpCodeEnum.USER_NOT_FOUND);
+            throw new BusinessException(AppHttpCodeEnum.USER_NOT_FOUND.getCode(), AppHttpCodeEnum.USER_NOT_FOUND.getErrorMessage());
         }
-        return ResponseResult.okResult(userVO);
+        UserVO userVO = ConvertBeanUtil.convertSingle(user, UserVO.class);
+        return userVO;
     }
 
     

@@ -18,7 +18,7 @@ public class MessageExtra {
     /**
      * at的用户id列表
      */
-    private List<Integer> atUidList;
+    private List<Long> atUidList;
     /**
      * 消息撤回相关信息
      */

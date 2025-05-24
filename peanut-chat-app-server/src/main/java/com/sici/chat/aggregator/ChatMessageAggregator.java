@@ -32,7 +32,7 @@ public abstract class ChatMessageAggregator<OUT extends ChatMessageVo> extends A
      */
     public abstract OUT fillInfo(MessageVo message, MessageMarkVo messageMarkVo);
     public abstract OUT fillInfoRelationToReceiver(MessageVo message, MessageMarkVo messageMarkVo, Integer receiver);
-    public abstract Map<Integer, OUT> fillInfoRelationToReceiver(MessageVo messageVo, Map<Integer, MessageMarkVo> messageMarkVo, List<Integer> receiver);
+    public abstract Map<Long, OUT> fillInfoRelationToReceiver(MessageVo messageVo, Map<Long, MessageMarkVo> messageMarkVo, List<Long> receiver);
     @Resource
     private MessageMarkDao messageMarkDao;
 
@@ -48,8 +48,8 @@ public abstract class ChatMessageAggregator<OUT extends ChatMessageVo> extends A
                 receiver);
         return out;
     }
-    public Map<Integer, OUT> aggregateAllRelationToReceiver(Message messageMeta, List<Integer> receiverIds) {
-        Map<Integer, OUT> out = fillInfoRelationToReceiver(aggregateMessageMetaInfo(messageMeta),
+    public Map<Long, OUT> aggregateAllRelationToReceiver(Message messageMeta, List<Long> receiverIds) {
+        Map<Long, OUT> out = fillInfoRelationToReceiver(aggregateMessageMetaInfo(messageMeta),
                 aggregateMessageMarkInfoRelationToReceiver(messageMeta, receiverIds),
                 receiverIds);
         return out;
@@ -92,13 +92,13 @@ public abstract class ChatMessageAggregator<OUT extends ChatMessageVo> extends A
      * @param receiverIds
      * @return
      */
-    public Map<Integer, MessageMarkVo> aggregateMessageMarkInfoRelationToReceiver(Message messageMeta, List<Integer> receiverIds) {
+    public Map<Long, MessageMarkVo> aggregateMessageMarkInfoRelationToReceiver(Message messageMeta, List<Long> receiverIds) {
         // 获取消息的喜欢和不喜欢数量以及人员id
         Pair<Long, Long> likeAndDislikeCount = messageMarkDao.getLikeAndDislikeCount(messageMeta.getId());
         List<Long> likeUser = messageMarkDao.getLikeUser(messageMeta.getId());
         List<Long> disLikeUser = messageMarkDao.getDisLikeUser(messageMeta.getId());
 
-        HashMap<Integer, MessageMarkVo> messageMarkVoMap = new HashMap<>();
+        HashMap<Long, MessageMarkVo> messageMarkVoMap = new HashMap<>();
         receiverIds.forEach(receiverId -> {
             MessageMarkVo messageMarkVo = new MessageMarkVo();
             messageMarkVo.setLikes(likeAndDislikeCount.getKey());

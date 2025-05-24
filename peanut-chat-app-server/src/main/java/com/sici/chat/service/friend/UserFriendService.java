@@ -1,8 +1,7 @@
 package com.sici.chat.service.friend;
 
 import java.util.Date;
-
-import com.sici.common.result.ResponseResult;
+import java.util.List;
 
 /**
  * @author 20148
@@ -34,5 +33,5 @@ public interface UserFriendService {
      * @param userId - 用户id
      * @return
      */
-    ResponseResult getFriendList(Long userId);
+    List<Long> getFriendList(Long userId);
 }

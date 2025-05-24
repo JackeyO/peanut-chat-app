@@ -29,12 +29,30 @@ public enum AppHttpCodeEnum {
     NO_OPERATOR_AUTH(3000, "无权限操作"),
     NEED_ADMIND(3001, "需要管理员权限"),
 
-    // 素材引用失效
-    FRIEND_APPLY_EXISTS(504, "已经向该用户发过申请了"),
-    ALREADY_FRIEND(505, "已经是好友关系"),
-    USER_NOT_FOUND(506, "用户不存在"),
-    BUSINESS_ERROR(507, "业务处理失败"),
-    ROOM_NOT_FOUND(508, "房间不存在");
+    // 用户相关错误 4000~4100
+    USER_NOT_FOUND(4000, "用户不存在"),
+    USER_ALREADY_EXIST(4001, "用户已存在"),
+    USER_PASSWORD_ERROR(4002, "用户密码错误"),
+    USER_ACCOUNT_LOCKED(4003, "用户账号已锁定"),
+    
+    // 好友相关错误 4100~4200
+    FRIEND_APPLY_EXISTS(4100, "已经向该用户发过申请了"),
+    ALREADY_FRIEND(4101, "已经是好友关系"),
+    FRIEND_APPLY_NOT_FOUND(4102, "好友申请不存在"),
+    
+    // 聊天消息相关错误 4200~4300
+    MESSAGE_NOT_FOUND(4200, "消息不存在"),
+    MESSAGE_ALREADY_LIKED(4201, "消息已点赞"),
+    MESSAGE_ALREADY_DISLIKED(4202, "消息已踩"),
+    
+    // 房间相关错误 4300~4400
+    ROOM_NOT_FOUND(4300, "房间不存在"),
+    ROOM_ALREADY_EXIST(4301, "房间已存在"),
+    ROOM_MEMBER_NOT_FOUND(4302, "房间成员不存在"),
+    
+    // 业务通用错误
+    BUSINESS_ERROR(9000, "业务处理失败"),
+    UNAUTHORIZED(4304, "未授权访问");
 
     Integer code;
 
