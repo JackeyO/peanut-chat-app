@@ -2,7 +2,7 @@ package com.sici.chat.service.impl.room;
 
 
 import com.sici.chat.cache.GroupRoomMemberCache;
-import com.sici.chat.cache.RoomCache;
+import com.sici.chat.cache.RoomBaseInfoCache;
 import com.sici.chat.cache.TwoPersonRoomMemberCache;
 import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
 import com.sici.chat.model.chat.room.cache.RoomMemberCacheInfo;
@@ -37,12 +37,12 @@ public class RoomServiceImpl implements RoomService {
     @Resource
     private TwoPersonRoomMemberCache twoPersonRoomMemberCache;
     @Resource
-    private RoomCache roomCache;
+    private RoomBaseInfoCache roomBaseInfoCache;
 
     @Override
     public RoomVO getRoomInfo(Long roomId) {
         // 获取房间基本信息
-        RoomCacheInfo room = roomCache.getOne(roomId);
+        RoomCacheInfo room = roomBaseInfoCache.getOne(roomId);
 
         if (Objects.isNull(room)) {
             throw new BusinessException(AppHttpCodeEnum.ROOM_NOT_FOUND.getCode(), AppHttpCodeEnum.ROOM_NOT_FOUND.getErrorMessage());

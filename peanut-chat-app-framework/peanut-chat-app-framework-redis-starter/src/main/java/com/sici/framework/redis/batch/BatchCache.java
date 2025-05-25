@@ -26,16 +26,4 @@ public interface BatchCache<IN, OUT> {
      * @return
      */
     Map<IN, OUT> getBatch(List<IN> req);
-
-    /**
-     * 删除一条缓存记录
-     * @param req
-     */
-    void deleteOne(IN req);
-
-    /**
-     * 删除多条缓存记录
-     * @param req
-     */
-    void deleteBatch(List<IN> req);
 }

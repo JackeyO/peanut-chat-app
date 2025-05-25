@@ -11,7 +11,7 @@ package com.sici.common.enums.chat.message;
 
 public enum MessageRespTypeEnum {
     TEXT(0, "文本消息"),
-    SOUND(1, "语音消息"),
+    AUDIO(1, "语音消息"),
     VIDEO(2, "视频消息"),
     IMAGE(3, "图片消息"),
     EMOJI(3, "表情消息"),

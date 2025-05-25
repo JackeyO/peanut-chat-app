@@ -17,6 +17,14 @@ import java.util.stream.Collectors;
  */
 @Component
 public class ConversationDao extends ServiceImpl<UserConversationMapper, UserConversation> {
+    public UserConversation getByConversationId(Long req) {
+        return getById(req);
+    }
+    public List<UserConversation> getByConversationId(List<Long> req) {
+        return req.stream()
+                .map(this::getByConversationId)
+                .collect(Collectors.toList());
+    }
 }
 
 

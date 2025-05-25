@@ -12,13 +12,12 @@ import org.springframework.stereotype.Component;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
 import com.sici.chat.cache.GroupRoomMemberCache;
-import com.sici.chat.cache.RoomCache;
+import com.sici.chat.cache.RoomBaseInfoCache;
 import com.sici.chat.cache.TwoPersonRoomMemberCache;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageSendDTO;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;
-import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.model.ws.bo.ImMsg;
 import com.sici.chat.service.ws.PushService;
 import com.sici.common.constant.im.ChatMqConstant;
@@ -45,7 +44,7 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
     @Resource
     private TwoPersonRoomMemberCache twoPersonRoomMemberCache;
     @Resource
-    private RoomCache roomCache;
+    private RoomBaseInfoCache roomBaseInfoCache;
     @Resource
     private MessageViewAdapter messageViewAdapter;
 
@@ -57,7 +56,7 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
 
         // 获取房间信息
         Long roomId = message.getRoomId();
-        RoomCacheInfo room = roomCache.getOne(roomId);
+        RoomCacheInfo room = roomBaseInfoCache.getOne(roomId);
 
         // 获取房间成员列表
         List<Long> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?

@@ -2,7 +2,9 @@ package com.sici.framework.redis.batch;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Pair;
+import com.sici.common.constant.common.CacheConstant;
 import com.sici.framework.redis.RedisUtils;
+import jakarta.annotation.Resource;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +26,7 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 
-public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN, OUT> {
+public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN, OUT>, RefreshableCache<IN> {
     private Class<OUT> outClass;
 
     public AbstractRedisStringCache () {
@@ -48,16 +53,40 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
      */
     public abstract Map<IN, OUT> loadFromDb(List<IN> req);
 
+    // 默认get string
+    public OUT getFromCache(IN req) {
+        return RedisUtils.get(getKey(req), outClass);
+    }
+    // 默认批量get string
+    public List<OUT> getFromCache(List<IN> req) {
+        List<String> keys = req.stream()
+                .map(this::getKey)
+                .collect(Collectors.toList());
+        return RedisUtils.mget(keys, outClass);
+    }
+    // 默认批量set string
+    public void setToCache(Map<String, OUT> toSet) {
+        if (CollectionUtil.isEmpty(toSet)) return;
+        RedisUtils.mset(toSet, getExpireSeconds());
+    }
+    // 默认删除string
+    public void deleteFromCache(IN req) {
+        RedisUtils.del(getKey(req));
+    }
+    // 默认批量删除string
+    public void deleteFromCache(List<IN> req) {
+        if (CollectionUtil.isEmpty(req)) return ;
+        RedisUtils.del(req.stream().map(this::getKey).collect(Collectors.toList()));
+    }
+
     @Override
     public OUT getOne(IN req) {
         return getBatch(List.of(req)).get(req);
     }
-
     @Override
     public Map<IN, OUT> getBatch(List<IN> req) {
         if (CollectionUtil.isEmpty(req)) return null;
-        List<String> keys = req.stream().map(this::getKey).collect(Collectors.toList());
-        List<OUT> results = RedisUtils.mget(keys, outClass);
+        List<OUT> results = getFromCache(req);
 
         Map<IN, OUT> finalResults = new HashMap<>(req.size());
         List<IN> needLoadIn = new ArrayList<>();
@@ -79,20 +108,27 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
                     .map(a -> Pair.of(getKey(a.getKey()), a.getValue()))
                     .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 
-            RedisUtils.mset(toSet, getExpireSeconds());
+            setToCache(toSet);
         }
 
         return finalResults;
     }
 
+
+
     @Override
-    public void deleteOne(IN req) {
-        RedisUtils.del(getKey(req));
+    public void refresh(IN req) {
+        deleteFromCache(req);
+        // 延时二次删除
+        Executor delayedExecutor = CompletableFuture.delayedExecutor(CacheConstant.SECOND_DELETE_INTERVAL, TimeUnit.MILLISECONDS);
+        CompletableFuture.runAsync(() -> deleteFromCache(req), delayedExecutor);
     }
 
     @Override
-    public void deleteBatch(List<IN> req) {
-        if (CollectionUtil.isEmpty(req)) return ;
-        RedisUtils.del(req.stream().map(this::getKey).collect(Collectors.toList()));
+    public void refresh(List<IN> req) {
+        deleteFromCache(req);
+        // 延时二次删除
+        Executor delayedExecutor = CompletableFuture.delayedExecutor(CacheConstant.SECOND_DELETE_INTERVAL, TimeUnit.MILLISECONDS);
+        CompletableFuture.runAsync(() -> deleteFromCache(req), delayedExecutor);
     }
 }

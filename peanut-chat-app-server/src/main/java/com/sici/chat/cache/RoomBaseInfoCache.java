@@ -1,9 +1,8 @@
 package com.sici.chat.cache;
 
-import com.sici.chat.builder.cache.RoomCacheRedisKeyBuilder;
+import com.sici.chat.builder.cache.RoomBaseCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomDao;
 import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
-import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.framework.redis.batch.AbstractRedisStringCache;
 import jakarta.annotation.Resource;
@@ -23,20 +22,20 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class RoomCache extends AbstractRedisStringCache<Long, RoomCacheInfo> {
+public class RoomBaseInfoCache extends AbstractRedisStringCache<Long, RoomCacheInfo> {
     @Resource
-    private RoomCacheRedisKeyBuilder roomCacheKeyBuilder;
+    private RoomBaseCacheRedisKeyBuilder roomBaseCacheRedisKeyBuilder;
     @Resource
     private RoomDao roomDao;
 
     @Override
     public String getKey(Long req) {
-        return roomCacheKeyBuilder.build(req);
+        return roomBaseCacheRedisKeyBuilder.build(req);
     }
 
     @Override
     public long getExpireSeconds() {
-        return roomCacheKeyBuilder.getExpireTime().toSeconds();
+        return roomBaseCacheRedisKeyBuilder.getExpireTime().toSeconds();
     }
 
     @Override

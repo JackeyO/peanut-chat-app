@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatMessageVo extends CommonMessageVo{
+public class ChatMessageVo extends CommonMessageVo {
     /**
      * 消息基本信息
      */

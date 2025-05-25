@@ -19,10 +19,10 @@ import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_
  */
 
 @Component
-public class RoomCacheRedisKeyBuilder implements RedisKeyBuilder<Long, String> {
+public class RoomBaseCacheRedisKeyBuilder implements RedisKeyBuilder<Long, String> {
     @Override
     public String build(Long req) {
-        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room"
+        return ALL_KEY_PREFIX + ALL_KEY_SPLIT_ITEM + "room-base-info"
                 + ALL_KEY_SPLIT_ITEM + req;
     }
     @Override

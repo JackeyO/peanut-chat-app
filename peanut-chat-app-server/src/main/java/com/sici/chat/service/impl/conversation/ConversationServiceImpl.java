@@ -12,6 +12,7 @@ import com.sici.chat.service.conversation.ConversationService;
 import com.sici.chat.service.room.RoomService;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.chat.util.CursorPageUtil;
+import com.sici.framework.redis.RedisUtils;
 import jakarta.annotation.Resource;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;

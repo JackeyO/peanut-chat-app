@@ -26,7 +26,7 @@ public class SoundMessageHandler extends AbstractMessageHandler<SoundMessageDto>
 
     @Override
     public MessageRespTypeEnum getMessageTypeEnum() {
-        return MessageRespTypeEnum.SOUND;
+        return MessageRespTypeEnum.AUDIO;
     }
 
     @Override
