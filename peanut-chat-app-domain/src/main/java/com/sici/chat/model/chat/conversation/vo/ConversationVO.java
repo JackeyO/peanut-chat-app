@@ -49,7 +49,7 @@ public class ConversationVO {
     /**
      * 未读消息数量
      */
-    private Integer unreadCount;
+    private Long unreadCount;
 
     /**
      * 会话创建时间

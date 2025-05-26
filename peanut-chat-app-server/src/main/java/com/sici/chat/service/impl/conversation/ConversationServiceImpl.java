@@ -1,24 +1,28 @@
 package com.sici.chat.service.impl.conversation;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.sici.chat.cache.ConversationActivityCache;
+import com.sici.chat.cache.RoomMessageCache;
 import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.dao.ConversationDao;
+import com.sici.chat.model.chat.conversation.cache.ConversationActivityCacheInfo;
 import com.sici.chat.model.chat.conversation.entity.UserConversation;
 import com.sici.chat.model.chat.conversation.vo.ConversationVO;
 import com.sici.chat.model.chat.cursor.dto.CursorPageDto;
 import com.sici.chat.model.chat.cursor.vo.CursorPageVo;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
 import com.sici.chat.service.conversation.ConversationService;
 import com.sici.chat.service.room.RoomService;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.chat.util.CursorPageUtil;
-import com.sici.framework.redis.RedisUtils;
 import jakarta.annotation.Resource;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -39,6 +43,10 @@ public class ConversationServiceImpl implements ConversationService {
     private RoomService roomService;
     @Resource
     private ConversationDao conversationDao;
+    @Resource
+    private ConversationActivityCache conversationActivityCache;
+    @Resource
+    private RoomMessageCache roomMessageCache;
 
     @Override
     public CursorPageVo<ConversationVO> getConversationCursorPageList(Long userId, CursorPageDto cursorPageDto) {
@@ -70,7 +78,24 @@ public class ConversationServiceImpl implements ConversationService {
         return CompletableFuture.runAsync(() -> {
             conversationVOList.forEach(conversationVO -> {
                 CompletableFuture.runAsync(() -> {
-                    // TODO 获取该会话最后一条消息内容和消息id,以及未读消息数量 - Su Xiao Wen - 5/24/25 16:45
+                    Long roomId = conversationVO.getRoomId();
+                    Long conversationId = conversationVO.getId();
+
+                    // 获取会话最后活跃时间
+                    ConversationActivityCacheInfo conversationActivityInfo = conversationActivityCache.getOne(conversationId);
+                    // 获取房间最后一条消息
+                    ChatMessageVo chatMessageVo = Objects.requireNonNull(roomMessageCache.reverseRange(roomId, 0, 0))
+                            .stream()
+                            .findFirst()
+                            .orElse(null);
+                    if (Objects.nonNull(chatMessageVo)) {
+                        conversationVO.setLastMsg(chatMessageVo.getMessage().getContent());
+                        if (Objects.nonNull(conversationActivityInfo) && Objects.nonNull(conversationActivityInfo.getLastActivityTime())) {
+                            // 获取未读数量
+                            Long unReadCount = roomMessageCache.count(roomId, conversationActivityInfo.getLastActivityTime() + 1, chatMessageVo.getMessage().getSendTime().getTime() + 1);
+                            conversationVO.setUnreadCount(unReadCount);
+                        }
+                    }
                 }, threadPoolExecutor);
             });
         }, threadPoolExecutor);

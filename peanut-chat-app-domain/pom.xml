@@ -42,6 +42,11 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sici</groupId>
+            <artifactId>peanut-chat-app-framework-redis-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

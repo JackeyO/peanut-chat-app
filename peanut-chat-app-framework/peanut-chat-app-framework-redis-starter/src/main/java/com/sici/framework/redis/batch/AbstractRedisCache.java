@@ -4,10 +4,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Pair;
 import com.sici.common.constant.common.CacheConstant;
 import com.sici.framework.redis.RedisUtils;
-import jakarta.annotation.Resource;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +25,10 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 
-public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN, OUT>, RefreshableCache<IN> {
-    private Class<OUT> outClass;
+public abstract class AbstractRedisCache<IN, OUT> implements BatchCache<IN, OUT>, RefreshableCache<IN> {
+    protected Class<OUT> outClass;
 
-    public AbstractRedisStringCache () {
+    public AbstractRedisCache() {
         ParameterizedType superclass = (ParameterizedType) this.getClass().getGenericSuperclass();
         this.outClass = (Class<OUT>) superclass.getActualTypeArguments()[1];
     }
@@ -53,30 +52,44 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
      */
     public abstract Map<IN, OUT> loadFromDb(List<IN> req);
 
-    // 默认get string
-    public OUT getFromCache(IN req) {
-        return RedisUtils.get(getKey(req), outClass);
+    /**
+     * 抽象缓存操作，具体取决于缓存数据类型
+     * @param req
+     * @return
+     */
+    public abstract OUT getFromCache(IN req);
+    public abstract List<OUT> getFromCache(List<IN> req);
+    public abstract void setToCache(Map<String, OUT> toSet);
+
+    public Map<IN, OUT> loadFromDbAndSetToCache(List<IN> req) {
+        if (CollectionUtils.isEmpty(req)) return Map.of();
+        Map<IN, OUT> fromDbResults = loadFromDb(req);
+        // 保存到缓存中
+        Map<String, OUT> toSet = fromDbResults.entrySet().stream()
+                .map(a -> Pair.of(getKey(a.getKey()), a.getValue()))
+                .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+
+        setToCache(toSet);
+        return fromDbResults;
     }
-    // 默认批量get string
-    public List<OUT> getFromCache(List<IN> req) {
-        List<String> keys = req.stream()
-                .map(this::getKey)
-                .collect(Collectors.toList());
-        return RedisUtils.mget(keys, outClass);
-    }
-    // 默认批量set string
-    public void setToCache(Map<String, OUT> toSet) {
-        if (CollectionUtil.isEmpty(toSet)) return;
-        RedisUtils.mset(toSet, getExpireSeconds());
-    }
-    // 默认删除string
+
+    /**
+     * 删除缓存
+     * @param req
+     */
     public void deleteFromCache(IN req) {
         RedisUtils.del(getKey(req));
     }
-    // 默认批量删除string
+    /**
+     * 批量删除缓存
+     * @param req
+     */
     public void deleteFromCache(List<IN> req) {
         if (CollectionUtil.isEmpty(req)) return ;
         RedisUtils.del(req.stream().map(this::getKey).collect(Collectors.toList()));
+    }
+    public Boolean existsInCache(IN req) {
+        return RedisUtils.hasKey(getKey(req));
     }
 
     @Override
@@ -100,21 +113,12 @@ public abstract class AbstractRedisStringCache<IN, OUT> implements BatchCache<IN
 
         // 缓存中没有的从数据库load
         if (!CollectionUtil.isEmpty(needLoadIn)) {
-            Map<IN, OUT> fromDbResults = loadFromDb(needLoadIn);
+            Map<IN, OUT> fromDbResults = loadFromDbAndSetToCache(needLoadIn);
             finalResults.putAll(fromDbResults);
-
-            // 保存到缓存中
-            Map<String, OUT> toSet = fromDbResults.entrySet().stream()
-                    .map(a -> Pair.of(getKey(a.getKey()), a.getValue()))
-                    .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
-
-            setToCache(toSet);
         }
 
         return finalResults;
     }
-
-
 
     @Override
     public void refresh(IN req) {

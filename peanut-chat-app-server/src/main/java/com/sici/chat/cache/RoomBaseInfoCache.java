@@ -4,7 +4,7 @@ import com.sici.chat.builder.cache.RoomBaseCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomDao;
 import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
 import com.sici.chat.util.ConvertBeanUtil;
-import com.sici.framework.redis.batch.AbstractRedisStringCache;
+import com.sici.framework.redis.batch.string.AbstractRedisStringCache;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 

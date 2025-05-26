@@ -1,18 +1,13 @@
 package com.sici.chat.cache;
 
 import com.sici.chat.builder.cache.ConversationActivityCacheKeyBuilder;
-import com.sici.chat.builder.cache.ConversationBaseCacheKeyBuilder;
-import com.sici.chat.dao.ConversationDao;
 import com.sici.chat.model.chat.conversation.cache.ConversationActivityCacheInfo;
-import com.sici.chat.model.chat.conversation.cache.ConversationBaseCacheInfo;
-import com.sici.chat.model.chat.conversation.entity.UserConversation;
-import com.sici.framework.redis.batch.AbstractRedisStringCache;
+import com.sici.framework.redis.batch.string.AbstractRedisStringCache;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author jackey

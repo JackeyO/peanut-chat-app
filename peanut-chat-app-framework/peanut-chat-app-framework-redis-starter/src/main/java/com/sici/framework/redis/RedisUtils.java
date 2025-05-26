@@ -797,6 +797,13 @@ public class RedisUtils {
     public static Boolean zAdd(String key, Object value, double score) {
         return zAdd(key, value.toString(), score);
     }
+    public static Boolean zAddIfAbsent(String key, String value, double score) {
+        return stringRedisTemplate.opsForZSet().addIfAbsent(key, value, score);
+    }
+    public static Boolean zAddIfAbsent(String key, Object value, double score) {
+        return stringRedisTemplate.opsForZSet().addIfAbsent(key, value.toString(), score);
+    }
+
 
     public static Boolean zIsMember(String key, Object value) {
         return Objects.nonNull(stringRedisTemplate.opsForZSet().score(key, value.toString()));
@@ -878,6 +885,13 @@ public class RedisUtils {
         return stringRedisTemplate.opsForZSet().range(key, 0, -1);
     }
 
+    public static Set<String> zReverseRangeByScore(String key, double min, double max, long offset, long count) {
+        return stringRedisTemplate.opsForZSet().reverseRangeByScore(key, min, max, offset, count);
+    }
+    public static Set<String> zReverseRangeByScore(String key, double min, double max) {
+        return stringRedisTemplate.opsForZSet().reverseRangeByScore(key, min, max);
+    }
+
     /**
      * 获取集合元素, 并且把score值也获取
      *
@@ -901,6 +915,10 @@ public class RedisUtils {
      */
     public static Set<String> zRangeByScore(String key, double min, double max) {
         return stringRedisTemplate.opsForZSet().rangeByScore(key, min, max);
+    }
+
+    public static Set<String> zRangeByScore(String key, double min, double max, long offset, long count) {
+        return stringRedisTemplate.opsForZSet().rangeByScore(key, min, max, offset, count);
     }
 
     /**
@@ -948,20 +966,6 @@ public class RedisUtils {
         return stringRedisTemplate.opsForZSet().reverseRange(key, start, end);
     }
 
-//    /**
-//     * 获取集合的元素, 从大到小排序, 并返回score值
-//     *
-//     * @param key
-//     * @param start
-//     * @param end
-//     * @return
-//     */
-//    public Set<TypedTuple<String>> zReverseRangeWithScores(String key,
-//                                                           long start, long end) {
-//        return redisTemplate.opsForZSet().reverseRangeWithScores(key, start,
-//                end);
-//    }
-
     /**
      * 获取集合的元素, 从大到小排序, 并返回score值
      *
@@ -973,6 +977,10 @@ public class RedisUtils {
                                                                   long pageSize) {
         return stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, Double.MIN_VALUE,
                 Double.MAX_VALUE, 0, pageSize);
+    }
+    public static Set<TypedTuple<String>> zReverseRangeWithScores(String key,
+                                                                  long start, long end) {
+        return stringRedisTemplate.opsForZSet().reverseRangeWithScores(key, start, end);
     }
 
     /**
@@ -987,33 +995,12 @@ public class RedisUtils {
                 1, pageSize);
     }
 
-//    /**
-//     * 根据Score值查询集合元素, 从大到小排序
-//     *
-//     * @param key
-//     * @param min
-//     * @param max
-//     * @return
-//     */
-//    public Set<String> zReverseRangeByScore(String key, double min,
-//                                            double max) {
-//        return redisTemplate.opsForZSet().reverseRangeByScore(key, min, max);
-//    }
-
-//    /**
-//     * 根据Score值查询集合元素, 从大到小排序
-//     *
-//     * @param key
-//     * @param min
-//     * @param max
-//     * @return
-//     */
-//    public Set<TypedTuple<String>> zReverseRangeByScoreWithScores(
-//            String key, double min, double max) {
-//        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key,
-//                min, max);
-//    }
-
+    public static Set<TypedTuple<String>> zReverseRangeByScoreWithScores(String key, double min, double max) {
+        return stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max);
+    }
+    public static Set<TypedTuple<String>> zReverseRangeByScoreWithScores(String key, double min, double max, long offset, long count) {
+        return stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max, offset, count);
+    }
 
     /**
      * 根据score值获取集合元素数量
