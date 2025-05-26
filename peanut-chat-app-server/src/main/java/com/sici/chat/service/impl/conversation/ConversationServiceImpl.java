@@ -21,10 +21,12 @@ import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
@@ -66,6 +68,7 @@ public class ConversationServiceImpl implements ConversationService {
         conversationVOCursorPageVo.setIsLast(cursorPageOfMySql.getIsLast());
         conversationVOCursorPageVo.setCursor(cursorPageOfMySql.getCursor());
 
+        // 等待两个并行任务执行完成(获取对话基本信息，对话消息信息)
         CompletableFuture.allOf(fillRoomInfo(conversationVOList),
                 fillMessageInfo(conversationVOList)
                 ).join();
@@ -75,41 +78,45 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     private CompletableFuture<?> fillMessageInfo(List<ConversationVO> conversationVOList) {
-        return CompletableFuture.runAsync(() -> {
-            conversationVOList.forEach(conversationVO -> {
-                CompletableFuture.runAsync(() -> {
-                    Long roomId = conversationVO.getRoomId();
-                    Long conversationId = conversationVO.getId();
+        List<Future> futures = new ArrayList<>();
+        conversationVOList.forEach(conversationVO -> {
+            CompletableFuture<Void> subFuture = CompletableFuture.runAsync(() -> {
+                Long roomId = conversationVO.getRoomId();
+                Long conversationId = conversationVO.getId();
 
-                    // 获取会话最后活跃时间
-                    ConversationActivityCacheInfo conversationActivityInfo = conversationActivityCache.getOne(conversationId);
-                    // 获取房间最后一条消息
-                    ChatMessageVo chatMessageVo = Objects.requireNonNull(roomMessageCache.reverseRange(roomId, 0, 0))
-                            .stream()
-                            .findFirst()
-                            .orElse(null);
-                    if (Objects.nonNull(chatMessageVo)) {
-                        conversationVO.setLastMsg(chatMessageVo.getMessage().getContent());
-                        if (Objects.nonNull(conversationActivityInfo) && Objects.nonNull(conversationActivityInfo.getLastActivityTime())) {
-                            // 获取未读数量
-                            Long unReadCount = roomMessageCache.count(roomId, conversationActivityInfo.getLastActivityTime() + 1, chatMessageVo.getMessage().getSendTime().getTime() + 1);
-                            conversationVO.setUnreadCount(unReadCount);
-                        }
+                // 获取会话最后活跃时间
+                ConversationActivityCacheInfo conversationActivityInfo = conversationActivityCache.getOne(conversationId);
+                // 获取房间最后一条消息
+                ChatMessageVo chatMessageVo = Objects.requireNonNull(roomMessageCache.reverseRange(roomId, 0, 0))
+                        .stream()
+                        .findFirst()
+                        .orElse(null);
+                if (Objects.nonNull(chatMessageVo)) {
+                    conversationVO.setLastMsg(chatMessageVo.getMessage().getContent());
+                    if (Objects.nonNull(conversationActivityInfo) && Objects.nonNull(conversationActivityInfo.getLastActivityTime())) {
+                        // 获取未读数量
+                        Long unReadCount = roomMessageCache.count(roomId, conversationActivityInfo.getLastActivityTime() + 1, chatMessageVo.getMessage().getSendTime().getTime() + 1);
+                        conversationVO.setUnreadCount(unReadCount);
                     }
-                }, threadPoolExecutor);
-            });
-        }, threadPoolExecutor);
+                }
+            }, threadPoolExecutor);
+            futures.add(subFuture);
+        });
+
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 
     private CompletableFuture<Void> fillRoomInfo(List<ConversationVO> conversationVOList) {
-        return CompletableFuture.runAsync(() -> {
-            conversationVOList.forEach(conversationVO -> {
-                CompletableFuture.runAsync(() -> {
-                    // 获取会话的房间信息
-                    RoomVO roomInfo = roomService.getRoomInfo(conversationVO.getRoomId());
-                    conversationVO.setRoomVO(roomInfo);
-                }, threadPoolExecutor);
-            });
-        }, threadPoolExecutor);
+
+        List<Future> futures = new ArrayList<>();
+        conversationVOList.forEach(conversationVO -> {
+            CompletableFuture<Void> subFuture = CompletableFuture.runAsync(() -> {
+                // 获取会话的房间信息
+                RoomVO roomInfo = roomService.getRoomInfo(conversationVO.getRoomId());
+                conversationVO.setRoomVO(roomInfo);
+            }, threadPoolExecutor);
+            futures.add(subFuture);
+        });
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 }

@@ -13,8 +13,5 @@ import lombok.NoArgsConstructor;
  * @date 5/25/25 15:05
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoomMessageCacheInfo extends RedisZSetCacheInfo<ChatMessageVo> {
 }
