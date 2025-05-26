@@ -107,7 +107,6 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     private CompletableFuture<Void> fillRoomInfo(List<ConversationVO> conversationVOList) {
-
         List<Future> futures = new ArrayList<>();
         conversationVOList.forEach(conversationVO -> {
             CompletableFuture<Void> subFuture = CompletableFuture.runAsync(() -> {

@@ -1,15 +1,21 @@
 package com.sici.chat.handler.msg;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.sici.chat.cache.RoomMessageCache;
+import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @projectName: qiyu-live-app
@@ -23,6 +29,12 @@ import java.lang.reflect.ParameterizedType;
 public abstract class AbstractMessageHandler<Req extends MessageDto> {
     @Resource
     private MessageDao messageDao;
+    @Resource
+    private RoomMessageCache roomMessageCache;
+    @Resource
+    @Qualifier(ThreadPoolConfiguration.CHAT_PUBLIC_EXECUTOR)
+    private ThreadPoolExecutor threadPoolExecutor;
+
     private Class<Req> messageBodyClass;
 
     /**
@@ -35,8 +47,8 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
         MessageHandlerFactory.register(this);
     }
 
-    public boolean support(MessageRequestDto messageRequestDto) {
-        return messageRequestDto.getBody() != null && messageBodyClass.isInstance(messageRequestDto.getBody());
+    public boolean support(Req body) {
+        return messageBodyClass.isInstance(body);
     }
 
     public abstract MessageRespTypeEnum getMessageTypeEnum();
@@ -54,29 +66,42 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
      *
      * @return
      */
-    public abstract void extCheck(MessageRequestDto messageReq);
+    public abstract void extCheck(Req body);
 
     /**
      * 子类扩展消息持久化
      */
-    public abstract void extSave(Message message, MessageRequestDto messageReq);
+    public abstract ChatMessageVo extSave(Message message, Req body);
 
-    public void check(MessageRequestDto messageReq) {
+    public void check(Req body) {
     }
 
-    public Message save(MessageRequestDto messageReq) {
-        Req body = getBody(messageReq);
+    public Message saveToDb(Req body) {
         Message message = new Message();
         BeanUtil.copyProperties(body, message);
         messageDao.save(message);
         return message;
     }
+    public void saveToCache(ChatMessageVo chatMessageVo) {
+        roomMessageCache.add(chatMessageVo.getMessage().getRoomId(), chatMessageVo);
+    }
 
     public Message checkAndSave(MessageRequestDto messageReq) {
-        check(messageReq);
-        extCheck(messageReq);
-        Message message = save(messageReq);
-        extSave(message, messageReq);
+        Req body = getBody(messageReq);
+        // 消息验证
+        check(body);
+        extCheck(body);
+
+        // 保存到db
+        Message message = saveToDb(body);
+
+        CompletableFuture.runAsync(() -> {
+            // 扩展消息持久化
+            ChatMessageVo chatMessageVo = extSave(message, body);
+
+            // 保存到缓存
+            saveToCache(chatMessageVo);
+        }, threadPoolExecutor);
         return message;
     }
 

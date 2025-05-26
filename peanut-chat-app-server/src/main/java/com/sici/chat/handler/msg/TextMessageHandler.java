@@ -4,7 +4,10 @@ import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.entity.Message;
+import com.sici.chat.model.chat.message.vo.ChatMessageVo;
+import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.util.AssertUtil;
+import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -30,20 +33,19 @@ public class TextMessageHandler extends AbstractMessageHandler<MessageDto> {
 
     @Override
     public MessageDto getBody(MessageRequestDto messageReq) {
-        AssertUtil.isTrue(super.support(messageReq), "消息类型不是文本消息, messageReq: " + messageReq);
         MessageDto MessageDto = (MessageDto) messageReq.getBody();
         return MessageDto;
     }
 
     @Override
-    public void extCheck(MessageRequestDto messageReq) {
+    public void extCheck(MessageDto messageDto) {
         // TODO: 检查文本消息的内容是否有敏感词  || created by 20148 at 11/27/2024 6:28 PM
-        AssertUtil.isTrue(super.support(messageReq), "消息类型不符合文本消息, messageReq: " + messageReq);
-        MessageDto body = (MessageDto) messageReq.getBody();
     }
 
     @Override
-    public void extSave(Message message, MessageRequestDto messageReq) {
-        // to nothing
+    public ChatMessageVo extSave(Message message, MessageDto body) {
+        ChatMessageVo chatMessageVo = new ChatMessageVo();
+        chatMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
+        return chatMessageVo;
     }
 }

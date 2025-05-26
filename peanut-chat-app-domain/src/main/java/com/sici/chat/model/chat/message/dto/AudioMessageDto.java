@@ -1,9 +1,7 @@
 package com.sici.chat.model.chat.message.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @projectName: qiyu-live-app
@@ -16,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class SoundMessageDto extends BaseFileMessageDto {
+public class AudioMessageDto extends BaseFileMessageDto {
     /**
      * 总时长(以s为单位)
      */

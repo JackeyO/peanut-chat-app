@@ -1,7 +1,11 @@
 package com.sici.chat.service.impl.chat;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
+import com.sici.chat.config.thread.ThreadPoolConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +54,9 @@ public class ChatServiceImpl implements ChatService {
     private MessageViewAdapter messageViewAdapter;
     @Resource
     private MQProducer mqProducer;
+    @Resource
+    @Qualifier(ThreadPoolConfiguration.CHAT_PUBLIC_EXECUTOR)
+    private ThreadPoolExecutor threadPoolExecutor;
 
     @Override
     public Message send(MessageRequestDto messageRequestDto) {

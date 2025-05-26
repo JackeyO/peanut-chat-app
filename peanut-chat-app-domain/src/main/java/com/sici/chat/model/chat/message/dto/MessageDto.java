@@ -32,5 +32,4 @@ public class MessageDto {
     private Date updateTime;
     private Integer status;
     private String extra;
-
 }
