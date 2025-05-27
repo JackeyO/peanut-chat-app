@@ -3,7 +3,6 @@ peanut:
   server:
     port: 8080
 
-
   # WeChat
   wx:
     callback: http://749291.s7.tunnelfrp.com
@@ -14,7 +13,7 @@ peanut:
 
   # RocketMq
   rocketmq:
-    name-server: 192.168.43.144:9876
+    name-server: 192.168.243.219:9876
     producer:
       group: chatGroup
 

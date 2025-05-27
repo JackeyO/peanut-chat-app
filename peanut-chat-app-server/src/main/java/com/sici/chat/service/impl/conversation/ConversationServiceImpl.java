@@ -19,6 +19,7 @@ import com.sici.chat.util.CursorPageUtil;
 import jakarta.annotation.Resource;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 public class ConversationServiceImpl implements ConversationService {
     @Resource
     @Qualifier(ThreadPoolConfiguration.CHAT_PUBLIC_EXECUTOR)
-    private ThreadPoolExecutor threadPoolExecutor;
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Resource
     private RoomService roomService;
@@ -99,7 +100,7 @@ public class ConversationServiceImpl implements ConversationService {
                         conversationVO.setUnreadCount(unReadCount);
                     }
                 }
-            }, threadPoolExecutor);
+            }, threadPoolTaskExecutor);
             futures.add(subFuture);
         });
 
@@ -113,7 +114,7 @@ public class ConversationServiceImpl implements ConversationService {
                 // 获取会话的房间信息
                 RoomVO roomInfo = roomService.getRoomInfo(conversationVO.getRoomId());
                 conversationVO.setRoomVO(roomInfo);
-            }, threadPoolExecutor);
+            }, threadPoolTaskExecutor);
             futures.add(subFuture);
         });
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));

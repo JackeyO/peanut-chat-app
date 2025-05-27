@@ -42,6 +42,7 @@
         <netty-all.version>4.1.89.Final</netty-all.version>
         <caffeine.version>2.9.3</caffeine.version>
         <weixin-java-mp.version>4.4.0</weixin-java-mp.version>
+        <tencent-oss.version>5.6.246</tencent-oss.version>
     </properties>
 
     <parent>
@@ -64,6 +65,11 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${tencent-oss.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-bom</artifactId>

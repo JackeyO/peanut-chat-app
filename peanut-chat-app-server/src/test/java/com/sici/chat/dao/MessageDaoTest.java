@@ -27,7 +27,7 @@ class MessageDaoTest {
     @Test
     void getMessagePageByCursor() {
         MessageCursorPageDto messageCursorPageDto = new MessageCursorPageDto();
-        messageCursorPageDto.setRoomId(1);
+        messageCursorPageDto.setRoomId(1L);
         CursorPageVo<Message> messagePageByCursor = messageDao.getMessagePageByCursor(messageCursorPageDto);
         CursorPageVo<ChatMessageVo> chatMessageVos = new CursorPageVo<>();
         BeanUtil.copyProperties(messagePageByCursor, chatMessageVos, "records");

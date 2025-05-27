@@ -12,6 +12,7 @@ import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.CompletableFuture;
@@ -33,7 +34,7 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
     private RoomMessageCache roomMessageCache;
     @Resource
     @Qualifier(ThreadPoolConfiguration.CHAT_PUBLIC_EXECUTOR)
-    private ThreadPoolExecutor threadPoolExecutor;
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     private Class<Req> messageBodyClass;
 
@@ -101,7 +102,7 @@ public abstract class AbstractMessageHandler<Req extends MessageDto> {
 
             // 保存到缓存
             saveToCache(chatMessageVo);
-        }, threadPoolExecutor);
+        }, threadPoolTaskExecutor);
         return message;
     }
 
