@@ -15,13 +15,13 @@ import io.netty.channel.ChannelHandlerContext;
  * @version: 1.0
  */
 
-public abstract class AbstractWsMessageHandler {
-    /**
+public abstract class AbstractWsMessageHandler<T> {
+    /*
      * 消息处理
      * @param ctx
-     * @param imMsg
+     * @param msgReq
      */
-    public abstract void handle(ChannelHandlerContext ctx, ImMsgReq msgReq);
+    public abstract void handle(ChannelHandlerContext ctx, ImMsgReq<T> msgReq);
     public abstract MessageReqTypeEnum getSupportedMessageType();
     public AbstractWsMessageHandler() {
         WsMessageHandlerFactory.registerWsMessageHandler(this);

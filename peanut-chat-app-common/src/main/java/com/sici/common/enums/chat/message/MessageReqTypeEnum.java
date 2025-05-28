@@ -10,7 +10,16 @@ package com.sici.common.enums.chat.message;
  */
 
 public enum MessageReqTypeEnum {
-    LOIN_REQUEST(0, "登录请求");
+    /**
+     * 登录请求
+     */
+    LOIN_REQUEST(0, "登录请求"),
+    /**
+     * 用户在会话中read
+     */
+    READ_EVENT_REQUEST(1, "用户在会话中read");
+
+
     private Integer type;
     private String desc;
 

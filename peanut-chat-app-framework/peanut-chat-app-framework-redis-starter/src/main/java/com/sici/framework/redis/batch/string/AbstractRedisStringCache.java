@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 
-public abstract class AbstractRedisStringCache<IN, OUT> extends AbstractRedisCache<IN, OUT> {
+public abstract class AbstractRedisStringCache<IN, OUT> extends AbstractRedisCache<IN, OUT> implements ValueOperation<IN, OUT> {
     public AbstractRedisStringCache () {
     }
     /**
@@ -52,5 +52,10 @@ public abstract class AbstractRedisStringCache<IN, OUT> extends AbstractRedisCac
     public void setToCache(Map<String, OUT> toSet) {
         if (CollectionUtil.isEmpty(toSet)) return;
         RedisUtils.mset(toSet, getExpireSeconds());
+    }
+
+    @Override
+    public void set(IN req, OUT value) {
+        RedisUtils.set(getKey(req), value);
     }
 }
