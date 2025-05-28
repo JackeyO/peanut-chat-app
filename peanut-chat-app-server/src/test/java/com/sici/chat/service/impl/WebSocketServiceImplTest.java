@@ -1,6 +1,6 @@
 package com.sici.chat.service.impl;
 
-import com.sici.chat.builder.cache.UserLoginCodeKeyBuilder;
+import com.sici.chat.builder.cache.user.UserLoginCodeKeyBuilder;
 import com.sici.framework.redis.RedisUtils;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;

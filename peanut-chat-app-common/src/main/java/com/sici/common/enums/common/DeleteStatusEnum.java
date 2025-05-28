@@ -24,7 +24,7 @@ public enum DeleteStatusEnum {
         this.desc = desc;
     }
 
-    public Integer getstatus() {
+    public Integer getStatus() {
         return status;
     }
 

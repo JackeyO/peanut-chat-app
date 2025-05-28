@@ -1,4 +1,4 @@
-package com.sici.chat.builder.cache;
+package com.sici.chat.builder.cache.conversation;
 
 import com.sici.common.constant.redis.key.RedisKeyConstant;
 import com.sici.framework.redis.key.RedisKeyBuilder;
@@ -12,15 +12,15 @@ import java.time.Duration;
  * @date 5/25/25 14:26
  */
 @Component
-public class ConversationActivityCacheKeyBuilder implements RedisKeyBuilder<Long, String> {
+public class ConversationBaseCacheKeyBuilder implements RedisKeyBuilder<Long, String> {
     @Override
     public String build(Long req) {
         return RedisKeyConstant.ALL_KEY_PREFIX + RedisKeyConstant.ALL_KEY_SPLIT_ITEM
-                + "conversation-activity" + RedisKeyConstant.ALL_KEY_SPLIT_ITEM + req;
+                + "conversation" + RedisKeyConstant.ALL_KEY_SPLIT_ITEM + req;
     }
 
     @Override
     public Duration getExpireTime() {
-        return Duration.ofSeconds(-1);
+        return Duration.ofDays(1);
     }
 }

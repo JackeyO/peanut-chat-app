@@ -1,8 +1,8 @@
-package com.sici.chat.cache;
+package com.sici.chat.cache.room;
 
 import com.alibaba.fastjson2.JSON;
 import com.sici.chat.adapter.MessageViewAdapter;
-import com.sici.chat.builder.cache.RoomMessageCacheKeyBuilder;
+import com.sici.chat.builder.cache.room.RoomMessageCacheKeyBuilder;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.cache.RoomMessageCacheInfo;
 import com.sici.chat.model.chat.message.vo.ChatMessageVo;

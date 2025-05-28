@@ -1,6 +1,6 @@
-package com.sici.chat.cache;
+package com.sici.chat.cache.conversation;
 
-import com.sici.chat.builder.cache.ConversationBaseCacheKeyBuilder;
+import com.sici.chat.builder.cache.conversation.ConversationBaseCacheKeyBuilder;
 import com.sici.chat.dao.ConversationDao;
 import com.sici.chat.model.chat.conversation.cache.ConversationBaseCacheInfo;
 import com.sici.chat.model.chat.conversation.entity.UserConversation;

@@ -27,7 +27,7 @@ public class UserFriendDao extends ServiceImpl<UserFriendMapper, UserFriend> {
     public UserFriend getFriendRelation(Long uid1, Long uid2) {
         return lambdaQuery().eq(UserFriend::getUid1, uid1)
                 .eq(UserFriend::getUid2, uid1)
-                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getstatus())
+                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getStatus())
                 .one();
     }
 
@@ -38,7 +38,7 @@ public class UserFriendDao extends ServiceImpl<UserFriendMapper, UserFriend> {
      */
     public List<Long> getFriendListById(Long userId) {
         return lambdaQuery().eq(UserFriend::getUid1, userId)
-                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getstatus())
+                .eq(UserFriend::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getStatus())
                 .select(UserFriend::getUid2)
                 .list()
                 .stream()

@@ -1,8 +1,8 @@
-package com.sici.chat.cache;
+package com.sici.chat.cache.room;
 
-import com.sici.chat.builder.cache.RoomBaseCacheRedisKeyBuilder;
+import com.sici.chat.builder.cache.room.RoomBaseCacheRedisKeyBuilder;
 import com.sici.chat.dao.RoomDao;
-import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
+import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.framework.redis.batch.string.AbstractRedisStringCache;
 import jakarta.annotation.Resource;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class RoomBaseInfoCache extends AbstractRedisStringCache<Long, RoomCacheInfo> {
+public class RoomBaseInfoCache extends AbstractRedisStringCache<Long, Room> {
     @Resource
     private RoomBaseCacheRedisKeyBuilder roomBaseCacheRedisKeyBuilder;
     @Resource
@@ -39,9 +39,9 @@ public class RoomBaseInfoCache extends AbstractRedisStringCache<Long, RoomCacheI
     }
 
     @Override
-    public Map<Long, RoomCacheInfo> loadFromDb(List<Long> req) {
+    public Map<Long, Room> loadFromDb(List<Long> req) {
         return roomDao.listByIds(req).stream()
-                .map(room -> ConvertBeanUtil.convertSingle(room, RoomCacheInfo.class))
-                .collect(Collectors.toMap(RoomCacheInfo::getId, roomCacheInfo -> roomCacheInfo));
+                .map(room -> ConvertBeanUtil.convertSingle(room, Room.class))
+                .collect(Collectors.toMap(Room::getId, roomCacheInfo -> roomCacheInfo));
     }
 }

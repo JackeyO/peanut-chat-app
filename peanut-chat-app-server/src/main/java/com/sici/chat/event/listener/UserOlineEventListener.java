@@ -1,6 +1,6 @@
 package com.sici.chat.event.listener;
 
-import com.sici.chat.builder.cache.RoomOnlineCountCacheKeyBuilder;
+import com.sici.chat.builder.cache.room.RoomOnlineCountCacheKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.chat.event.UserOnlineEvent;
 import com.sici.framework.redis.RedisUtils;
@@ -38,7 +38,7 @@ public class UserOlineEventListener {
 
         // 更新房间在线用户数缓存
         threadPoolTaskExecutor.execute(() -> {
-            List<String> roomOnlineCountKeys = roomMemberDao.getRoomsByUserId(userId)
+            List<String> roomOnlineCountKeys = roomMemberDao.getRoomIdByUserId(userId)
                     .stream()
                     .map(roomId -> roomOnlineCountCacheKeyBuilder.build(roomId))
                     .collect(Collectors.toList());

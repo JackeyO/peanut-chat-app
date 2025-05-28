@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
-import com.sici.chat.builder.cache.UserLoginCodeKeyBuilder;
+import com.sici.chat.builder.cache.user.UserLoginCodeKeyBuilder;
 import com.sici.chat.event.UserOfflineEvent;
 import com.sici.chat.event.UserOnlineEvent;
 import com.sici.chat.model.chat.message.bo.aggregate.LoginMessageAggregateParam;

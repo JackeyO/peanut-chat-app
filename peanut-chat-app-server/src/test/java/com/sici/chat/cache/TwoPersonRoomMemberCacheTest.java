@@ -1,5 +1,6 @@
 package com.sici.chat.cache;
 
+import com.sici.chat.cache.room.TwoPersonRoomMemberCache;
 import com.sici.chat.model.chat.room.cache.RoomMemberCacheInfo;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
-package com.sici.chat.cache;
+package com.sici.chat.cache.conversation;
 
-import com.sici.chat.builder.cache.ConversationActivityCacheKeyBuilder;
+import com.sici.chat.builder.cache.conversation.ConversationActivityCacheKeyBuilder;
 import com.sici.chat.model.chat.conversation.cache.ConversationActivityCacheInfo;
 import com.sici.framework.redis.batch.string.AbstractRedisStringCache;
 import jakarta.annotation.Resource;

@@ -1,9 +1,9 @@
 package com.sici.chat.dao;
 
-import cn.hutool.core.lang.Pair;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sici.chat.mapper.RoomMemberMapper;
 import com.sici.chat.model.chat.room.entity.RoomMember;
+import com.sici.common.enums.common.DeleteStatusEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -68,8 +68,10 @@ public class RoomMemberDao extends ServiceImpl<RoomMemberMapper, RoomMember> {
                         })));
     }
 
-    public List<Long> getRoomsByUserId(Long userId) {
+    public List<Long> getRoomIdByUserId(Long userId) {
+        // 获取用户加入的房间id, 不包括已退出或已经解散的房间
         return lambdaQuery().eq(RoomMember::getUid1, userId)
+                .eq(RoomMember::getDeleteStatus, DeleteStatusEnum.NOT_DELETE.getStatus())
                 .list()
                 .stream()
                 .map(RoomMember::getRoomId)

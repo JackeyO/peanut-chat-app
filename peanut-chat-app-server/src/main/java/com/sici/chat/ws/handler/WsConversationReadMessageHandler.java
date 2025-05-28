@@ -1,12 +1,11 @@
 package com.sici.chat.ws.handler;
 
 
-import com.sici.chat.cache.ConversationActivityCache;
+import com.sici.chat.cache.conversation.ConversationActivityCache;
 import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.model.chat.conversation.cache.ConversationActivityCacheInfo;
 import com.sici.chat.model.chat.ws.WsReadEventDto;
 import com.sici.chat.model.ws.bo.ImMsgReq;
-import com.sici.chat.service.ws.WebSocketService;
 import com.sici.common.enums.chat.message.MessageReqTypeEnum;
 import io.netty.channel.ChannelHandlerContext;
 import jakarta.annotation.Resource;
@@ -56,6 +55,8 @@ public class WsConversationReadMessageHandler extends AbstractWsMessageHandler<W
             ConversationActivityCacheInfo conversationActivityCacheInfo = new ConversationActivityCacheInfo();
             conversationActivityCacheInfo.setLastActivityTime(readTime);
             conversationActivityCache.set(conversationId, conversationActivityCacheInfo);
+
+            log.info("update conversation activity cache, conversationId: {}, readTime: {}", conversationId, readTime);
         }, threadPoolTaskExecutor);
     }
 }

@@ -1,8 +1,8 @@
 package com.sici.chat.service.impl.conversation;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.sici.chat.cache.ConversationActivityCache;
-import com.sici.chat.cache.RoomMessageCache;
+import com.sici.chat.cache.conversation.ConversationActivityCache;
+import com.sici.chat.cache.room.RoomMessageCache;
 import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.dao.ConversationDao;
 import com.sici.chat.model.chat.conversation.cache.ConversationActivityCacheInfo;
@@ -28,7 +28,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 /**

@@ -1,7 +1,11 @@
 package com.sici.chat.controller.room;
 
 
+import com.sici.chat.context.RequestInfo;
+import com.sici.chat.model.chat.room.vo.RoomJoinedVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
+import com.sici.chat.util.RequestHolder;
+import com.sici.common.enums.code.AppHttpCodeEnum;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,9 +50,25 @@ public class RoomController {
         } catch (BusinessException e) {
             log.error("获取房间信息失败", e);
             return ResponseResult.errorResult(e.getCode(), e.getMessage());
-        } catch (Exception e) {
-            log.error("获取房间信息失败", e);
-            return ResponseResult.errorResult(500, e.getMessage());
         }
     }
+
+    /**
+     * 查询当前用户加入的群组房间(不包含单聊房间)
+     */
+    @GetMapping("rooms")
+    public ResponseResult<RoomJoinedVo> getUserJoinedGroupRooms() {
+        RequestInfo requestInfo = RequestHolder.get();
+        AssertUtil.notNull(requestInfo, AppHttpCodeEnum.UNAUTHORIZED);
+        AssertUtil.notNull(requestInfo.getUserId(), AppHttpCodeEnum.UNAUTHORIZED);
+
+        try {
+            RoomJoinedVo roomVO = roomService.getUserJoinedRooms(requestInfo.getUserId());
+            return ResponseResult.okResult(roomVO);
+        } catch (BusinessException e) {
+            log.error("获取用户房间信息失败", e);
+            return ResponseResult.errorResult(e.getCode(), e.getMessage());
+        }
+    }
+
 }

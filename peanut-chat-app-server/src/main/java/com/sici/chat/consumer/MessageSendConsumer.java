@@ -1,24 +1,19 @@
 package com.sici.chat.consumer;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
-import com.sici.chat.config.thread.ThreadPoolConfiguration;
-import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
+import com.sici.chat.model.chat.room.entity.Room;
 import jakarta.annotation.Resource;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import com.sici.chat.adapter.MessageViewAdapter;
 import com.sici.chat.builder.ImMsgBuilder;
-import com.sici.chat.cache.GroupRoomMemberCache;
-import com.sici.chat.cache.RoomBaseInfoCache;
-import com.sici.chat.cache.TwoPersonRoomMemberCache;
+import com.sici.chat.cache.room.GroupRoomMemberCache;
+import com.sici.chat.cache.room.RoomBaseInfoCache;
+import com.sici.chat.cache.room.TwoPersonRoomMemberCache;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageSendDTO;
 import com.sici.chat.model.chat.message.entity.Message;
@@ -63,10 +58,10 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
 
         // 获取房间信息
         Long roomId = message.getRoomId();
-        RoomCacheInfo room = roomBaseInfoCache.getOne(roomId);
+        Room room = roomBaseInfoCache.getOne(roomId);
 
         // 获取房间成员列表
-        List<Long> roomMemberIds = room.getType().equals(RoomTypeEnums.TWO_PRIVATE) ?
+        List<Long> roomMemberIds = room.getType().equals(RoomTypeEnums.PRIVATE) ?
                 twoPersonRoomMemberCache.getOne(roomId).getMembers() : groupRoomMemberCache.getOne(roomId).getMembers();
 
         // 构建ImMsg,准备进行消息推送

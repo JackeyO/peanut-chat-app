@@ -8,7 +8,7 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.sici.chat.builder.cache.UserOpenIdBindLoginCodeKeyBuilder;
+import com.sici.chat.builder.cache.user.UserOpenIdBindLoginCodeKeyBuilder;
 import com.sici.chat.builder.user.UserInfoBuilder;
 import com.sici.chat.builder.wx.TextBuilder;
 import com.sici.chat.dao.UserDao;

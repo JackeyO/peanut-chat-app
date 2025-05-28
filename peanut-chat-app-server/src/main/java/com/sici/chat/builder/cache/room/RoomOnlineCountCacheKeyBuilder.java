@@ -1,4 +1,4 @@
-package com.sici.chat.builder.cache;
+package com.sici.chat.builder.cache.room;
 
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_PREFIX;
 import static com.sici.common.constant.redis.key.RedisKeyConstant.ALL_KEY_SPLIT_ITEM;

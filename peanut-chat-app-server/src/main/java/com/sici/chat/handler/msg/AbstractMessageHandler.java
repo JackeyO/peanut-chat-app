@@ -1,7 +1,7 @@
 package com.sici.chat.handler.msg;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.sici.chat.cache.RoomMessageCache;
+import com.sici.chat.cache.room.RoomMessageCache;
 import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.dao.MessageDao;
 import com.sici.chat.model.chat.message.dto.MessageDto;
@@ -16,7 +16,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @projectName: qiyu-live-app

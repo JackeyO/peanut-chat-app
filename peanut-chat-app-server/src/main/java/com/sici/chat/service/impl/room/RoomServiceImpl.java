@@ -1,12 +1,15 @@
 package com.sici.chat.service.impl.room;
 
 
-import com.sici.chat.cache.GroupRoomMemberCache;
-import com.sici.chat.cache.RoomBaseInfoCache;
-import com.sici.chat.cache.TwoPersonRoomMemberCache;
-import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
+import com.sici.chat.cache.room.GroupRoomMemberCache;
+import com.sici.chat.cache.room.RoomBaseInfoCache;
+import com.sici.chat.cache.room.TwoPersonRoomMemberCache;
+import com.sici.chat.cache.user.UserJoinedGroupRoomCache;
 import com.sici.chat.model.chat.room.cache.RoomMemberCacheInfo;
+import com.sici.chat.model.chat.room.entity.Room;
+import com.sici.chat.model.chat.room.vo.RoomJoinedVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
+import com.sici.chat.model.user.cache.UserJoinedGroupRoomCacheInfo;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.common.enums.chat.room.RoomTypeEnums;
 import org.assertj.core.util.Lists;
@@ -38,11 +41,13 @@ public class RoomServiceImpl implements RoomService {
     private TwoPersonRoomMemberCache twoPersonRoomMemberCache;
     @Resource
     private RoomBaseInfoCache roomBaseInfoCache;
+    @Resource
+    private UserJoinedGroupRoomCache userJoinedGroupRoomCache;
 
     @Override
     public RoomVO getRoomInfo(Long roomId) {
         // 获取房间基本信息
-        RoomCacheInfo room = roomBaseInfoCache.getOne(roomId);
+        Room room = roomBaseInfoCache.getOne(roomId);
 
         if (Objects.isNull(room)) {
             throw new BusinessException(AppHttpCodeEnum.ROOM_NOT_FOUND.getCode(), AppHttpCodeEnum.ROOM_NOT_FOUND.getErrorMessage());
@@ -52,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
 
         // 获取房间成员列表
         RoomMemberCacheInfo roomMemberCacheInfo = Optional.ofNullable(room.getType().equals(RoomTypeEnums.GROUP.getType()) ?
-                groupRoomMemberCache.getOne(roomId) : twoPersonRoomMemberCache.getOne(roomId))
+                        groupRoomMemberCache.getOne(roomId) : twoPersonRoomMemberCache.getOne(roomId))
                 .orElse(new RoomMemberCacheInfo());
         List<Long> groupRoomMember = Optional.ofNullable(roomMemberCacheInfo.getMembers())
                 .orElse(Lists.newArrayList());
@@ -62,5 +67,17 @@ public class RoomServiceImpl implements RoomService {
         roomVO.setMemberCount(groupRoomMember.size());
 
         return roomVO;
+    }
+
+    @Override
+    public RoomJoinedVo getUserJoinedRooms(Long userId) {
+        // 从缓存中获取用户加入的房间信息(群聊, 不包括双人聊天房间)
+        UserJoinedGroupRoomCacheInfo userJoinedGroupRoomCacheInfo = userJoinedGroupRoomCache.getOne(userId);
+        List<Room> rooms = userJoinedGroupRoomCacheInfo.getRooms();
+
+        return RoomJoinedVo
+                .builder()
+                .rooms(rooms)
+                .build();
     }
 }

@@ -1,6 +1,6 @@
-package com.sici.chat.cache;
+package com.sici.chat.cache.room;
 
-import com.sici.chat.builder.cache.RoomMemberCacheKeyBuilder;
+import com.sici.chat.builder.cache.room.RoomMemberCacheKeyBuilder;
 import com.sici.chat.dao.RoomMemberDao;
 import com.sici.chat.model.chat.room.cache.RoomMemberCacheInfo;
 import com.sici.framework.redis.batch.string.AbstractRedisStringCache;
