@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomJoinedVo {
+public class GroupRoomJoinedVo {
     /**
      * 用户加入的房间列表(只包含房间基本信息，和群组房间，不包含私聊房间)
      */

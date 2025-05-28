@@ -2,7 +2,8 @@ package com.sici.chat.controller.room;
 
 
 import com.sici.chat.context.RequestInfo;
-import com.sici.chat.model.chat.room.vo.RoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomSearchVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
 import com.sici.chat.util.RequestHolder;
 import com.sici.common.enums.code.AppHttpCodeEnum;
@@ -57,13 +58,13 @@ public class RoomController {
      * 查询当前用户加入的群组房间(不包含单聊房间)
      */
     @GetMapping("rooms")
-    public ResponseResult<RoomJoinedVo> getUserJoinedGroupRooms() {
+    public ResponseResult<GroupRoomJoinedVo> getUserJoinedGroupRooms() {
         RequestInfo requestInfo = RequestHolder.get();
         AssertUtil.notNull(requestInfo, AppHttpCodeEnum.UNAUTHORIZED);
         AssertUtil.notNull(requestInfo.getUserId(), AppHttpCodeEnum.UNAUTHORIZED);
 
         try {
-            RoomJoinedVo roomVO = roomService.getUserJoinedRooms(requestInfo.getUserId());
+            GroupRoomJoinedVo roomVO = roomService.getUserJoinedRooms(requestInfo.getUserId());
             return ResponseResult.okResult(roomVO);
         } catch (BusinessException e) {
             log.error("获取用户房间信息失败", e);
@@ -71,4 +72,20 @@ public class RoomController {
         }
     }
 
+    /**
+     * 搜索群组房间
+     */
+
+    @GetMapping("search")
+    public ResponseResult<GroupRoomSearchVo> searchGroupRooms(@RequestParam String keyword) {
+        AssertUtil.notNull(keyword, AppHttpCodeEnum.KEYWORDS_IS_NULL);
+
+        try {
+            GroupRoomSearchVo groupRoomSearchVo = roomService.searchGroupRoom(keyword);
+            return ResponseResult.okResult(groupRoomSearchVo);
+        } catch (BusinessException e) {
+            log.error("搜索群组房间失败", e);
+            return ResponseResult.errorResult(e.getCode(), e.getMessage());
+        }
+    }
 }

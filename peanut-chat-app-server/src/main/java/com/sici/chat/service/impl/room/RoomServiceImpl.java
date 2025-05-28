@@ -7,7 +7,8 @@ import com.sici.chat.cache.room.TwoPersonRoomMemberCache;
 import com.sici.chat.cache.user.UserJoinedGroupRoomCache;
 import com.sici.chat.model.chat.room.cache.RoomMemberCacheInfo;
 import com.sici.chat.model.chat.room.entity.Room;
-import com.sici.chat.model.chat.room.vo.RoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomSearchVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
 import com.sici.chat.model.user.cache.UserJoinedGroupRoomCacheInfo;
 import com.sici.chat.util.ConvertBeanUtil;
@@ -70,14 +71,23 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomJoinedVo getUserJoinedRooms(Long userId) {
+    public GroupRoomJoinedVo getUserJoinedRooms(Long userId) {
         // 从缓存中获取用户加入的房间信息(群聊, 不包括双人聊天房间)
         UserJoinedGroupRoomCacheInfo userJoinedGroupRoomCacheInfo = userJoinedGroupRoomCache.getOne(userId);
         List<Room> rooms = userJoinedGroupRoomCacheInfo.getRooms();
 
-        return RoomJoinedVo
+        return GroupRoomJoinedVo
                 .builder()
                 .rooms(rooms)
                 .build();
+    }
+
+    @Override
+    public GroupRoomSearchVo searchGroupRoom(String keyword) {
+        // TODO 使用ES处理按关键词搜索群聊房间(定义索引结构，和索引全量以及增量写入) - Su Xiao Wen - 5/28/25 17:04
+
+        GroupRoomSearchVo groupRoomSearchVo = new GroupRoomSearchVo();
+
+        return groupRoomSearchVo;
     }
 }

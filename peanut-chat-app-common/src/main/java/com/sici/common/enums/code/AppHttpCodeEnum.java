@@ -53,7 +53,8 @@ public enum AppHttpCodeEnum {
     // 业务通用错误
     BUSINESS_ERROR(9000, "业务处理失败"),
     UNAUTHORIZED(4304, "未授权访问"),
-    CHAT_FILE_NEED_ROOM_ID(4305, "聊天文件上传需要房间ID"),;
+    CHAT_FILE_NEED_ROOM_ID(4305, "聊天文件上传需要房间ID"),
+    KEYWORDS_IS_NULL(4306, "关键词不能为空"),;
 
     Integer code;
 

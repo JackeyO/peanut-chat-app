@@ -1,7 +1,7 @@
 package com.sici.chat.service.room;
 
-import com.sici.chat.model.chat.room.entity.Room;
-import com.sici.chat.model.chat.room.vo.RoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomJoinedVo;
+import com.sici.chat.model.chat.room.vo.GroupRoomSearchVo;
 import com.sici.chat.model.chat.room.vo.RoomVO;
 
 /**
@@ -17,5 +17,7 @@ public interface RoomService  {
      */
     RoomVO getRoomInfo(Long roomId);
 
-    RoomJoinedVo getUserJoinedRooms(Long userId);
+    GroupRoomJoinedVo getUserJoinedRooms(Long userId);
+
+    GroupRoomSearchVo searchGroupRoom(String keyword);
 }

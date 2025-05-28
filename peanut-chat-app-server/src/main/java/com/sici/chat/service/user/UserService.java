@@ -3,6 +3,7 @@ package com.sici.chat.service.user;
 
 import com.sici.chat.model.user.dto.UserProfileDto;
 import com.sici.chat.model.user.entity.User;
+import com.sici.chat.model.user.vo.UserSearchVo;
 import com.sici.chat.model.user.vo.UserVO;
 
 /**
@@ -29,4 +30,6 @@ public interface UserService {
      * @return
      */
     UserVO profile(UserProfileDto userProfileDto);
+
+    UserSearchVo searchUser(String keyword);
 }

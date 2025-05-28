@@ -28,6 +28,7 @@ import java.util.concurrent.CompletableFuture;
 public class WsConversationReadMessageHandler extends AbstractWsMessageHandler<WsReadEventDto> {
     @Resource
     private ConversationActivityCache conversationActivityCache;
+
     @Resource
     @Qualifier(ThreadPoolConfiguration.CHAT_PUBLIC_EXECUTOR)
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
