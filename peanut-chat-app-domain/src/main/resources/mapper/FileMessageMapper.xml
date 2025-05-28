@@ -9,6 +9,7 @@
             <result property="msgId" column="msg_id" />
             <result property="url" column="url" />
             <result property="size" column="size" />
+            <result property="duration" column="duration" />
             <result property="extra" column="extra" />
             <result property="type" column="type" />
             <result property="createTime" column="create_time" />
@@ -16,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,msg_id,url,size,extra,type,
-        create_time,update_time
+        id,msg_id,url,size,duration,extra,
+        type,create_time,update_time
     </sql>
 </mapper>

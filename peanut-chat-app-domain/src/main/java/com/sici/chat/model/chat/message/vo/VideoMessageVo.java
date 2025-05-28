@@ -22,5 +22,10 @@ public class VideoMessageVo extends ChatMessageVo{
     /**
      * 视频消息的大小，单位为字节
      */
-    private Long size;
+    private Integer size;
+
+    /**
+     * 视频消息的类型
+     */
+    private String type;
 }

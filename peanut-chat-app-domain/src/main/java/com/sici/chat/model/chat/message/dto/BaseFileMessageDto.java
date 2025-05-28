@@ -22,5 +22,7 @@ public class BaseFileMessageDto extends MessageDto{
     /**
      * 文件大小
      */
-    private Long size;
+    private Integer size;
+
+    private String type;
 }

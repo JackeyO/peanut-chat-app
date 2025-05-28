@@ -1,12 +1,17 @@
 package com.sici.chat.consumer;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
+import com.sici.chat.config.thread.ThreadPoolConfiguration;
 import com.sici.chat.model.chat.room.cache.RoomCacheInfo;
 import jakarta.annotation.Resource;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import com.sici.chat.adapter.MessageViewAdapter;
@@ -50,6 +55,8 @@ public class MessageSendConsumer implements RocketMQListener<MessageSendDTO> {
 
     @Override
     public void onMessage(MessageSendDTO messageSendDTO) {
+        // 1.执行消息推送
+
         Long msgId = messageSendDTO.getMsgId();
         // 获取消息META信息
         Message message = messageDao.getById(msgId);

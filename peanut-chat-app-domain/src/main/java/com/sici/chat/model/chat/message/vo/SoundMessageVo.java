@@ -15,6 +15,11 @@ public class SoundMessageVo extends ChatMessageVo{
     private String url;
 
     /**
+     * 语音消息类型
+     */
+    private String type;
+
+    /**
      * 语音消息的时长，单位为秒
      */
     private Integer duration;
@@ -22,5 +27,5 @@ public class SoundMessageVo extends ChatMessageVo{
     /**
      * 语音消息的大小，单位为字节
      */
-    private Long size;
+    private Integer size;
 }

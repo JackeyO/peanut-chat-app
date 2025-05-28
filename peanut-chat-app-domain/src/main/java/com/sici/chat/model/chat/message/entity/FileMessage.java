@@ -1,11 +1,11 @@
 package com.sici.chat.model.chat.message.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -15,8 +15,6 @@ import java.util.Date;
  */
 @TableName(value ="file_message")
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class FileMessage {
     /**
      * 主键id
@@ -38,6 +36,11 @@ public class FileMessage {
      * 文件大小
      */
     private Integer size;
+
+    /**
+     * 时长（单位秒，音频或视频文件使用）
+     */
+    private Integer duration;
 
     /**
      * 附加信息
@@ -116,6 +119,20 @@ public class FileMessage {
     }
 
     /**
+     * 时长（单位秒，音频或视频文件使用）
+     */
+    public Integer getDuration() {
+        return duration;
+    }
+
+    /**
+     * 时长（单位秒，音频或视频文件使用）
+     */
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    /**
      * 附加信息
      */
     public String getExtra() {
@@ -187,6 +204,7 @@ public class FileMessage {
             && (this.getMsgId() == null ? other.getMsgId() == null : this.getMsgId().equals(other.getMsgId()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
+            && (this.getDuration() == null ? other.getDuration() == null : this.getDuration().equals(other.getDuration()))
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -201,6 +219,7 @@ public class FileMessage {
         result = prime * result + ((getMsgId() == null) ? 0 : getMsgId().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getSize() == null) ? 0 : getSize().hashCode());
+        result = prime * result + ((getDuration() == null) ? 0 : getDuration().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -218,6 +237,7 @@ public class FileMessage {
         sb.append(", msgId=").append(msgId);
         sb.append(", url=").append(url);
         sb.append(", size=").append(size);
+        sb.append(", duration=").append(duration);
         sb.append(", extra=").append(extra);
         sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);

@@ -38,6 +38,7 @@ CREATE TABLE file_message (
                               msg_id      bigint       NOT NULL COMMENT '消息id',
                               url         varchar(255) NOT NULL COMMENT '文件url地址',
                               size        int          NOT NULL COMMENT '文件大小',
+                              duration    int          DEFAULT 0 COMMENT '时长（单位秒，音频或视频文件使用）',
                               extra       varchar(255) COMMENT '附加信息',
                               type        int          NOT NULL COMMENT '文件类型(1:音频，2:视频，3:图片，4:普通文件)',
                               create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

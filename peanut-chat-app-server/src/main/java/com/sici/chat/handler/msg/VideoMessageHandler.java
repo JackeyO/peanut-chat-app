@@ -3,8 +3,10 @@ package com.sici.chat.handler.msg;
 import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.VideoMessageDto;
+import com.sici.chat.model.chat.message.entity.FileMessage;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.MessageVo;
+import com.sici.chat.model.chat.message.vo.SoundMessageVo;
 import com.sici.chat.model.chat.message.vo.VideoMessageVo;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
@@ -44,9 +46,24 @@ public class VideoMessageHandler extends AbstractMessageHandler<VideoMessageDto>
 
     @Override
     public VideoMessageVo extSave(Message message, VideoMessageDto videoMessageDto) {
+
+        // 插入file message记录
+        FileMessage fileMessage = FileMessage.builder()
+                .msgId(message.getId())
+                .url(videoMessageDto.getUrl())
+                .size(videoMessageDto.getSize())
+                .duration(videoMessageDto.getDuration())
+                .type(MessageRespTypeEnum.VIDEO.getType())
+                .build();
+        fileMessageDao.save(fileMessage);
+
+
         VideoMessageVo videoMessageVo = new VideoMessageVo();
         videoMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
-        // TODO 上传到oss，插入file message记录,回填到videoMessageVo - Su Xiao Wen - 5/26/25 16:43
+        videoMessageVo.setType(videoMessageDto.getType());
+        videoMessageVo.setUrl(videoMessageDto.getUrl());
+        videoMessageVo.setDuration(videoMessageDto.getDuration());
+        videoMessageVo.setSize(videoMessageDto.getSize());
 
         return videoMessageVo;
     }

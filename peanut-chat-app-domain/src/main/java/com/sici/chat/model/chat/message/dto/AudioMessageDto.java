@@ -18,5 +18,10 @@ public class AudioMessageDto extends BaseFileMessageDto {
     /**
      * 总时长(以s为单位)
      */
-    private Long time;
+    private Integer duration;
+
+    /**
+     * 语音消息类型
+     */
+    private String type;
 }

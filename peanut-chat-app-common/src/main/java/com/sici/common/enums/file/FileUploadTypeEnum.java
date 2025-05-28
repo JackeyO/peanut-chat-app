@@ -11,6 +11,7 @@ public enum FileUploadTypeEnum {
      */
     CHAT_FILE("chat_file", "聊天文件（音频，视频，普通文件）");
 
+
     private final String type;
     private final String description;
 

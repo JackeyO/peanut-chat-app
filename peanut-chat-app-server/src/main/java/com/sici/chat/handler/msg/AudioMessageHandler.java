@@ -3,6 +3,7 @@ package com.sici.chat.handler.msg;
 import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.AudioMessageDto;
+import com.sici.chat.model.chat.message.entity.FileMessage;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.model.chat.message.vo.SoundMessageVo;
@@ -44,10 +45,22 @@ public class AudioMessageHandler extends AbstractMessageHandler<AudioMessageDto>
 
     @Override
     public SoundMessageVo extSave(Message message, AudioMessageDto audioMessageDto) {
+        // 插入file message记录
+        FileMessage fileMessage = FileMessage.builder()
+                .msgId(message.getId())
+                .url(audioMessageDto.getUrl())
+                .size(audioMessageDto.getSize())
+                .duration(audioMessageDto.getDuration())
+                .type(MessageRespTypeEnum.AUDIO.getType())
+                .build();
+        fileMessageDao.save(fileMessage);
+
         SoundMessageVo soundMessageVo = new SoundMessageVo();
         soundMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
-
-        // TODO 上传到oss，插入file message记录,回填到soundMessageVo - Su Xiao Wen - 5/26/25 16:43
+        soundMessageVo.setType(audioMessageDto.getType());
+        soundMessageVo.setUrl(audioMessageDto.getUrl());
+        soundMessageVo.setDuration(audioMessageDto.getDuration());
+        soundMessageVo.setSize(audioMessageDto.getSize());
 
         return soundMessageVo;
     }

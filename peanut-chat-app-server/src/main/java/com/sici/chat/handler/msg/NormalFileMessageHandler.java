@@ -4,6 +4,7 @@ import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.BaseFileMessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
 import com.sici.chat.model.chat.message.dto.VideoMessageDto;
+import com.sici.chat.model.chat.message.entity.FileMessage;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.model.chat.message.vo.NormalFileMessageVo;
@@ -47,9 +48,21 @@ public class NormalFileMessageHandler extends AbstractMessageHandler<BaseFileMes
 
     @Override
     public NormalFileMessageVo extSave(Message message, BaseFileMessageDto baseFileMessageDto) {
+        // 插入file message记录
+        FileMessage fileMessage = FileMessage.builder()
+                .msgId(message.getId())
+                .url(baseFileMessageDto.getUrl())
+                .size(baseFileMessageDto.getSize())
+                .type(MessageRespTypeEnum.NORMAL_FILE.getType())
+                .build();
+        fileMessageDao.save(fileMessage);
+
+
         NormalFileMessageVo normalFileMessageVo = new NormalFileMessageVo();
         normalFileMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
-        // TODO 上传到oss，插入file message记录,回填到normalFileMessageVo - Su Xiao Wen - 5/26/25 16:43
+        normalFileMessageVo.setUrl(baseFileMessageDto.getUrl());
+        normalFileMessageVo.setType(baseFileMessageDto.getType());
+        normalFileMessageVo.setSize(baseFileMessageDto.getSize());
 
         return normalFileMessageVo;
     }
