@@ -14,7 +14,6 @@ spring:
       port: ${peanut.redis.port}
       database: 0
 
-
   datasource:
     url: jdbc:mysql://${peanut.mysql.ip}:${peanut.mysql.port}/${peanut.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${peanut.mysql.username}
@@ -25,7 +24,10 @@ spring:
       maximum-pool-size: 10
       max-lifetime: 30000   #不能小于30秒，否则默认回到1800秒
   #      connection-test-query: SELECT
-
+  elasticsearch:
+    uris: ${peanut.elasticsearch.uris:http://localhost:9200}
+#    username: ${peanut.elasticsearch.username:}
+#    password: ${peanut.elasticsearch.password:}
 
 # RocketMq
 rocketmq:
@@ -48,3 +50,33 @@ peanut:
   # ws
   ws:
     port: ${peanut.im.ws.port}
+
+  # es
+  es:
+    batch:
+      size: 1000
+      async: true
+      retry:
+        times: 3
+    sync:
+      pageSize: 1000
+
+  # Canal配置
+  canal:
+    enabled: ${peanut.canal.enabled}
+    server-host: ${peanut.canal.server-host}
+    server-port: ${peanut.canal.server-port}
+    destination: ${peanut.canal.destination}
+    username: ${peanut.canal.username}
+    password: ${peanut.canal.password}
+    batch-size: ${peanut.canal.batch-size}
+    timeout: ${peanut.canal.timeout}
+
+    # 表配置
+    tables: ${peanut.canal.tables}
+
+    # 重试配置
+    retry:
+      max-retry-times: ${peanut.canal.retry.max-retry-times}
+      retry-interval: ${peanut.canal.retry.retry-interval}
+      exponential-backoff: ${peanut.canal.retry.exponential-backoff}

@@ -313,4 +313,26 @@ public class User {
         sb.append("]");
         return sb.toString();
     }
+
+    public Float calculateEsSearchScore() {
+        float score = 1.0f;
+
+        // 根据注册时间给分：越新注册的用户评分越高
+        if (this.getRegisterTime() != null) {
+            long daysSinceRegister = (System.currentTimeMillis() - this.getRegisterTime().getTime()) / (1000 * 60 * 60 * 24);
+            score += Math.max(0, 100 - daysSinceRegister * 0.1);
+        }
+
+        // 根据个人信息完整度给分
+        if (this.getNickName() != null && !this.getNickName().trim().isEmpty()) {
+            score += 10;
+        }
+        if (this.getAvatar() != null && !this.getAvatar().trim().isEmpty()) {
+            score += 5;
+        }
+        if (this.getCity() != null && !this.getCity().trim().isEmpty()) {
+            score += 3;
+        }
+        return score;
+    }
 }

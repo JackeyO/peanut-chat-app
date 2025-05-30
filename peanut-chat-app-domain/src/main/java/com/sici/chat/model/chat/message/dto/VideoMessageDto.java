@@ -24,5 +24,5 @@ public class VideoMessageDto extends BaseFileMessageDto{
     /**
      * 语音消息类型
      */
-    private String type;
+    private String videoType;
 }

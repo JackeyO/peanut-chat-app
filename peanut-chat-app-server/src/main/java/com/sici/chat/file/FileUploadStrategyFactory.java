@@ -1,4 +1,4 @@
-package com.sici.chat.strategy.file;
+package com.sici.chat.file;
 
 import java.util.HashMap;
 import java.util.Map;

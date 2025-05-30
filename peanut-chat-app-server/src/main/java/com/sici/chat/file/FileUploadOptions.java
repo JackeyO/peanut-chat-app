@@ -1,4 +1,4 @@
-package com.sici.chat.strategy.file;
+package com.sici.chat.file;
 
 import com.qcloud.cos.model.ObjectMetadata;
 import lombok.AllArgsConstructor;

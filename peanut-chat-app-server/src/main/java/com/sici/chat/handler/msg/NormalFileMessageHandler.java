@@ -3,13 +3,10 @@ package com.sici.chat.handler.msg;
 import com.sici.chat.dao.FileMessageDao;
 import com.sici.chat.model.chat.message.dto.BaseFileMessageDto;
 import com.sici.chat.model.chat.message.dto.MessageRequestDto;
-import com.sici.chat.model.chat.message.dto.VideoMessageDto;
 import com.sici.chat.model.chat.message.entity.FileMessage;
 import com.sici.chat.model.chat.message.entity.Message;
 import com.sici.chat.model.chat.message.vo.MessageVo;
 import com.sici.chat.model.chat.message.vo.NormalFileMessageVo;
-import com.sici.chat.model.chat.message.vo.VideoMessageVo;
-import com.sici.chat.util.AssertUtil;
 import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.common.enums.chat.message.MessageRespTypeEnum;
 import jakarta.annotation.Resource;
@@ -61,7 +58,7 @@ public class NormalFileMessageHandler extends AbstractMessageHandler<BaseFileMes
         NormalFileMessageVo normalFileMessageVo = new NormalFileMessageVo();
         normalFileMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
         normalFileMessageVo.setUrl(baseFileMessageDto.getUrl());
-        normalFileMessageVo.setType(baseFileMessageDto.getType());
+        normalFileMessageVo.setType(baseFileMessageDto.getFileType());
         normalFileMessageVo.setSize(baseFileMessageDto.getSize());
 
         return normalFileMessageVo;

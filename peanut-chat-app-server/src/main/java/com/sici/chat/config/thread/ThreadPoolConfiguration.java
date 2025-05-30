@@ -30,6 +30,8 @@ public class ThreadPoolConfiguration implements AsyncConfigurer {
 
     public static final String CHAT_PUBLIC_EXECUTOR = "publicExecutor";
     public static final String CHAT_WS_EXECUTOR = "wsExecutor";
+    public static final String CHAT_ES_SYNC_EXECUTOR = "esSyncExecutor";
+    public static final String CHAT_CANAL_SYNC = "canalSyncExecutor";
 
     @Bean(CHAT_PUBLIC_EXECUTOR)
     @Primary
@@ -44,6 +46,18 @@ public class ThreadPoolConfiguration implements AsyncConfigurer {
         return tpe;
     }
 
+    @Bean(CHAT_ES_SYNC_EXECUTOR)
+    public ThreadPoolTaskExecutor chatEsSyncExecutor() {
+        ThreadPoolTaskExecutor tpe = new ThreadPoolTaskExecutor();
+        tpe.setCorePoolSize(10);
+        tpe.setMaxPoolSize(10);
+        tpe.setQueueCapacity(200);
+        tpe.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        tpe.setThreadFactory(new MyThreadFactory(tpe));
+        tpe.setThreadNamePrefix(CHAT_ES_SYNC_EXECUTOR);
+        return tpe;
+    }
+
     @Bean(CHAT_WS_EXECUTOR)
     public ThreadPoolTaskExecutor chatWsExecutor() {
         ThreadPoolTaskExecutor tpe = new ThreadPoolTaskExecutor();
@@ -52,7 +66,19 @@ public class ThreadPoolConfiguration implements AsyncConfigurer {
         tpe.setQueueCapacity(1000);
         tpe.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
         tpe.setThreadFactory(new MyThreadFactory(tpe));
-        tpe.setThreadNamePrefix(CHAT_PUBLIC_EXECUTOR);
+        tpe.setThreadNamePrefix(CHAT_WS_EXECUTOR);
+        return tpe;
+    }
+
+    @Bean(CHAT_CANAL_SYNC)
+    public ThreadPoolTaskExecutor chatCanalSyncExecutor() {
+        ThreadPoolTaskExecutor tpe = new ThreadPoolTaskExecutor();
+        tpe.setCorePoolSize(10);
+        tpe.setMaxPoolSize(10);
+        tpe.setQueueCapacity(200);
+        tpe.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        tpe.setThreadFactory(new MyThreadFactory(tpe));
+        tpe.setThreadNamePrefix(CHAT_CANAL_SYNC);
         return tpe;
     }
 }

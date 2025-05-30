@@ -3,6 +3,7 @@ package com.sici.chat.builder.cache.user;
 import com.sici.chat.config.wx.WxMpProperties;
 import com.sici.common.constant.redis.key.RedisKeyConstant;
 import com.sici.framework.redis.key.RedisKeyBuilder;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
@@ -11,6 +12,7 @@ import java.time.Duration;
  * @description
  * @date 5/28/25 16:21
  */
+@Component
 public class UserJoinedRoomCacheKeyBuilder implements RedisKeyBuilder<Long, String> {
     @Override
     public Duration getExpireTime() {

@@ -62,8 +62,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Message send(MessageRequestDto messageRequestDto) {
         // 根据消息类型获取对应的消息处理器并处理消息(包括检查并保存消息)
-        AbstractMessageHandler messageHandler = MessageHandlerFactory.getMessageHandler(messageRequestDto.getType());
-        Message message = messageHandler.checkAndSave(messageRequestDto);
+        Message message = MessageHandlerFactory.handleMessage(messageRequestDto);
         // 发布消息发送事件
         applicationEventPublisher.publishEvent(new MessageSendEvent(this, message.getId()));
         return message;

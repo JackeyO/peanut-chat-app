@@ -1,17 +1,14 @@
 package com.sici.chat.service.impl.file;
 
-import com.qcloud.cos.model.PutObjectResult;
 import com.sici.chat.model.chat.file.dto.FileUploadDto;
 import com.sici.chat.model.chat.file.vo.FileUploadVo;
 import com.sici.chat.service.file.FileUploadService;
-import com.sici.chat.strategy.file.AbstractFileUploadStrategy;
-import com.sici.chat.strategy.file.FileUploadResult;
-import com.sici.chat.strategy.file.FileUploadStrategyFactory;
+import com.sici.chat.file.AbstractFileUploadStrategy;
+import com.sici.chat.file.FileUploadResult;
+import com.sici.chat.file.FileUploadStrategyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 /**
  * @author jackey

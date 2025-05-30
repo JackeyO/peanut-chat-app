@@ -1,7 +1,6 @@
-package com.sici.chat.strategy.file;
+package com.sici.chat.file;
 
 import com.qcloud.cos.model.PutObjectResult;
-import com.sici.chat.service.file.FileUploadService;
 import com.sici.chat.util.CosUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;

@@ -60,7 +60,7 @@ public class VideoMessageHandler extends AbstractMessageHandler<VideoMessageDto>
 
         VideoMessageVo videoMessageVo = new VideoMessageVo();
         videoMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
-        videoMessageVo.setType(videoMessageDto.getType());
+        videoMessageVo.setType(videoMessageDto.getVideoType());
         videoMessageVo.setUrl(videoMessageDto.getUrl());
         videoMessageVo.setDuration(videoMessageDto.getDuration());
         videoMessageVo.setSize(videoMessageDto.getSize());

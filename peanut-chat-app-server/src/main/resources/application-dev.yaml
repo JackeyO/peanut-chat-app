@@ -13,7 +13,7 @@ peanut:
 
   # RocketMq
   rocketmq:
-    name-server: 192.168.243.219:9876
+    name-server: 127.0.0.1:9876
     producer:
       group: chatGroup
 
@@ -33,3 +33,38 @@ peanut:
     db: peanut_chat
     username: root
     password: 345267
+
+  elasticsearch:
+    uris: http://localhost:9200
+
+  canal:
+    enabled: true
+    server-host: 127.0.0.1
+    server-port: 11111
+    destination: test
+    username: ""
+    password: ""
+    batch-size: 1000
+    timeout: 1000
+
+    # 表配置
+    tables:
+      - database: peanut_chat
+        table: user
+        primary-key: id
+        enabled: true
+        properties:
+          sync-to-es: true
+
+      - database: peanut_chat
+        table: room
+        primary-key: id
+        enabled: true
+        properties:
+          sync-to-es: true
+
+    # 重试配置
+    retry:
+      max-retry-times: 3
+      retry-interval: 1000
+      exponential-backoff: true

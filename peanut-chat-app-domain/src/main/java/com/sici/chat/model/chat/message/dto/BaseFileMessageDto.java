@@ -1,11 +1,6 @@
 package com.sici.chat.model.chat.message.dto;
 
-import com.sici.chat.model.chat.message.bo.MessageExtra;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * @projectName: qiyu-live-app
@@ -23,6 +18,5 @@ public class BaseFileMessageDto extends MessageDto{
      * 文件大小
      */
     private Integer size;
-
-    private String type;
+    private String fileType;
 }

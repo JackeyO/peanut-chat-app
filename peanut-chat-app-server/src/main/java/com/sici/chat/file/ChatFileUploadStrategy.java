@@ -1,4 +1,4 @@
-package com.sici.chat.strategy.file;
+package com.sici.chat.file;
 
 import com.sici.chat.util.AssertUtil;
 import com.sici.common.constant.cos.ChatCosConstant;

@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserSearchVo {
     // TODO 定义用户ES搜索--返回结果 - Su Xiao Wen - 5/28/25 17:12

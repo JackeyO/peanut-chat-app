@@ -57,7 +57,7 @@ public class AudioMessageHandler extends AbstractMessageHandler<AudioMessageDto>
 
         SoundMessageVo soundMessageVo = new SoundMessageVo();
         soundMessageVo.setMessage(ConvertBeanUtil.convertSingle(message, MessageVo.class));
-        soundMessageVo.setType(audioMessageDto.getType());
+        soundMessageVo.setType(audioMessageDto.getAudioType());
         soundMessageVo.setUrl(audioMessageDto.getUrl());
         soundMessageVo.setDuration(audioMessageDto.getDuration());
         soundMessageVo.setSize(audioMessageDto.getSize());
