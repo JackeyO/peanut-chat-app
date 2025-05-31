@@ -71,21 +71,4 @@ public class RoomController {
             return ResponseResult.errorResult(e.getCode(), e.getMessage());
         }
     }
-
-    /**
-     * 搜索群组房间
-     */
-
-    @GetMapping("search")
-    public ResponseResult<GroupRoomSearchVo> searchGroupRooms(@RequestParam String keyword) {
-        AssertUtil.notNull(keyword, AppHttpCodeEnum.KEYWORDS_IS_NULL);
-
-        try {
-            GroupRoomSearchVo groupRoomSearchVo = roomService.searchGroupRoom(keyword);
-            return ResponseResult.okResult(groupRoomSearchVo);
-        } catch (BusinessException e) {
-            log.error("搜索群组房间失败", e);
-            return ResponseResult.errorResult(e.getCode(), e.getMessage());
-        }
-    }
 }

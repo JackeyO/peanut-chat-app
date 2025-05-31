@@ -18,6 +18,4 @@ public interface RoomService  {
     RoomVO getRoomInfo(Long roomId);
 
     GroupRoomJoinedVo getUserJoinedRooms(Long userId);
-
-    GroupRoomSearchVo searchGroupRoom(String keyword);
 }

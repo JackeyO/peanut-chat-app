@@ -22,11 +22,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * Canal客户端管理器
  */
-@Component
+//@Component
 @Slf4j
 public class CanalClientManager implements CommandLineRunner {
     @Resource
     private CanalConfigurationProperties canalConfigurationProperties;
+    @Resource
+    private DataChangeHandlerFactory dataChangeHandlerFactory;
 
     private CanalConnector connector;
     private volatile boolean running = false;
@@ -201,7 +203,7 @@ public class CanalClientManager implements CommandLineRunner {
                 DataChangeEvent event = buildDataChangeEvent(entry, eventType, rowData);
                 
                 // 分发给对应的处理器
-                DataChangeHandlerFactory.handleDataChangeEvent(event);
+                dataChangeHandlerFactory.handleDataChangeEvent(event);
             }
             
         } catch (Exception e) {

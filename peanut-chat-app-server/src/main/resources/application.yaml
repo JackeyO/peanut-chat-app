@@ -14,6 +14,7 @@ spring:
       port: ${peanut.redis.port}
       database: 0
 
+
   datasource:
     url: jdbc:mysql://${peanut.mysql.ip}:${peanut.mysql.port}/${peanut.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${peanut.mysql.username}
@@ -26,8 +27,21 @@ spring:
   #      connection-test-query: SELECT
   elasticsearch:
     uris: ${peanut.elasticsearch.uris:http://localhost:9200}
-#    username: ${peanut.elasticsearch.username:}
-#    password: ${peanut.elasticsearch.password:}
+  #    username: ${peanut.elasticsearch.username:}
+  #    password: ${peanut.elasticsearch.password:}
+
+
+  ai:
+    openai:
+      api-key: ${peanut.ai.openai.api-key}
+
+    deepseek:
+      api-key: ${peanut.ai.deepseek.api-key}
+
+    chat:
+      client:
+        enabled: false
+
 
 # RocketMq
 rocketmq:

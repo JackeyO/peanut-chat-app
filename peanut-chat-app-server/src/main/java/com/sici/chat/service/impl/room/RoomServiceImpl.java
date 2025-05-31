@@ -81,13 +81,4 @@ public class RoomServiceImpl implements RoomService {
                 .rooms(rooms)
                 .build();
     }
-
-    @Override
-    public GroupRoomSearchVo searchGroupRoom(String keyword) {
-        // TODO 使用ES处理按关键词搜索群聊房间(定义索引结构，和索引全量以及增量写入) - Su Xiao Wen - 5/28/25 17:04
-
-        GroupRoomSearchVo groupRoomSearchVo = new GroupRoomSearchVo();
-
-        return groupRoomSearchVo;
-    }
 }

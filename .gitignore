@@ -87,3 +87,4 @@ junit*.properties
 *.swp
 *~
 .*.swp
+/peanut-chat-app-server/src/main/resources/application-dev.yaml

@@ -2,12 +2,36 @@
 
 本目录包含花生聊天应用的Elasticsearch索引配置文件和创建脚本。
 
+## 目录结构
+
+```
+es/
+├── mappings/                  # 索引映射配置
+│   ├── user_index.json       # 用户索引映射配置
+│   └── room_index.json       # 房间索引映射配置
+├── scripts/                   # 管理脚本
+│   ├── create_all_indices.sh # 批量创建所有索引
+│   ├── create_user_index.sh  # 创建用户索引
+│   ├── create_room_index.sh  # 创建房间索引
+│   ├── import_room_data.sh   # 导入房间示例数据
+│   ├── validate_data.sh      # 验证数据格式
+│   ├── create_indices.sh     # 原有索引创建脚本
+│   └── create_indices_simple.sh # 简化版索引创建脚本
+├── data/                      # 示例数据
+│   └── room_sample_data.json # 房间示例数据
+├── docs/                      # 文档
+└── README.md                  # 说明文档
+```
+
 ## 文件说明
 
-- `user_index.json` - 用户索引配置文件
-- `room_index.json` - 房间索引配置文件  
-- `create_indices.sh` - 完整的索引创建脚本（推荐）
-- `create_indices_simple.sh` - 简化版索引创建脚本
+- `mappings/user_index.json` - 用户索引配置文件
+- `mappings/room_index.json` - 房间索引配置文件  
+- `scripts/create_all_indices.sh` - 批量创建所有索引（推荐）
+- `scripts/create_user_index.sh` - 单独创建用户索引
+- `scripts/create_room_index.sh` - 单独创建房间索引
+- `scripts/import_room_data.sh` - 导入房间示例数据
+- `data/room_sample_data.json` - 房间示例数据（25条记录）
 - `README.md` - 本说明文档
 
 ## 前置条件
@@ -47,12 +71,12 @@ curl -X GET "localhost:9200/_cat/plugins?v"
 
 ## 使用方法
 
-### 方法1: 使用完整脚本（推荐）
+### 方法1: 批量创建所有索引（推荐）
 
 ```bash
-cd peanut-chat-app/es
-chmod +x create_indices.sh
-./create_indices.sh
+cd peanut-chat-app/es/scripts
+chmod +x create_all_indices.sh
+./create_all_indices.sh
 ```
 
 功能特点：
@@ -63,15 +87,27 @@ chmod +x create_indices.sh
 - ✅ 详细的执行日志
 - ✅ 自动测试分析器功能
 
-### 方法2: 使用简化脚本
+### 方法2: 单独创建索引
 
 ```bash
-cd peanut-chat-app/es
-chmod +x create_indices_simple.sh
-./create_indices_simple.sh
+cd peanut-chat-app/es/scripts
+
+# 只创建用户索引
+./create_user_index.sh
+
+# 只创建房间索引
+./create_room_index.sh
 ```
 
-### 方法3: 直接使用curl命令
+### 方法3: 使用原有脚本
+
+```bash
+cd peanut-chat-app/es/scripts
+chmod +x create_indices.sh
+./create_indices.sh
+```
+
+### 方法4: 直接使用curl命令
 
 ```bash
 cd peanut-chat-app/es
@@ -79,32 +115,41 @@ cd peanut-chat-app/es
 # 创建用户索引
 curl -X PUT "localhost:9200/user_index" \
     -H 'Content-Type: application/json' \
-    -d @user_index.json
+    -d @mappings/user_index.json
 
 # 创建房间索引
 curl -X PUT "localhost:9200/room_index" \
     -H 'Content-Type: application/json' \
-    -d @room_index.json
+    -d @mappings/room_index.json
 ```
 
-### 方法4: 自定义ES地址
+### 方法5: 导入示例数据
+
+创建索引后，可以导入房间示例数据进行测试：
+
+```bash
+cd peanut-chat-app/es/scripts
+
+# 验证数据格式
+./validate_data.sh
+
+# 导入房间示例数据
+./import_room_data.sh
+
+# 验证导入结果
+curl "localhost:9200/room_index/_count"
+```
+
+### 自定义ES地址
 
 如果ES不在本地或使用非默认端口：
 
 ```bash
-# 设置环境变量
-export ES_HOST=your-es-host
-export ES_PORT=9200
+# 创建索引时指定地址
+./create_all_indices.sh your-es-host 9200
 
-# 运行脚本
-./create_indices.sh
-```
-
-或者直接修改curl命令中的地址：
-```bash
-curl -X PUT "http://your-es-host:9200/user_index" \
-    -H 'Content-Type: application/json' \
-    -d @user_index.json
+# 导入数据时指定地址
+./import_room_data.sh your-es-host 9200
 ```
 
 ## 索引配置说明

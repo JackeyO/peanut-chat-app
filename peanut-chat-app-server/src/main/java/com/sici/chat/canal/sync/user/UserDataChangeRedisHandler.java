@@ -10,6 +10,8 @@ import com.sici.chat.model.canal.event.DataChangeEvent;
 import com.sici.chat.model.user.entity.User;
 import com.sici.common.constant.canal.DatabaseConstant;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
  * @description
  * @date 5/29/25 18:13
  */
+@Component
+@Slf4j
 public class UserDataChangeRedisHandler extends AbstractDataChangeRedisHandler<User, Long> {
     @Resource
     private UserDao userDao;
@@ -51,12 +55,16 @@ public class UserDataChangeRedisHandler extends AbstractDataChangeRedisHandler<U
         Long userId = convertPrimaryKey(dataChangeEvent.getPrimaryKey());
         User user = userDao.getById(userId);
         userBaseInfoCache.set(userId, user);
+
+        log.info("{}.{} 插入数据{}变更事件处理完成，主键: {}", getDatabase(), getTable(), getSyncType(), userId);
     }
 
     @Override
     public void handlerDeleteDataChangeEvent(DataChangeEvent dataChangeEvent) {
         Long userId = convertPrimaryKey(dataChangeEvent.getPrimaryKey());
         userBaseInfoCache.deleteFromCache(userId);
+
+        log.info("{}.{} 删除数据{}变更事件处理完成，主键: {}", getDatabase(), getTable(), getSyncType(), userId);
     }
 
     @Override
@@ -64,6 +72,8 @@ public class UserDataChangeRedisHandler extends AbstractDataChangeRedisHandler<U
         Long userId = convertPrimaryKey(dataChangeEvent.getPrimaryKey());
         User user = userDao.getById(userId);
         userBaseInfoCache.set(userId, user);
+
+        log.info("{}.{} 更新数据{}变更事件处理完成，主键: {}", getDatabase(), getTable(), getSyncType(), userId);
     }
 
     private User convertMapToUser(Map<String, Object> userMap) {

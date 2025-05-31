@@ -11,4 +11,9 @@ public abstract class AbstractDataChangeRedisHandler<T, ID extends Serializable>
     public AbstractDataChangeRedisHandler() {
         super();
     }
+
+    @Override
+    public String getSyncType() {
+        return "REDIS";
+    }
 }

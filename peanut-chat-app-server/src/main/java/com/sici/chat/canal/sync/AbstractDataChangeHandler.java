@@ -2,6 +2,7 @@ package com.sici.chat.canal.sync;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sici.chat.model.canal.event.DataChangeEvent;
+import jakarta.annotation.Resource;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @date 5/29/25 17:45
  */
 public abstract class AbstractDataChangeHandler<T, ID extends Serializable> implements DataChangeHandler {
+
     public AbstractDataChangeHandler() {
         DataChangeHandlerFactory.registerDataChangeHandler(this);
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @description
  * @date 5/30/25 11:31
  */
-@Component
+//@Component
 public class UserIndexSyncTask extends AbstractIndexSyncTask {
     @Resource
     private UserIndexSyncService userIndexSyncService;

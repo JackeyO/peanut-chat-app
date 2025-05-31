@@ -9,6 +9,7 @@ import com.sici.chat.model.chat.room.entity.Room;
 import com.sici.common.constant.canal.DatabaseConstant;
 import com.sici.common.enums.chat.room.RoomTypeEnums;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -17,6 +18,7 @@ import java.util.Objects;
  * @description
  * @date 5/29/25 18:13
  */
+@Component
 public class GroupRoomChangeRedisHandler extends AbstractDataChangeRedisHandler<Room, Long> {
     @Resource
     private RoomDao roomDao;
@@ -40,7 +42,7 @@ public class GroupRoomChangeRedisHandler extends AbstractDataChangeRedisHandler<
 
     @Override
     public String getTable() {
-        return DatabaseConstant.CHAT_USER_TABLE;
+        return DatabaseConstant.CHAT_ROOM_TABLE;
     }
 
     @Override

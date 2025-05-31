@@ -1,13 +1,22 @@
 package com.sici.chat.model.chat.room.es;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.InnerField;
+import org.springframework.data.elasticsearch.annotations.MultiField;
+import org.springframework.data.elasticsearch.annotations.Setting;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.*;
-
-import java.time.LocalDateTime;
 
 /**
  * 房间ES文档
@@ -75,13 +84,15 @@ public class RoomDocument {
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updateTime;
 
     /**
@@ -105,6 +116,7 @@ public class RoomDocument {
     /**
      * 房间最后活跃时间 - 用于搜索排序
      */
-    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime lastActiveTime;
 }

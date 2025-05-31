@@ -11,12 +11,14 @@ import com.sici.chat.util.ConvertBeanUtil;
 import com.sici.common.constant.canal.DatabaseConstant;
 import jakarta.annotation.Resource;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Component;
 
 /**
  * @author jackey
  * @description
  * @date 5/29/25 18:13
  */
+@Component
 public class UserDataChangeEsHandler extends AbstractDataChangeEsHandler<User, UserDocument, Long> {
     @Resource
     private UserDao userDao;

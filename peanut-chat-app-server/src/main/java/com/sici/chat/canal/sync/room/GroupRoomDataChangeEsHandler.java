@@ -14,6 +14,7 @@ import com.sici.common.constant.canal.DatabaseConstant;
 import com.sici.common.enums.chat.room.RoomTypeEnums;
 import jakarta.annotation.Resource;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ import java.util.Objects;
  * @description
  * @date 5/29/25 18:13
  */
+@Component
 public class GroupRoomDataChangeEsHandler extends AbstractDataChangeEsHandler<Room, RoomDocument, Long> {
     @Resource
     private RoomDao roomDao;
@@ -39,11 +41,13 @@ public class GroupRoomDataChangeEsHandler extends AbstractDataChangeEsHandler<Ro
         roomDocument.setSearchScore(room.calculateEsSearchScore());
 
         RoomActivityCacheInfo roomActivityCache = this.roomActivityCache.getOne(room.getId());
-        roomDocument.setMemberCount(roomActivityCache.getMembersCount());
-        LocalDateTime lastActivityTime = Instant.ofEpochMilli(roomActivityCache.getLastActivityTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        roomDocument.setLastActiveTime(lastActivityTime);
+        if (Objects.nonNull(roomActivityCache)) {
+            roomDocument.setMemberCount(roomActivityCache.getMembersCount());
+            LocalDateTime lastActivityTime = Instant.ofEpochMilli(roomActivityCache.getLastActivityTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            roomDocument.setLastActiveTime(lastActivityTime);
+        }
 
         return roomDocument;
     }
@@ -70,7 +74,7 @@ public class GroupRoomDataChangeEsHandler extends AbstractDataChangeEsHandler<Ro
 
     @Override
     public String getTable() {
-        return DatabaseConstant.CHAT_USER_TABLE;
+        return DatabaseConstant.CHAT_ROOM_TABLE;
     }
 
     @Override
