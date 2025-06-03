@@ -15,6 +15,7 @@
         <module>peanut-chat-app-framework-redis-starter</module>
         <module>peanut-chat-app-framework-rocketmq-starter</module>
         <module>peanut-chat-app-framework-frequency-control-starter</module>
+        <module>penaut-chat-app-framework-agent</module>
     </modules>
 
     <properties>
