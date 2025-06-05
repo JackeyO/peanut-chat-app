@@ -1,7 +1,7 @@
 package com.sici.chat.service.impl.ai;
 
 import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisResult;
-import com.sici.chat.model.chat.ai.vo.image.AiImageGenerateVo;
+import com.sici.chat.model.chat.ai.vo.AiImageGenerateVo;
 import com.sici.chat.service.ai.AiImageGenerateService;
 import com.sici.chat.service.ai.dashscope.DashScopeImageService;
 import jakarta.annotation.Resource;

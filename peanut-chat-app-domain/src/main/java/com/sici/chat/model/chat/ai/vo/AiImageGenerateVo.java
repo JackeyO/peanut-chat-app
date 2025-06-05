@@ -1,4 +1,4 @@
-package com.sici.chat.model.chat.ai.vo.image;
+package com.sici.chat.model.chat.ai.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.sici.chat.service.ai;
 
-import com.sici.chat.model.chat.ai.vo.image.AiImageGenerateVo;
+import com.sici.chat.model.chat.ai.vo.AiImageGenerateVo;
 
 /**
  * @author jackey
