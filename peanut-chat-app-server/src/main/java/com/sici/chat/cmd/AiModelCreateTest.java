@@ -1,16 +1,12 @@
 package com.sici.chat.cmd;
 
-import com.sici.chat.agent.tools.DateTimeTools;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 /**
  * @author jackey
@@ -39,12 +35,12 @@ public class AiModelCreateTest implements CommandLineRunner {
 //                .content();
 //        log.info("OpenAI Chat Response: {}", response);
 
-        String content = volcengineDeepSeekChatClient.prompt()
-                .user("hello")
-                .call()
-                .content();
-
-        log.info("Volcengine DeepSeek Chat Response: {}", content);
+//        String content = volcengineDeepSeekChatClient.prompt()
+//                .user("hello")
+//                .call()
+//                .content();
+//
+//        log.info("Volcengine DeepSeek Chat Response: {}", content);
 
 //        String content = deepseekChatClient.prompt()
 //                .user("Hello")
@@ -52,5 +48,16 @@ public class AiModelCreateTest implements CommandLineRunner {
 //                .content();
 //
 //        log.info("DeepSeek Chat Response: {}", content);
+//        ChatResponse chatResponse = volcengineDeepSeekChatClient.prompt()
+//                .user("hello")
+//                .call()
+//                .chatResponse();
+//        AssistantMessage result = chatResponse.getResult().
+//                getOutput();
+        Flux<String> hello = volcengineDeepSeekChatClient.prompt()
+                .user("hello")
+                .stream()
+                .content();
+
     }
 }

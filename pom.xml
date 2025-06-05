@@ -209,7 +209,12 @@
             <!-- ======================================== -->
             <!-- ======== 内部项目依赖管理 ================ -->
             <!-- ======================================== -->
-            
+
+            <dependency>
+                <groupId>com.sici</groupId>
+                <artifactId>peanut-chat-app-framework-agent-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.sici</groupId>
                 <artifactId>peanut-chat-app-framework-rocketmq-starter</artifactId>
