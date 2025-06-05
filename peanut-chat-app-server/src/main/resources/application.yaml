@@ -35,6 +35,7 @@ spring:
     openai:
       api-key: ${peanut.ai.openai.api-key}
 
+
     deepseek:
       api-key: ${peanut.ai.deepseek.api-key}
 
@@ -94,3 +95,9 @@ peanut:
       max-retry-times: ${peanut.canal.retry.max-retry-times}
       retry-interval: ${peanut.canal.retry.retry-interval}
       exponential-backoff: ${peanut.canal.retry.exponential-backoff}
+  ai:
+    dashscope:
+      image:
+        api-key: ${peanut.ai.dashscope.image.api-key}
+        model: ${peanut.ai.dashscope.image.model}
+

@@ -47,6 +47,7 @@
         <canal.version>1.1.8</canal.version>
         <spring.ai.version>1.0.0</spring.ai.version>
         <openai.version>1.6.1</openai.version>
+        <dashscope.version>2.20.2</dashscope.version>
     </properties>
 
     <parent>
@@ -74,6 +75,12 @@
 <!--                <artifactId>openai-java</artifactId>-->
 <!--                <version>${openai.version}</version>-->
 <!--            </dependency>-->
+            <!-- https://mvnrepository.com/artifact/com.alibaba/dashscope-sdk-java -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dashscope-sdk-java</artifactId>
+                <version>${dashscope.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.ai</groupId>
                 <artifactId>spring-ai-bom</artifactId>

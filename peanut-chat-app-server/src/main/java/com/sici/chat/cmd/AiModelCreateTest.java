@@ -1,12 +1,18 @@
 package com.sici.chat.cmd;
 
+import com.sici.chat.aggregator.ChatMessageAggregator;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+
+import java.util.Optional;
 
 /**
  * @author jackey
@@ -25,6 +31,8 @@ public class AiModelCreateTest implements CommandLineRunner {
     @Resource
     @Qualifier("deepseekChatClient")
     private ChatClient deepseekChatClient;
+    @Autowired
+    private ChatMessageAggregator chatMessageAggregator;
 
     @Override
     public void run(String... args) throws Exception {

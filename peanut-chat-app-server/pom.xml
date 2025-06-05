@@ -19,6 +19,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-chat-memory-repository-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dashscope-sdk-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.sici</groupId>
             <artifactId>peanut-chat-app-framework-agent-starter</artifactId>
         </dependency>
