@@ -8,5 +8,5 @@ import reactor.core.publisher.Flux;
  * @date 6/5/25 21:50
  */
 public interface AiChatService {
-    Flux<String> rewriteContent(String content);
+    Flux<String> rewriteContent(String content, String prompt);
 }

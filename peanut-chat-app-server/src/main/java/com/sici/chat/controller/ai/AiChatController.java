@@ -19,7 +19,7 @@ public class AiChatController {
     private AiChatServiceImpl aiChatService;
 
     @GetMapping("rewrite")
-    public Flux<String> rewriteContent(String content) {
-        return aiChatService.rewriteContent(content);
+    public Flux<String> rewriteContent(String content, String prompt) {
+        return aiChatService.rewriteContent(content, prompt);
     }
 }
