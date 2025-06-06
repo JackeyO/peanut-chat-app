@@ -270,3 +270,7 @@ If you have any questions or need help, please:
   <h3>🌟 If you like this project, please give it a star! 🌟</h3>
   <p>Made with ❤️ by the Peanut Chat Team</p>
 </div> 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=JackeyO/peanut-chat-app&type=Date)](https://www.star-history.com/#JackeyO/peanut-chat-app&Date)

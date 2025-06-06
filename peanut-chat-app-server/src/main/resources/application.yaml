@@ -101,3 +101,8 @@ peanut:
         api-key: ${peanut.ai.dashscope.image.api-key}
         model: ${peanut.ai.dashscope.image.model}
 
+  cos:
+    secret-id: ${peanut.cos.secret-id}
+    secret-key: ${peanut.cos.secret-key}
+    region: ${peanut.cos.region}
+
